@@ -1,11 +1,10 @@
 #include "Siege.h"
 #include <iostream>
 
-Siege::Siege(char Scouleur)
+Siege::Siege(c Scouleur)
 {
     couleur = Scouleur;
-    couleursoldat = 'o';
-    soldat = &
+    soldat = null;
 }
 
 Siege::~Siege()
@@ -13,17 +12,17 @@ Siege::~Siege()
     delete soldat;
 }
 
-char Siege::getCouleur()
+c Siege::getCouleur()
 {
     return couleur;
 }
 
-char Siege::getCouleurSoldat()
+c Siege::getCouleurSoldat()
 {
-    return couleursoldat;
+    return couleurSoldat;
 }
 
 *void Siege::getSoldat()
 {
-    return
+    return soldat;
 }
