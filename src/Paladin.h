@@ -4,24 +4,25 @@
 #include "Siege.h"
 #include "Terrain.h"
 
+enum c {rouge,noir};
 
 class Paladin
 {
     private :
     unsigned int x,y;
-    enum couleur {rouge,noir};
     Siege *siege;
+    c couleur;
     
     public :
-    Paladin(unsigned int Px, unsigned int Py, enum couleur Pcouleur );
+    Paladin(unsigned int Px, unsigned int Py, c Pcouleur );
     ~Paladin();
-    enum couleur getCouleur();
+    c getCouleur();
     Siege* getSiege();
-    void setSiege();
+    void setSiege(Siege Psiege);
     void deplacerHD( const Terrain &t);
     void deplacerHG( const Terrain &t);
     void deplacerBD( const Terrain &t);
     void deplacerBG( const Terrain &t);
-}
+};
 
 #endif
