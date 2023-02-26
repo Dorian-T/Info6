@@ -1,34 +1,82 @@
 #include "Paladin.h"
 #include <iostream>
 
-Paladin::Paladin(unsigned int Px, unsigned int Py, enum couleur Pcouleur ) {
+Paladin::Paladin(unsigned int Px, unsigned int Py, c Pcouleur )
+{
     x = Px;
     y = Py;
     couleur = Pcouleur;
     siege = null;
 }
 
-Paladin::~Paladin() {
+Paladin::~Paladin()
+{
     delete siege; // Utile ???
     siege = null;
 }
 
-enum  couleur Paladin::getCouleur() {
+c Paladin::getCouleur()
+{
+    
+    return couleur;
+}
+
+Siege* Paladin::getSiege()
+{
+    
+    return siege;
     
 }
 
-Siege* Paladin::getSiege(){
+void Paladin::setSiege(Siege Psiege) {
     
-    return *siege;
-    
+    siege = Psiege;
 }
 
-void Paladin::setSiege() {
-    
-    
+void Paladin::deplacerHD( const Terrain &t)
+{
+    if (couleur == noir)
+    {
+        verifiecase(x-1,y+1);
+    }
+    if (couleur == rouge)
+    {
+        verifiecase(x+1,y-1);
+    }
 }
 
-void Paladin::deplacerHD( const Terrain &t){
-    
-    
+void Paladin::deplacerHG( const Terrain &t)
+{
+    if (couleur == noir)
+    {
+        verifiecase(x+1,y+1);
+    }
+    if (couleur == rouge)
+    {
+        verifiecase(x-1,y-1);
+    }
+}
+
+void Paladin::deplacerBD( const Terrain &t)
+{
+    if (couleur == noir)
+    {
+        verifiecase(x-1,y-1);
+    }
+    if (couleur == rouge)
+    {
+        verifiecase(x+1,y+1);
+    }
+}
+
+void Paladin::deplacerBG( const Terrain &t)
+{
+    if (couleur == noir)
+    {
+        verifiecase(x+1,y-1);
+    }
+    if (couleur == rouge)
+    {
+        verifiecase(x-1,y+1);
+    }
 }
