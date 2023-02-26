@@ -1,27 +1,24 @@
 #ifndef SIEGE_H
 #define SIEGE_H
 
+enum c {rouge,noir};
+
 class Siege
 {
     private :
     
-    char couleur;
-    char couleurSoldat;
+    c couleur;
+    c couleurSoldat;
     void* soldat;
     
     public :
     
-    Siege(char Scouleur);
+    Siege(c Scouleur);
     ~Siege();
-    char getCouleur();
-    char getCouleurSoldat();
+    c getCouleur();
+    c getCouleurSoldat();
     void* getSoldat();
-}
-
-
-
-
-
+};
 
 #endif
 
