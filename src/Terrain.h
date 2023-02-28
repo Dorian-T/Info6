@@ -1,11 +1,11 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include "Case.h"
+#include "Piece.h"
 
 class Terrain {
 	private:
-		Case* grille;
+		Piece* grille;
 
 	public:
 		Terrain();

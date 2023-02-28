@@ -1,5 +1,5 @@
 #ifndef CASE_H
-#define CASE_H
+#define CASE_H // est-ce qu'il y a besoin de cette classe ?
 
 enum c {
 	rouge = 0,
