@@ -17,7 +17,7 @@ class Soldat : public Piece
 		~Soldat();
 
 		Siege* getSiege() const;
-		void setSiege(Siege* Fsiege);
+		void setSiege(Siege* Ssiege);
 
 		void deplacerH(Terrain & t);
 		void deplacerHD(Terrain & t);

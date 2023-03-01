@@ -12,6 +12,7 @@ class Siege : public Piece {
 
 	public:
 		Siege();
+		Siege(unsigned int Px, unsigned int Py, Couleur Pcouleur);
 		~Siege();
 
 		Couleur getCouleurSoldat() const;

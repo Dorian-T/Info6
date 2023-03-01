@@ -10,10 +10,11 @@ Piece::Piece(unsigned int Px, unsigned int Py) {
 	y = Py;
 }
 
-Piece::Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Ptype) {
-	x = Px;
-	y = Py;
+Piece::Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur) Piece(Px, Py) {
 	couleur = Pcouleur;
+}
+
+Piece::Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Ptype) Piece(Px, Py, Pcouleur) {
 	type = Ptype;
 }
 

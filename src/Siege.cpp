@@ -9,6 +9,10 @@ Siege::Siege() {
 	soldat = NULL;
 }
 
+Siege::Siege(unsigned int Px, unsigned int Py, Couleur Pcouleur) : Piece(Px, Py, Pcouleur) {
+	soldat = NULL;
+}
+
 Siege::~Siege() {
 	if(soldat != NULL) delete soldat;
 	soldat = NULL;

@@ -21,6 +21,7 @@ class Piece {
 	public:
 		Piece();
 		Piece(unsigned int Px, unsigned int Py);
+		Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur);
 		Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Ptype);
 
 		Couleur getCouleur() const;

@@ -23,7 +23,7 @@ Siege* Soldat::getSiege() const {
 	return siege;
 }
 
-void Soldat::setSiege(Siege * Fsiege) {
+void Soldat::setSiege(Siege * Ssiege) {
 	siege = Fsiege;
 }
 
