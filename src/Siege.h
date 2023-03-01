@@ -1,24 +1,25 @@
 #ifndef SIEGE_H
 #define SIEGE_H
 
-enum Couleur {
-	rouge,
-	noir
-};
+#include "Piece.h"
 
-class Siege
-{
+class Soldat;
+
+class Siege : public Piece {
 	private:
-		Couleur couleur;
 		Couleur couleurSoldat;
-		void* soldat;
+		Soldat* soldat;
 
 	public:
-		Siege(Couleur Scouleur);
+		Siege();
 		~Siege();
-		Couleur getCouleur();
-		Couleur getCouleurSoldat();
-		void* getSoldat();
+
+		Couleur getCouleurSoldat() const;
+		Soldat* getSoldat() const;
+		void setCouleurSoldat(Couleur ScouleurSoldat);
+		void setSoldat(Soldat* Ssoldat);
+
+		void testRegression();
 };
 
 #endif
