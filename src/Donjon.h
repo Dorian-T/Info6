@@ -1,27 +1,18 @@
 #ifndef DONJON_H
 #define DONJON_H
 
-enum Couleur {
-    rouge,
-    noir
-};
+#include "Piece.h"
 
-class Donjon
+class Donjon: public Piece
 {
-    private :
-    
-    unsigned int x,y;
-    Couleur couleur;
-    unsigned int menace;
-    unsigned int regardeMenace();
-    
-    public :
-    
-    Donjon(unsigned int Dx, unsigned int Dy, Couleur Pcouleur);
-    ~Donjon();
-    Couleur getCouleur() const;
-    unsigned int getMenace() const;
-    
+	private:
+		unsigned int menace;
+		unsigned int regardeMenace();
+
+	public:
+		Donjon(unsigned int Px, unsigned int Py, Couleur Pcouleur);
+		unsigned int getMenace() const;
+		void testRegression();
 };
 
 #endif

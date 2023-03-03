@@ -1,8 +1,13 @@
+#include "Piece.h"
+#include "Soldat.h"
+#include "Siege.h"
+#include "Donjon.h"
 #include "Terrain.h"
 
 Terrain::Terrain() {
 	grille = new Piece[63]; // oblige de faire un tableau 1D avec new
-	// probleme de constructeur de Piece
+	Soldat* S = new Soldat(1,2,noir, fantassin);
+	// grille[0] = S; // probleme ! je veux faire un tableau de pointeurs pas un pointeur sur un tableau !
 }
 
 Terrain::~Terrain() {

@@ -6,16 +6,24 @@
 
 class Siege;
 
+enum Type {
+	fantassin,
+	paladin,
+	archer
+};
+
 class Soldat : public Piece
 {
 	private:
+		Type type;
 		Siege* siege;
 	
 	public:
 		Soldat();
-		Soldat(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Ptype);
+		Soldat(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Stype);
 		~Soldat();
 
+		Type getType() const;
 		Siege* getSiege() const;
 		void setSiege(Siege* Ssiege);
 

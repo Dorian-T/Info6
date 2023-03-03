@@ -10,20 +10,12 @@ Piece::Piece(unsigned int Px, unsigned int Py) {
 	y = Py;
 }
 
-Piece::Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur) Piece(Px, Py) {
+Piece::Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur): Piece(Px, Py) {
 	couleur = Pcouleur;
-}
-
-Piece::Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Ptype) Piece(Px, Py, Pcouleur) {
-	type = Ptype;
 }
 
 Couleur Piece::getCouleur() const {
 	return couleur;
-}
-
-Type Piece::getType() const {
-	return type;
 }
 
 void Piece::testRegression() {
@@ -31,12 +23,10 @@ void Piece::testRegression() {
 	cout << "\tTest constructeur par defaut : OK" << endl;
 	Piece P(1,2);
 	assert(P.x == 1); assert(P.y == 2);
-	cout << "\tTest constructeur par parametre 1 : OK" << endl;
-	Piece P2(1,2,rouge,fantassin);
+	cout << "\tTest constructeur parametre 1 : OK" << endl;
+	Piece P2(1,2,rouge);
 	assert(P.getCouleur() == rouge);
 	cout << "\tTest getCouleur : OK" << endl;
-	assert(P.getType() == fantassin);
-	cout << "\tTest getType : OK" << endl;
-	cout << "\tTest constructeur par parametre 2 : OK" << endl;
+	cout << "\tTest constructeur parametre 2 : OK" << endl;
 	cout << "Test Piece : OK" << endl << endl;
 }

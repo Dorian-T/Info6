@@ -10,7 +10,8 @@ Soldat::Soldat() {
 	siege = NULL;
 }
 
-Soldat::Soldat(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Ptype) : Piece(Px, Py, Pcouleur, Ptype) {
+Soldat::Soldat(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Ptype) : Piece(Px, Py, Pcouleur) {
+	type = Ptype;
 	siege = NULL;
 }
 
@@ -19,12 +20,16 @@ Soldat::~Soldat() {
 	siege = NULL;
 }
 
+Type Soldat::getType() const {
+	return type;
+}
+
 Siege* Soldat::getSiege() const {
 	return siege;
 }
 
 void Soldat::setSiege(Siege * Ssiege) {
-	siege = Fsiege;
+	siege = Ssiege;
 }
 
 // il faut verifier quand on vas en arriere que c'est bien pour manger
@@ -130,10 +135,8 @@ void Soldat::testRegression() {
 	Soldat Sr(1, 1, rouge, fantassin);
 	Soldat Sn(2, 2, noir, paladin);
 	assert(Sr.x == 1); assert(Sr.y == 1); assert(Sn.x == 2); assert(Sn.y == 2);
-	assert(Sr.getCouleur() == rouge); assert(Sn.getCouleur() == noir);
-	cout << "\tTest de getCouleur : OK" << endl;
-	assert(Sr.getType() == fantassin); assert(Sn.getType() == paladin);
-	cout << "\tTest de getType : OK" << endl;
+	assert(Sr.couleur == rouge); assert(Sn.couleur == noir);
+	assert(Sr.type == fantassin); assert(Sn.type == paladin);
 	cout << "\tTest du constructeur : OK" << endl;
 	Siege* Si = new Siege;
 	Sr.setSiege(Si);
