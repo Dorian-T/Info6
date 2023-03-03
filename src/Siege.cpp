@@ -36,9 +36,11 @@ void Siege::setSoldat(Soldat* Ssoldat) {
 
 void Siege::testRegression() {
 	cout << "Test Siege" << endl;
-	Siege S;
-	assert(S.soldat == NULL);
+	assert(soldat == NULL);
 	cout << "\tTest constructeur : OK" << endl;
+	Siege S(1, 2, noir);
+	assert(S.x == 1 && S.y == 2 && S.couleur == noir);
+	cout << "\tTest constructeur parametre : OK" << endl;
 	S.setCouleurSoldat(rouge);
 	assert(S.getCouleurSoldat() == rouge);
 	cout << "\tTest setCouleurSoldat et getCouleurSoldat : OK" << endl;

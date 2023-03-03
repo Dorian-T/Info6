@@ -7,11 +7,14 @@ class Donjon: public Piece
 {
 	private:
 		unsigned int menace;
-		unsigned int regardeMenace();
+		// unsigned int regardeMenace();
 
 	public:
+		Donjon();
 		Donjon(unsigned int Px, unsigned int Py, Couleur Pcouleur);
+
 		unsigned int getMenace() const;
+
 		void testRegression();
 };
 

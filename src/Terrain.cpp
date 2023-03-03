@@ -4,6 +4,8 @@
 #include "Donjon.h"
 #include "Terrain.h"
 #include <iostream>
+#include <assert.h>
+using namespace std;
 
 Terrain::Terrain() {
 	grille = new Piece*[63]; // oblige de faire un tableau 1D avec new
@@ -70,4 +72,8 @@ bool Terrain::verifieCase(unsigned int x, unsigned int y) {
 	if(x < 0 || x > 7 || y < 0 || y > 9) return false;
 	// autres tests
 	return true;
+}
+
+void Terrain::testRegression() {
+	cout << "Test de la classe Terrain" << endl;
 }

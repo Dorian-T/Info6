@@ -132,12 +132,16 @@ void Soldat::deplacerHG(Terrain & t) {
 
 void Soldat::testRegression() {
 	cout << "Test de la classe Soldat" << endl;
+	assert(siege == NULL);
+	cout << "\tTest du constructeur : OK" << endl;
 	Soldat Sr(1, 1, rouge, fantassin);
 	Soldat Sn(2, 2, noir, paladin);
 	assert(Sr.x == 1); assert(Sr.y == 1); assert(Sn.x == 2); assert(Sn.y == 2);
 	assert(Sr.couleur == rouge); assert(Sn.couleur == noir);
-	assert(Sr.type == fantassin); assert(Sn.type == paladin);
-	cout << "\tTest du constructeur : OK" << endl;
+	assert(Sr.getType() == fantassin); assert(Sn.getType() == paladin);
+	assert(Sr.siege == NULL && Sn.siege == NULL);
+	cout << "\tTest du constructeur parametre : OK" << endl;
+	cout << "\tTest de getType : OK" << endl;
 	Siege* Si = new Siege;
 	Sr.setSiege(Si);
 	assert(Sr.getSiege() == Si);

@@ -10,7 +10,10 @@ class Terrain {
 	public:
 		Terrain();
 		~Terrain();
+
 		bool verifieCase(unsigned int x, unsigned int y);
+
+		void testRegression();
 };
 
 #endif
