@@ -5,7 +5,7 @@
 
 class Terrain {
 	private:
-		Piece* grille;
+		Piece** grille; // tableau de pointeurs sur Piece
 
 	public:
 		Terrain();
