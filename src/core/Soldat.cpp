@@ -24,11 +24,12 @@ Type Soldat::getType() const {
 	return type;
 }
 
-Siege* Soldat::getSiege() const {
+Piece* Soldat::getSiege() const {
 	return siege;
 }
 
-void Soldat::setSiege(Siege * Ssiege) {
+void Soldat::setSiege(Piece * Ssiege) {
+	assert(Ssiege->getType() == siege);
 	siege = Ssiege;
 }
 

@@ -73,10 +73,47 @@ Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
 	return grille[x][y];
 }
 
-bool Terrain::verifieCase(unsigned int x, unsigned int y) {
-	if(x < 0 || x > 7 || y < 0 || y > 9) return false;
-	// autres tests
-	return true;
+bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny) {
+	if(nx < 0 || nx > 7 || ny < 0 || ny > 9) // test si la case est dans le terrain
+		return false;
+	else {
+		if(grille[nx][ny]->getCouleur() == grille[ax][ay]->getCouleur()) { // test si la case est de la même couleur
+			if(grille[nx][ny]->getType() == siege) { // test si la case est un siege
+				if(grille[nx][ny]->getSoldat() == NULL)
+					grille[nx][ny]->setSoldat(grille[ax][ay]);
+				else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
+					return false;
+				else {
+					delete grille[nx][ny]->getSoldat();
+					grille[nx][ny]->setSoldat(grille[ax][ay]);
+				}
+			}
+			else
+				return false;
+		}
+		else {
+			if(grille[nx][ny]->getType() == fantassin || grille[nx][ny]->getType() == paladin || grille[nx][ny]->getType() == archer)
+				delete grille[nx][ny];
+			else if(grille[nx][ny]->getType() == siege) {
+				if(grille[nx][ny]->getSoldat() == NULL)
+					return false;
+				else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
+					return false;
+				else {
+					delete grille[nx][ny]->getSoldat();
+					grille[nx][ny]->setSoldat(grille[ax][ay]);
+				}
+			}
+			else if(grille[nx][ny]->getType() == donjon) {
+				// a faire
+				// ne pas oublier que si les 2 donjons sont detruits, c'est la fin de partie
+			}
+		}
+		// faut pas oublier de remmetre le siege si on le quitte (si siege adverse ou si on mange une piece)
+		grille[nx][ny] = grille[ax][ay];
+		grille[ax][ay] = NULL;
+		return true;
+	}
 }
 
 void Terrain::testRegression() {

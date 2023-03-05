@@ -6,8 +6,8 @@ class Soldat;
 
 class Siege : public Piece {
 	private:
-		Couleur couleurSoldat;
-		Soldat* soldat;
+		Couleur couleurSoldat; // je m'en sers pas
+		Piece* soldat;
 
 	public:
 		Siege();
@@ -15,9 +15,9 @@ class Siege : public Piece {
 		~Siege();
 
 		Couleur getCouleurSoldat() const;
-		Soldat* getSoldat() const;
+		Piece* getSoldat() const;
 		void setCouleurSoldat(Couleur ScouleurSoldat);
-		void setSoldat(Soldat* Ssoldat);
+		void setSoldat(Piece* Ssoldat);
 
 		void testRegression();
 };

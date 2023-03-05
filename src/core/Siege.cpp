@@ -23,7 +23,7 @@ Couleur Siege::getCouleurSoldat() const {
 	return couleurSoldat;
 }
 
-Soldat* Siege::getSoldat() const {
+Piece* Siege::getSoldat() const {
 	return soldat;
 }
 
@@ -31,7 +31,8 @@ void Siege::setCouleurSoldat(Couleur ScouleurSoldat) {
 	couleurSoldat = ScouleurSoldat;
 }
 
-void Siege::setSoldat(Soldat* Ssoldat) {
+void Siege::setSoldat(Piece* Ssoldat) {
+	assert(Ssoldat->getType() == fantassin || Ssoldat->getType() == paladin || Ssoldat->getType() == archer);
 	soldat = Ssoldat;
 }
 

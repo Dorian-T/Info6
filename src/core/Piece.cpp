@@ -1,4 +1,6 @@
 #include "Piece.h"
+#include "Soldat.h"
+#include "Siege.h"
 #include <assert.h>
 #include <iostream>
 using namespace std;
@@ -22,9 +24,11 @@ Type Piece::getType() const {
 	return type;
 }
 
-Siege* Piece::getSiege() const {
-	return NULL;
-}
+Piece* Piece::getSiege() const {return NULL;}
+
+Piece* Piece::getSoldat() const {return NULL;}
+
+void Piece::setSoldat(Piece* Ssoldat) {}
 
 void Piece::testRegression() {
 	cout << "Test Piece" << endl;

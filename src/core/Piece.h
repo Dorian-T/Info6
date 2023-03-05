@@ -1,6 +1,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+class Soldat;
 class Siege;
 
 enum Couleur {
@@ -30,7 +31,10 @@ class Piece {
 		Couleur getCouleur() const;
 		Type getType() const;
 
-		Siege* getSiege() const;
+		Piece* getSiege() const;
+		Piece* getSoldat() const;
+		void setSiege(Piece* Ssiege);
+		void setSoldat(Piece* Ssoldat);
 
 		void testRegression();
 };

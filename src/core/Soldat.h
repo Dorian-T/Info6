@@ -9,16 +9,16 @@ class Siege;
 class Soldat : public Piece
 {
 	private:
-		Siege* siege;
-	
+		Piece* siege;
+
 	public:
 		Soldat();
 		Soldat(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Stype);
 		~Soldat();
 
 		Type getType() const;
-		Siege* getSiege() const;
-		void setSiege(Siege* Ssiege);
+		Piece* getSiege() const;
+		void setSiege(Piece* Ssiege);
 
 		void deplacerH(Terrain & t);
 		void deplacerHD(Terrain & t);
