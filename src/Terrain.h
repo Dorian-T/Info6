@@ -5,11 +5,13 @@
 
 class Terrain {
 	private:
-		Piece** grille; // tableau de pointeurs sur Piece
+		Piece* grille[9][7];
 
 	public:
 		Terrain();
 		~Terrain();
+
+		Piece* getPiece(unsigned int x, unsigned int y) const;
 
 		bool verifieCase(unsigned int x, unsigned int y);
 

@@ -1,8 +1,7 @@
 #ifndef SIEGE_H
 #define SIEGE_H
 
-#include "Piece.h"
-
+class Piece;
 class Soldat;
 
 class Siege : public Piece {

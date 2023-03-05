@@ -6,16 +6,9 @@
 
 class Siege;
 
-enum Type {
-	fantassin,
-	paladin,
-	archer
-};
-
 class Soldat : public Piece
 {
 	private:
-		Type type;
 		Siege* siege;
 	
 	public:

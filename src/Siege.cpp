@@ -10,6 +10,7 @@ Siege::Siege() {
 }
 
 Siege::Siege(unsigned int Px, unsigned int Py, Couleur Pcouleur) : Piece(Px, Py, Pcouleur) {
+	type = siege;
 	soldat = NULL;
 }
 

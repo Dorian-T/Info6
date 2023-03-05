@@ -18,6 +18,14 @@ Couleur Piece::getCouleur() const {
 	return couleur;
 }
 
+Type Piece::getType() const {
+	return type;
+}
+
+Siege* Piece::getSiege() const {
+	return NULL;
+}
+
 void Piece::testRegression() {
 	cout << "Test Piece" << endl;
 	cout << "\tTest constructeur par defaut : OK" << endl;

@@ -8,19 +8,40 @@ using namespace std;
 Donjon::Donjon() {}
 
 Donjon::Donjon(unsigned int Px, unsigned int Py, Couleur Pcouleur): Piece(Px, Py, Pcouleur) {
+	type = donjon;
 	menace = 0;
 }
 
 unsigned int Donjon::getMenace() const {
 	return menace;
 }
-/*
-unsigned int Donjon::regardeMenace() {
-	if (couleur == rouge) { // ne regarde pas les mêmes cases en fonctions de la couleur
-		// Regarder une case autours du donjon puis récupérer le type, sa couleur et si il est sur un siège pour ajouter sur menace.
+
+void Donjon::rMenace(Terrain & t, Piece* p, Type ty) {
+	if(p->getCouleur() != couleur) {
+		if(p->getType() == ty || p->getType() == archer) {
+			if(p->getSiege() == NULL) menace++;
+			else menace += 2;
+		}
 	}
 }
-*/
+
+void Donjon::regardeMenace(Terrain & t) {
+	if (couleur == rouge) {
+		rMenace(t, t.getPiece(x-1, y), fantassin);
+		rMenace(t, t.getPiece(x-1, y-1), paladin);
+		rMenace(t, t.getPiece(x, y-1), fantassin);
+		rMenace(t, t.getPiece(x+1, y-1), paladin);
+		rMenace(t, t.getPiece(x+1, y), fantassin);
+	}
+	else {
+		rMenace(t, t.getPiece(x-1, y), fantassin);
+		rMenace(t, t.getPiece(x-1, y+1), paladin);
+		rMenace(t, t.getPiece(x, y+1), fantassin);
+		rMenace(t, t.getPiece(x+1, y+1), paladin);
+		rMenace(t, t.getPiece(x+1, y), fantassin);
+	}
+}
+
 void Donjon::testRegression() {
 	cout << "Test Donjon" << endl;
 	cout << "\tTest constructeur : OK" << endl;
