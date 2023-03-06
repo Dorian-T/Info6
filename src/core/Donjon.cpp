@@ -1,5 +1,6 @@
-#include "Donjon.h"
 #include "Piece.h"
+#include "Soldat.h"
+#include "Donjon.h"
 #include "Terrain.h"
 #include <iostream>
 #include <assert.h>
@@ -42,7 +43,7 @@ void Donjon::regardeMenace(Terrain & t) {
 	}
 }
 
-void Donjon::testRegression() {
+void Donjon::testRegression(Terrain & t) {
 	cout << "Test Donjon" << endl;
 	cout << "\tTest constructeur : OK" << endl;
 	Donjon D(1,2,rouge);

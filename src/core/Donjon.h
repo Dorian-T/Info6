@@ -17,7 +17,7 @@ class Donjon: public Piece
 
 		unsigned int getMenace() const;
 
-		void testRegression();
+		void testRegression(Terrain & t);
 };
 
 #endif

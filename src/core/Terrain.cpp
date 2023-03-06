@@ -74,11 +74,12 @@ Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
 }
 
 bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny) {
-	if(nx < 0 || nx > 7 || ny < 0 || ny > 9) // test si la case est dans le terrain
+	bool mange = false;
+	if(nx < 0 || nx > 7 || ny < 0 || ny > 9) // si la case n'est pas dans le terrain
 		return false;
-	else {
-		if(grille[nx][ny]->getCouleur() == grille[ax][ay]->getCouleur()) { // test si la case est de la même couleur
-			if(grille[nx][ny]->getType() == siege) { // test si la case est un siege
+	else { // si la case est dans le terrain
+		if(grille[nx][ny]->getCouleur() == grille[ax][ay]->getCouleur()) { // si la case est de la couleur alliee
+			if(grille[nx][ny]->getType() == siege) { // si la case est un siege
 				if(grille[nx][ny]->getSoldat() == NULL)
 					grille[nx][ny]->setSoldat(grille[ax][ay]);
 				else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
@@ -86,15 +87,18 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 				else {
 					delete grille[nx][ny]->getSoldat();
 					grille[nx][ny]->setSoldat(grille[ax][ay]);
+					mange = true;
 				}
 			}
-			else
+			else // si la case n'est pas un siege
 				return false;
 		}
-		else {
-			if(grille[nx][ny]->getType() == fantassin || grille[nx][ny]->getType() == paladin || grille[nx][ny]->getType() == archer)
+		else { // si la case est de la couleur adverse
+			if(grille[nx][ny]->getType() == fantassin || grille[nx][ny]->getType() == paladin || grille[nx][ny]->getType() == archer) { // si la case est un soldat
 				delete grille[nx][ny];
-			else if(grille[nx][ny]->getType() == siege) {
+				mange = true;
+			}
+			else if(grille[nx][ny]->getType() == siege) { // si la case est un siege
 				if(grille[nx][ny]->getSoldat() == NULL)
 					return false;
 				else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
@@ -102,9 +106,10 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 				else {
 					delete grille[nx][ny]->getSoldat();
 					grille[nx][ny]->setSoldat(grille[ax][ay]);
+					mange = true;
 				}
 			}
-			else if(grille[nx][ny]->getType() == donjon) {
+			else if(grille[nx][ny]->getType() == donjon) { // si la case est un donjon
 				// a faire
 				// ne pas oublier que si les 2 donjons sont detruits, c'est la fin de partie
 			}
