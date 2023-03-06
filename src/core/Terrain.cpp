@@ -8,10 +8,9 @@
 using namespace std;
 
 Terrain::Terrain() {
-	// grille = new Piece*[63]; // oblige de faire un tableau 1D avec new
 	Soldat* f; Soldat* p; Soldat* a; Siege* s; Donjon* d;
 
-	f = new Soldat(1,2,noir, fantassin); grille[0][0] = f;
+	f = new Soldat(1,2,noir, fantassin); grille[0][0] = f; // TODO : faire grille = new
 	d = new Donjon(1,3,noir); grille[0][1] = d;
 	f = new Soldat(1,4,noir, fantassin); grille[0][2] = f;
 	a = new Soldat(1,5,noir, archer); grille[0][3] = a;
@@ -73,50 +72,74 @@ Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
 	return grille[x][y];
 }
 
-bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny) {
-	bool mange = false;
+bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule) {
+	bool quitteSiege = false;
 	if(nx < 0 || nx > 7 || ny < 0 || ny > 9) // si la case n'est pas dans le terrain
 		return false;
 	else { // si la case est dans le terrain
-		if(grille[nx][ny]->getCouleur() == grille[ax][ay]->getCouleur()) { // si la case est de la couleur alliee
-			if(grille[nx][ny]->getType() == siege) { // si la case est un siege
-				if(grille[nx][ny]->getSoldat() == NULL)
-					grille[nx][ny]->setSoldat(grille[ax][ay]);
-				else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
-					return false;
-				else {
-					delete grille[nx][ny]->getSoldat();
-					grille[nx][ny]->setSoldat(grille[ax][ay]);
-					mange = true;
-				}
-			}
-			else // si la case n'est pas un siege
+		if(grille[nx][ny] == NULL) { // si la case est vide
+			if(recule)
 				return false;
 		}
-		else { // si la case est de la couleur adverse
-			if(grille[nx][ny]->getType() == fantassin || grille[nx][ny]->getType() == paladin || grille[nx][ny]->getType() == archer) { // si la case est un soldat
-				delete grille[nx][ny];
-				mange = true;
+		else { // si la case n'est pas vide
+			if(grille[nx][ny]->getCouleur() == grille[ax][ay]->getCouleur()) { // si la case est de la couleur alliee
+				if(grille[nx][ny]->getType() == siege) { // si la case est un siege
+					if(grille[nx][ny]->getSoldat() == NULL) {
+						grille[nx][ny]->setSoldat(grille[ax][ay]);
+						quitteSiege = true;
+					}
+					else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
+						return false;
+					else {
+						delete grille[nx][ny]->getSoldat();
+						grille[nx][ny]->setSoldat(grille[ax][ay]);
+						quitteSiege = true;
+					}
+				}
+				else // si la case n'est pas un siege
+					return false;
 			}
-			else if(grille[nx][ny]->getType() == siege) { // si la case est un siege
-				if(grille[nx][ny]->getSoldat() == NULL)
-					return false;
-				else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
-					return false;
-				else {
-					delete grille[nx][ny]->getSoldat();
-					grille[nx][ny]->setSoldat(grille[ax][ay]);
-					mange = true;
+			else { // si la case est de la couleur adverse
+				if(grille[nx][ny]->getType() == fantassin || grille[nx][ny]->getType() == paladin || grille[nx][ny]->getType() == archer) { // si la case est un soldat
+					delete grille[nx][ny];
+					quitteSiege = true;
+				}
+				else if(grille[nx][ny]->getType() == siege) { // si la case est un siege
+					if(grille[nx][ny]->getSoldat() == NULL)
+						return false;
+					else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
+						return false;
+					else {
+						delete grille[nx][ny]->getSoldat();
+						grille[nx][ny]->setSoldat(grille[ax][ay]);
+						quitteSiege = true;
+					}
+				}
+				else if(grille[nx][ny]->getType() == donjon) { // si la case est un donjon
+					if(grille[nx][ny]->getCouleur() == grille[ax][ay]->getCouleur())
+						return false;
+					else {
+						if(grille[nx][ny]->regardeMenace() > 1) {
+							delete grille[nx][ny];
+							quitteSiege = true;
+						}
+						else
+							return false;
+					// ne pas oublier que si les 2 donjons sont detruits, c'est la fin de partie
+					}
 				}
 			}
-			else if(grille[nx][ny]->getType() == donjon) { // si la case est un donjon
-				// a faire
-				// ne pas oublier que si les 2 donjons sont detruits, c'est la fin de partie
-			}
 		}
-		// faut pas oublier de remmetre le siege si on le quitte (si siege adverse ou si on mange une piece)
-		grille[nx][ny] = grille[ax][ay];
-		grille[ax][ay] = NULL;
+		if(quitteSiege && grille[ax][ay]->getSiege() != NULL) {
+			grille[nx][ny] = grille[ax][ay];
+			grille[ax][ay] = grille[nx][ny]->getSiege();
+			grille[nx][ny]->setSiege(NULL);
+			grille[ax][ay]->setSoldat(NULL);
+		}
+		else {
+			grille[nx][ny] = grille[ax][ay];
+			grille[ax][ay] = NULL;
+		}
 		return true;
 	}
 }

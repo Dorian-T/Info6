@@ -35,6 +35,7 @@ class Piece {
 		Piece* getSoldat() const;
 		void setSiege(Piece* Ssiege);
 		void setSoldat(Piece* Ssoldat);
+		unsigned int regardeMenace() const;
 
 		void testRegression();
 };

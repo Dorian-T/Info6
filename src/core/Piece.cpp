@@ -28,6 +28,8 @@ Piece* Piece::getSiege() const {return NULL;}
 
 Piece* Piece::getSoldat() const {return NULL;}
 
+unsigned int Piece::regardeMenace() const {return 0;}
+
 void Piece::setSoldat(Piece* Ssoldat) {}
 
 void Piece::testRegression() {

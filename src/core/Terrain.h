@@ -13,7 +13,7 @@ class Terrain {
 
 		Piece* getPiece(unsigned int x, unsigned int y) const;
 
-		bool verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny);
+		bool verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule);
 
 		void testRegression();
 };
