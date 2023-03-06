@@ -11,7 +11,7 @@ enum Couleur {
 
 enum Type {
 	donjon,
-	siege,
+	tour_de_siege,
 	fantassin,
 	paladin,
 	archer

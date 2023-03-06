@@ -2,7 +2,7 @@
 #include "Soldat.h"
 #include "Siege.h"
 #include "Donjon.h"
-// #include "Terrain.h"
+#include "Terrain.h"
 
 int main() {
 	Piece P;
@@ -14,8 +14,10 @@ int main() {
 	Siege Si;
 	Si.testRegression();
 
+	Terrain T;
+
 	Donjon D;
-	D.testRegression();
+	D.testRegression(T);
 
 	return 0;
 }

@@ -83,7 +83,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 		}
 		else { // si la case n'est pas vide
 			if(grille[nx][ny]->getCouleur() == grille[ax][ay]->getCouleur()) { // si la case est de la couleur alliee
-				if(grille[nx][ny]->getType() == siege) { // si la case est un siege
+				if(grille[nx][ny]->getType() == tour_de_siege) { // si la case est un siege
 					if(grille[nx][ny]->getSoldat() == NULL) {
 						grille[nx][ny]->setSoldat(grille[ax][ay]);
 						quitteSiege = true;
@@ -104,7 +104,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 					delete grille[nx][ny];
 					quitteSiege = true;
 				}
-				else if(grille[nx][ny]->getType() == siege) { // si la case est un siege
+				else if(grille[nx][ny]->getType() == tour_de_siege) { // si la case est un siege
 					if(grille[nx][ny]->getSoldat() == NULL)
 						return false;
 					else if(grille[nx][ny]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())

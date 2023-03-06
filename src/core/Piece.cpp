@@ -28,9 +28,11 @@ Piece* Piece::getSiege() const {return NULL;}
 
 Piece* Piece::getSoldat() const {return NULL;}
 
-unsigned int Piece::regardeMenace() const {return 0;}
-
 void Piece::setSoldat(Piece* Ssoldat) {}
+
+void Piece::setSiege(Piece* Ssiege) {}
+
+unsigned int Piece::regardeMenace() const {return 0;}
 
 void Piece::testRegression() {
 	cout << "Test Piece" << endl;
