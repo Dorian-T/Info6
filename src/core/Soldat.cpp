@@ -33,121 +33,181 @@ void Soldat::setSiege(Piece * Ssiege) {
 	siege = Ssiege;
 }
 
-void Soldat::deplacerH(Terrain & t) {
+bool Soldat::deplacer(Terrain & t, unsigned int i) {
+	assert(i < 8);
+	switch(i) {
+		case 0:
+			return deplacerH(t);
+		case 1:
+			return deplacerHD(t);
+		case 2:
+			return deplacerD(t);
+		case 3:
+			return deplacerBD(t);
+		case 4:
+			return deplacerB(t);
+		case 5:
+			return deplacerBG(t);
+		case 6:
+			return deplacerG(t);
+		case 7:
+			return deplacerHG(t);
+	}
+}
+
+bool Soldat::deplacerH(Terrain & t) {
 	if(type == fantassin || type == archer)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x, y-1, false)) y--;
+			else return false;
 		else
 			if(t.verifieCase(x, y, x, y+1, false)) y++;
+			else return false;
+	else return false;
+	return true;
 }
 
-void Soldat::deplacerHD(Terrain & t) {
+bool Soldat::deplacerHD(Terrain & t) {
 	if(type == paladin || type == archer)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x+1, y-1, false)) {
 				x++;
 				y--;
 			}
+			else return false;
 		else
 			if(t.verifieCase(x, y, x-1, y+1, false)) {
 				x--;
 				y++;
 			}
+			else return false;
+	else return false;
+	return true;
 }
 
-void Soldat::deplacerD(Terrain & t) {
+bool Soldat::deplacerD(Terrain & t) {
 	if(type == fantassin || type == archer)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x+1, y, false)) x++;
+			else return false;
 		else
 			if(t.verifieCase(x, y, x+1, y, false)) x--;
+			else return false;
+	else return false;
+	return true;
 }
 
-void Soldat::deplacerBD(Terrain & t) {
+bool Soldat::deplacerBD(Terrain & t) {
 	if(type == paladin)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x+1, y+1, true)) {
 				x++;
 				y++;
 			}
+			else return false;
 		else
 			if(t.verifieCase(x, y, x-1, y-1, true)) {
 				x--;
 				y--;
 			}
+			else return false;
 	else if(type == archer)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x+1, y+1, false)) {
 				x++;
 				y++;
 			}
+			else return false;
 		else
 			if(t.verifieCase(x, y, x-1, y-1, false)) {
 				x--;
 				y--;
 			}
+			else return false;
+	else return false;
+	return true;
 }
 
-void Soldat::deplacerB(Terrain & t) {
+bool Soldat::deplacerB(Terrain & t) {
 	if(type == fantassin)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x, y+1, true)) y++;
+			else return false;
 		else
 			if(t.verifieCase(x, y, x, y-1, true)) y--;
+			else return false;
 	else if(type == archer)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x, y+1, false)) y++;
+			else return false;
 		else
 			if(t.verifieCase(x, y, x, y-1, false)) y--;
+			else return false;
+	else return false;
+	return true;
 }
 
-void Soldat::deplacerBG(Terrain & t) {
+bool Soldat::deplacerBG(Terrain & t) {
 	if(type == paladin)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x-1, y+1, true)) {
 				x--;
 				y++;
 			}
+			else return false;
 		else
 			if(t.verifieCase(x, y, x+1, y-1, true)) {
 				x++;
 				y--;
 			}
+			else return false;
 	else if(type == archer)
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x-1, y+1, false)) {
 				x--;
 				y++;
 			}
+			else return false;
 		else
 			if(t.verifieCase(x, y, x+1, y-1, false)) {
 				x++;
 				y--;
 			}
+			else return false;
+	else return false;
+	return true;
 }
 
-void Soldat::deplacerG(Terrain & t) {
+bool Soldat::deplacerG(Terrain & t) {
 	if(type == fantassin || type == archer) {
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x-1, y, false)) x--;
+			else return false;
 		else
 			if(t.verifieCase(x, y, x+1, y, false)) x++;
+			else return false;
 	}
+	else return false;
+	return true;
 }
 
-void Soldat::deplacerHG(Terrain & t) {
+bool Soldat::deplacerHG(Terrain & t) {
 	if(type == paladin || type == archer) {
 		if(couleur == rouge)
 			if(t.verifieCase(x, y, x-1, y-1, false)) {
 				x--;
 				y--;
 			}
+			else return false;
 		else
 			if(t.verifieCase(x, y, x+1, y+1, false)) {
 				x++;
 				y++;
 			}
-	}
+			else return false;
+		}
+	else return false;
+	return true;
 }
 
 void Soldat::testRegression() {

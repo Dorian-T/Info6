@@ -11,14 +11,14 @@ class Soldat : public Piece
 	private:
 		Piece* siege;
 
-		void deplacerH(Terrain & t);
-		void deplacerHD(Terrain & t);
-		void deplacerD(Terrain & t);
-		void deplacerBD(Terrain & t);
-		void deplacerB(Terrain & t);
-		void deplacerBG(Terrain & t);
-		void deplacerG(Terrain & t);
-		void deplacerHG(Terrain & t);
+		bool deplacerH(Terrain & t);
+		bool deplacerHD(Terrain & t);
+		bool deplacerD(Terrain & t);
+		bool deplacerBD(Terrain & t);
+		bool deplacerB(Terrain & t);
+		bool deplacerBG(Terrain & t);
+		bool deplacerG(Terrain & t);
+		bool deplacerHG(Terrain & t);
 
 	public:
 		Soldat();
@@ -29,7 +29,7 @@ class Soldat : public Piece
 		Piece* getSiege() const;
 		void setSiege(Piece* Ssiege);
 
-		bool deplacer(Terrain & t); // TODO
+		bool deplacer(Terrain & t, unsigned int i); // TODO
 
 		void testRegression();
 };

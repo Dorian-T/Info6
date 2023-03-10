@@ -36,6 +36,7 @@ class Piece {
 		void setSiege(Piece* Ssiege);
 		void setSoldat(Piece* Ssoldat);
 		unsigned int regardeMenace() const;
+		bool deplacer(Terrain & t, unsigned int i);
 
 		void testRegression();
 };

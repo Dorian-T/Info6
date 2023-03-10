@@ -34,6 +34,8 @@ void Piece::setSiege(Piece* Ssiege) {}
 
 unsigned int Piece::regardeMenace() const {return 0;}
 
+bool Piece::deplacer(Terrain & t, unsigned int i) {return false;}
+
 void Piece::testRegression() {
 	cout << "Test Piece" << endl;
 	cout << "\tTest constructeur par defaut : OK" << endl;
