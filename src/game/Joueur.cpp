@@ -1,5 +1,5 @@
-#include "Piece.h"
-#include "Terrain.h"
+#include "../core/Piece.h"
+#include "../core/Terrain.h"
 #include "Joueur.h"
 #include <iostream>
 #include <string.h>

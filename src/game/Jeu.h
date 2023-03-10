@@ -1,5 +1,5 @@
 #include "Joueur.h"
-#include "Terrain.h"
+#include "../core/Terrain.h"
 
 class Jeu {
 	private:

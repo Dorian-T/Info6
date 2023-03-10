@@ -1,4 +1,4 @@
-#include "Piece.h"
+#include "../core/Piece.h"
 #include <vector>
 
 class Joueur {

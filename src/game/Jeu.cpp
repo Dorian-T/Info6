@@ -1,5 +1,5 @@
 #include "Jeu.h"
-#include "Piece.h"
+#include "../core/Piece.h"
 #include <iostream>
 using namespace std;
 
