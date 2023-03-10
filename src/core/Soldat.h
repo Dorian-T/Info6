@@ -11,6 +11,15 @@ class Soldat : public Piece
 	private:
 		Piece* siege;
 
+		void deplacerH(Terrain & t);
+		void deplacerHD(Terrain & t);
+		void deplacerD(Terrain & t);
+		void deplacerBD(Terrain & t);
+		void deplacerB(Terrain & t);
+		void deplacerBG(Terrain & t);
+		void deplacerG(Terrain & t);
+		void deplacerHG(Terrain & t);
+
 	public:
 		Soldat();
 		Soldat(unsigned int Px, unsigned int Py, Couleur Pcouleur, Type Stype);
@@ -20,14 +29,7 @@ class Soldat : public Piece
 		Piece* getSiege() const;
 		void setSiege(Piece* Ssiege);
 
-		void deplacerH(Terrain & t);
-		void deplacerHD(Terrain & t);
-		void deplacerD(Terrain & t);
-		void deplacerBD(Terrain & t);
-		void deplacerB(Terrain & t);
-		void deplacerBG(Terrain & t);
-		void deplacerG(Terrain & t);
-		void deplacerHG(Terrain & t);
+		bool deplacer(Terrain & t); // TODO
 
 		void testRegression();
 };

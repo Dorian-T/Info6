@@ -1,6 +1,14 @@
+#include "Piece.h"
+#include <vector>
+
 class Joueur {
 	private:
-		void actionClavier(char c); // c est le nom de la direction, appele les fonctions de Piece
+		bool couleur;
+		bool robot;
+		// vector<Piece*> pieces; // les pieces du joueur
+
+		bool coordonneesValides(Terrain & t, int x, int y);
 	public:
-		void Joue();
+		Joueur(Couleur c, bool r);
+		void Joue(Terrain & t);
 };
