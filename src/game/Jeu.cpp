@@ -36,13 +36,13 @@ void Jeu::joueurSuivant() {
 	joueur1 = !joueur1;
 }
 
-void Jeu::affiche() {
+void Jeu::affiche() { // je pense qu'il y a un probleme de transposition du terrain
 	Piece* P;
-	for(int i = 0; i < 9; i++)
+	for(int i = 0; i < 9; i++) {
 		for(int j = 0; j < 7; j++) {
 			P = terrain.getPiece(j, i);
 			if (P == NULL)
-				cout << "  ";
+				cout << ". ";
 			else
 				switch (P->getType()) {
 					case donjon:
@@ -62,7 +62,8 @@ void Jeu::affiche() {
 						break;
 				}
 		}
-	cout << endl;
+		cout << endl;
+	}
 }
 
 void Jeu::finDePartie() {

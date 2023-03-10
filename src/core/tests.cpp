@@ -3,6 +3,8 @@
 #include "Siege.h"
 #include "Donjon.h"
 #include "Terrain.h"
+#include <iostream>
+using namespace std;
 
 int main() {
 	Piece P;
@@ -18,6 +20,8 @@ int main() {
 
 	Donjon D;
 	D.testRegression(T);
+
+	cout << "Tests : OK" << endl;
 
 	return 0;
 }
