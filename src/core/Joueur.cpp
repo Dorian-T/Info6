@@ -11,7 +11,7 @@ Joueur::Joueur(Couleur c, bool r) {
 }
 
 void Joueur::Joue(Terrain & t) {
-	if (robot) JoueRobot(t);
+	if (robot) joueRobot(t);
 	else joueHumain(t);
 }
 
