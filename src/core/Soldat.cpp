@@ -34,7 +34,6 @@ void Soldat::setSiege(Piece * Ssiege) {
 }
 
 bool Soldat::deplacer(Terrain & t, unsigned int i) {
-	assert(i < 8);
 	switch(i) {
 		case 0:
 			return deplacerH(t);
@@ -52,6 +51,8 @@ bool Soldat::deplacer(Terrain & t, unsigned int i) {
 			return deplacerG(t);
 		case 7:
 			return deplacerHG(t);
+		default:
+			return false;
 	}
 }
 

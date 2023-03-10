@@ -1,7 +1,7 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include "Piece.h"
+class Piece;
 
 class Terrain {
 	private:

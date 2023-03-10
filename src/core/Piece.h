@@ -3,6 +3,7 @@
 
 class Soldat;
 class Siege;
+class Terrain;
 
 enum Couleur {
 	rouge,

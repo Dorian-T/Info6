@@ -1,6 +1,7 @@
 #include "Piece.h"
 #include "Soldat.h"
 #include "Siege.h"
+#include "Terrain.h"
 #include <assert.h>
 #include <iostream>
 using namespace std;

@@ -15,6 +15,15 @@ void Joueur::Joue(Terrain & t) {
 	else joueHumain(t);
 }
 
+bool Joueur::coordonneesValides(Terrain & t, int x, int y) {
+	if(x < 0 || x > 6 || y < 0 || y > 8) return false;
+	Piece* P = t.getPiece(x, y);
+	if(P == NULL) return false;
+	if(P->getCouleur() != couleur) return false;
+	if(P->getType() == donjon || P->getType() == tour_de_siege) return false;
+	return true;
+}
+
 void Joueur::joueHumain(Terrain & t) {
 	unsigned int i;
 	cout << "Entrez les coordonnees de la piece a deplacer (yx) : ";
@@ -37,11 +46,6 @@ void Joueur::joueHumain(Terrain & t) {
 	else if(s == "hg") P->deplacer(t, 7);
 }
 
-bool Joueur::coordonneesValides(Terrain & t, int x, int y) {
-	if(x < 0 || x > 6 || y < 0 || y > 8) return false;
-	Piece* P = t.getPiece(x, y);
-	if(P == NULL) return false;
-	if(P->getCouleur() != couleur) return false;
-	if(P->getType() == donjon || P->getType() == tour_de_siege) return false;
-	return true;
+void Joueur::joueRobot(Terrain & t) {
+	// TODO
 }
