@@ -46,4 +46,4 @@ obj/jeu.o: $(GAME_PATH)Jeu.cpp $(GAME_PATH)Jeu.h $(GAME_PATH)Joueur.h $(CORE_HEA
 	g++ $(FLAGS) -c $(GAME_PATH)Jeu.cpp -o obj/jeu.o
 
 clean:
-	rm -f obj/*.o bin/tests bin/main
+	rm -f obj/*.o bin/*

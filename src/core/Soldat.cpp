@@ -33,9 +33,10 @@ void Soldat::setSiege(Piece * Ssiege) {
 	siege = Ssiege;
 }
 
-bool Soldat::deplacer(Terrain & t, unsigned int i) {
+bool Soldat::deplacer(Terrain & t, unsigned int i) { cout << "3" << endl;
 	switch(i) {
 		case 0:
+			cout << "4" << endl;
 			return deplacerH(t);
 		case 1:
 			return deplacerHD(t);

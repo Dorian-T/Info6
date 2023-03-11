@@ -29,14 +29,19 @@ void Joueur::joueHumain(Terrain & t) {
 	cout << "Entrez les coordonnees de la piece a deplacer (yx) : ";
 	do {
 		cin >> i;
-	} while (!coordonneesValides(t, i % 10, i / 10));
-	Piece* P = t.getPiece(i % 10, i / 10);
+	} while (!coordonneesValides(t, i % 10, i / 10)); // si on choisit une Piece qui peut pas se deplacer, on boucle
+	Piece* P = t.getPiece(i % 10, i / 10); // ajouter un retour
 	string s;
 	cout << "Entrez une direction (h, hd, d, bd, b, bg, g, hg) : ";
 	do {
 		cin >> s;
 	} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
-	if(s == "h") P->deplacer(t, 0); // il y a deux conversions
+	if(s == "h")
+	{
+		cout << "1" << endl;
+	P->deplacer(t, 0); // il y a deux conversions
+	cout << "2" << endl;
+	}
 	else if(s == "hd") P->deplacer(t, 1);
 	else if(s == "d") P->deplacer(t, 2);
 	else if(s == "bd") P->deplacer(t, 3);
