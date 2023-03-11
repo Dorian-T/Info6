@@ -8,58 +8,57 @@
 using namespace std;
 
 Terrain::Terrain() {
-	Soldat* f; Soldat* p; Soldat* a; Siege* s; Donjon* d;
+	grille[0][0] = new Soldat(0, 0, noir, fantassin);
+	grille[1][0] = new Donjon(1, 0, noir);
+	grille[2][0] = new Soldat(2, 0, noir, fantassin);
+	grille[3][0] = new Soldat(3, 0, noir, archer);
+	grille[4][0] = new Soldat(4, 0, noir, fantassin);
+	grille[5][0] = new Donjon(5, 0, noir);
+	grille[6][0] = new Soldat(6, 0, noir, fantassin);
 
-	f = new Soldat(1,2,noir, fantassin); grille[0][0] = f; // TODO : faire grille = new
-	d = new Donjon(1,3,noir); grille[0][1] = d;
-	f = new Soldat(1,4,noir, fantassin); grille[0][2] = f;
-	a = new Soldat(1,5,noir, archer); grille[0][3] = a;
-	f = new Soldat(1,6,noir, fantassin); grille[0][4] = f;
-	d = new Donjon(1,7,noir); grille[0][5] = d;
-	f = new Soldat(1,8,noir, fantassin); grille[0][6] = f;
+	grille[0][1] = new Soldat(0, 1, noir, paladin);
+	grille[1][1] = new Soldat(1, 1, noir, archer);
+	grille[2][1] = new Soldat(2, 1, noir, paladin);
+	grille[3][1] = new Soldat(3, 1, noir, fantassin);
+	grille[4][1] = new Soldat(4, 1, noir, paladin);
+	grille[5][1] = new Soldat(5, 1, noir, archer);
+	grille[6][1] = new Soldat(6, 1, noir, paladin);
 
-	p = new Soldat(2,2,noir, paladin); grille[1][0] = p;
-	a = new Soldat(2,3,noir, archer); grille[1][1] = a;
-	p = new Soldat(2,4,noir, paladin); grille[1][2] = p;
-	f = new Soldat(2,5,noir, fantassin); grille[1][3] = f;
-	p = new Soldat(2,6,noir, paladin); grille[1][4] = p;
-	a = new Soldat(2,7,noir, archer); grille[1][5] = a;
-	p = new Soldat(2,8,noir, paladin); grille[1][6] = p;
+	grille[0][2] = new Soldat(0, 2, noir, fantassin);
+	grille[1][2] = new Soldat(1, 2, noir, paladin);
+	grille[2][2] = new Soldat(2, 2, noir, fantassin);
+	grille[3][2] = new Siege(3, 2, noir);
+	grille[4][2] = new Soldat(4, 2, noir, fantassin);
+	grille[5][2] = new Soldat(5, 2, noir, paladin);
+	grille[6][2] = new Soldat(6, 2, noir, fantassin);
 
-	f = new Soldat(3,2,noir, fantassin); grille[2][0] = f;
-	p = new Soldat(3,3,noir, paladin); grille[2][1] = p;
-	f = new Soldat(3,4,noir, fantassin); grille[2][2] = f;
-	s = new Siege(3,5,noir); grille[2][3] = s;
-	f = new Soldat(3,6,noir, fantassin); grille[2][4] = f;
-	p = new Soldat(3,7,noir, paladin); grille[2][5] = p;
-	f = new Soldat(3,8,noir, fantassin); grille[2][6] = f;
+	for(int i = 0; i < 7; i++)
+		for(int j = 3; j < 6; j++)
+			grille[i][j] = NULL;
 
-	for(int i = 3; i < 6; i++)
-		for(int j = 2; j < 9; j++) grille[i][j] = NULL;
+	grille[0][6] = new Soldat(0, 6, rouge, fantassin);
+	grille[1][6] = new Soldat(1, 6, rouge, paladin);
+	grille[2][6] = new Soldat(2, 6, rouge, fantassin);
+	grille[3][6] = new Siege(3, 6, rouge);
+	grille[4][6] = new Soldat(4, 6, rouge, fantassin);
+	grille[5][6] = new Soldat(5, 6, rouge, paladin);
+	grille[6][6] = new Soldat(6, 6, rouge, fantassin);
 
-	f = new Soldat(6,2,rouge, fantassin); grille[6][0] = f;
-	p = new Soldat(6,3,rouge, paladin); grille[6][1] = p;
-	f = new Soldat(6,4,rouge, fantassin); grille[6][2] = f;
-	s = new Siege(6,5,rouge); grille[6][3] = s;
-	f = new Soldat(6,6,rouge, fantassin); grille[6][4] = f;
-	p = new Soldat(6,7,rouge, paladin); grille[6][5] = p;
-	f = new Soldat(6,8,rouge, fantassin); grille[6][6] = f;
+	grille[0][7] = new Soldat(0, 7, rouge, paladin);
+	grille[1][7] = new Soldat(1, 7, rouge, archer);
+	grille[2][7] = new Soldat(2, 7, rouge, paladin);
+	grille[3][7] = new Soldat(3, 7, rouge, fantassin);
+	grille[4][7] = new Soldat(4, 7, rouge, paladin);
+	grille[5][7] = new Soldat(5, 7, rouge, archer);
+	grille[6][7] = new Soldat(6, 7, rouge, paladin);
 
-	p = new Soldat(7,2,rouge, paladin); grille[7][0] = p;
-	a = new Soldat(7,3,rouge, archer); grille[7][1] = a;
-	p = new Soldat(7,4,rouge, paladin); grille[7][2] = p;
-	f = new Soldat(7,5,rouge, fantassin); grille[7][3] = f;
-	p = new Soldat(7,6,rouge, paladin); grille[7][4] = p;
-	a = new Soldat(7,7,rouge, archer); grille[7][5] = a;
-	p = new Soldat(7,8,rouge, paladin); grille[7][6] = p;
-
-	f = new Soldat(8,2,rouge, fantassin); grille[8][0] = f;
-	d = new Donjon(8,3,rouge); grille[8][1] = d;
-	f = new Soldat(8,4,rouge, fantassin); grille[8][2] = f;
-	a = new Soldat(8,5,rouge, archer); grille[8][3] = a;
-	f = new Soldat(8,6,rouge, fantassin); grille[8][4] = f;
-	d = new Donjon(8,7,rouge); grille[8][5] = d;
-	f = new Soldat(8,8,rouge, fantassin); grille[8][6] = f;
+	grille[0][8] = new Soldat(0, 8, rouge, fantassin);
+	grille[1][8] = new Donjon(1, 8, rouge);
+	grille[2][8] = new Soldat(2, 8, rouge, fantassin);
+	grille[3][8] = new Soldat(3, 8, rouge, archer);
+	grille[4][8] = new Soldat(4, 8, rouge, fantassin);
+	grille[5][8] = new Donjon(5, 8, rouge);
+	grille[6][8] = new Soldat(6, 8, rouge, fantassin);
 }
 
 Terrain::~Terrain() {

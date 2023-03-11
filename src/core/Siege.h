@@ -14,9 +14,9 @@ class Siege : public Piece {
 		Siege(unsigned int Px, unsigned int Py, Couleur Pcouleur);
 		~Siege();
 
-		Couleur getCouleurSoldat() const;
+		Couleur getCouleurSoldat() const; // utile ?
 		Piece* getSoldat() const;
-		void setCouleurSoldat(Couleur ScouleurSoldat);
+		void setCouleurSoldat(Couleur ScouleurSoldat); // utile ?
 		void setSoldat(Piece* Ssoldat);
 
 		void testRegression();

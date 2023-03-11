@@ -16,7 +16,7 @@ int main() {
 	Siege Si;
 	Si.testRegression();
 
-	Terrain T;
+	Terrain T; // modifier pour faire des tests sur les deplacements des pieces
 
 	Donjon D;
 	D.testRegression(T);

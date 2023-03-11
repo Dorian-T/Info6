@@ -67,5 +67,5 @@ void Jeu::affiche() { // je pense qu'il y a un probleme de transposition du terr
 }
 
 void Jeu::finDePartie() {
-	// TODO
+	cout << endl << endl << "Bravo au gagnant !";
 }

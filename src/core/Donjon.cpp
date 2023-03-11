@@ -18,12 +18,12 @@ unsigned int Donjon::getMenace() const {
 }
 
 void Donjon::rMenace(Terrain & t, Piece* p, Type ty) {
-	if(p->getCouleur() != couleur) {
-		if(p->getType() == ty || p->getType() == archer) {
-			if(p->getSiege() == NULL) menace++;
-			else menace += 2;
-		}
-	}
+	if(p != NULL)
+		if(p->getCouleur() != couleur)
+			if(p->getType() == ty || p->getType() == archer) {
+				if(p->getSiege() == NULL) menace++;
+				else menace += 2;
+			}
 }
 
 void Donjon::regardeMenace(Terrain & t) {

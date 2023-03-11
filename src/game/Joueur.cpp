@@ -36,7 +36,7 @@ void Joueur::joueHumain(Terrain & t) {
 	do {
 		cin >> s;
 	} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
-	if(s == "h") P->deplacer(t, 0);
+	if(s == "h") P->deplacer(t, 0); // il y a deux conversions
 	else if(s == "hd") P->deplacer(t, 1);
 	else if(s == "d") P->deplacer(t, 2);
 	else if(s == "bd") P->deplacer(t, 3);
