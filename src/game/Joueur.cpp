@@ -36,10 +36,10 @@ void Joueur::joueHumain(Terrain & t) {
 	do {
 		cin >> s;
 	} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
-	if(s == "h")
+	if(s == "h") // il y a deux conversions
 	{
 		cout << "1" << endl;
-	P->deplacer(t, 0); // il y a deux conversions
+	P->deplacer(t, 0); // on ne verifie jamais que le déplacement est possible !
 	cout << "2" << endl;
 	}
 	else if(s == "hd") P->deplacer(t, 1);
