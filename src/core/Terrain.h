@@ -5,10 +5,11 @@ class Piece;
 
 class Terrain {
 	private:
-		Piece* grille[9][7];
+        Piece* grille[9][7];
 
 	public:
 		Terrain();
+        TerrainTest()
 		~Terrain();
 
 		Piece* getPiece(unsigned int x, unsigned int y) const;

@@ -8,7 +8,7 @@
 using namespace std;
 
 Terrain::Terrain() {
-	grille[0][0] = new Soldat(0, 0, noir, fantassin);
+	grille[0][0] = new Soldat(0, 0, noir, fantassin); // Est-ce qu'on aurait pas inversé lignes et colonnes ?
 	grille[1][0] = new Donjon(1, 0, noir);
 	grille[2][0] = new Soldat(2, 0, noir, fantassin);
 	grille[3][0] = new Soldat(3, 0, noir, archer);
@@ -60,6 +60,7 @@ Terrain::Terrain() {
 	grille[5][8] = new Donjon(5, 8, rouge);
 	grille[6][8] = new Soldat(6, 8, rouge, fantassin);
 }
+
 
 Terrain::~Terrain() {
 	for(int i = 0; i < 7; i++)
