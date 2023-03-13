@@ -3,6 +3,7 @@
 
 #include "Piece.h"
 #include "Terrain.h"
+#include <string.h>
 
 class Siege;
 
@@ -29,7 +30,7 @@ class Soldat : public Piece
 		Piece* getSiege() const;
 		void setSiege(Piece* Ssiege);
 
-		bool deplacer(Terrain & t, unsigned int i); // TODO
+		bool deplacer(Terrain & t, std::string s);
 
 		void testRegression();
 };

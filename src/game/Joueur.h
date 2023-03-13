@@ -9,6 +9,9 @@ class Joueur {
 
 		bool coordonneesValides(Terrain & t, int x, int y);
 		void joueHumain(Terrain & t);
+		unsigned int hChoixCoordonnees(Terrain & t);
+		string hChoixDirection();
+
 		void joueRobot(Terrain & t);
 
 	public:

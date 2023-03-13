@@ -26,29 +26,31 @@ bool Joueur::coordonneesValides(Terrain & t, int x, int y) {
 
 void Joueur::joueHumain(Terrain & t) {
 	unsigned int i;
+	string s;
+	Piece* P;
+	do {
+		i = hChoixCoordonnees(t);
+		P = t.getPiece(i % 10, i / 10);
+		s = hChoixDirection();
+	} while((P->getType() == tour_de_siege || P->getType() == donjon) && !P->deplacer(t, s));
+}
+
+unsigned int Joueur::hChoixCoordonnees(Terrain & t) {
+	unsigned int i;
 	cout << "Entrez les coordonnees de la piece a deplacer (yx) : ";
 	do {
 		cin >> i;
-	} while (!coordonneesValides(t, i % 10, i / 10)); // si on choisit une Piece qui peut pas se deplacer, on boucle
-	Piece* P = t.getPiece(i % 10, i / 10); // ajouter un retour
+	} while (!coordonneesValides(t, i % 10, i / 10));
+	return i;
+}
+
+string Joueur::hChoixDirection() {
 	string s;
 	cout << "Entrez une direction (h, hd, d, bd, b, bg, g, hg) : ";
 	do {
 		cin >> s;
 	} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
-	if(s == "h") // il y a deux conversions
-	{
-		cout << "1" << endl;
-	P->deplacer(t, 0); // on ne verifie jamais que le déplacement est possible !
-	cout << "2" << endl;
-	}
-	else if(s == "hd") P->deplacer(t, 1);
-	else if(s == "d") P->deplacer(t, 2);
-	else if(s == "bd") P->deplacer(t, 3);
-	else if(s == "b") P->deplacer(t, 4);
-	else if(s == "bg") P->deplacer(t, 5);
-	else if(s == "g") P->deplacer(t, 6);
-	else if(s == "hg") P->deplacer(t, 7);
+	return s;
 }
 
 void Joueur::joueRobot(Terrain & t) {

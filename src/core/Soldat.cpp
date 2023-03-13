@@ -33,28 +33,16 @@ void Soldat::setSiege(Piece * Ssiege) {
 	siege = Ssiege;
 }
 
-bool Soldat::deplacer(Terrain & t, unsigned int i) { cout << "3" << endl;
-	switch(i) {
-		case 0:
-			cout << "4" << endl;
-			return deplacerH(t);
-		case 1:
-			return deplacerHD(t);
-		case 2:
-			return deplacerD(t);
-		case 3:
-			return deplacerBD(t);
-		case 4:
-			return deplacerB(t);
-		case 5:
-			return deplacerBG(t);
-		case 6:
-			return deplacerG(t);
-		case 7:
-			return deplacerHG(t);
-		default:
-			return false;
-	}
+bool Soldat::deplacer(Terrain & t, string s) {
+	if(s == "h") return deplacerH(t);
+	else if(s == "hd") return deplacerHD(t);
+	else if(s == "d") return deplacerD(t);
+	else if(s == "bd") return deplacerBD(t);
+	else if(s == "b") return deplacerB(t);
+	else if(s == "bg") return deplacerBG(t);
+	else if(s == "g") return deplacerG(t);
+	else if(s == "hg") return deplacerHG(t);
+	else return false;
 }
 
 bool Soldat::deplacerH(Terrain & t) {
