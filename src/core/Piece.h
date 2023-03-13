@@ -1,7 +1,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include <string.h>
+#include <string>
 
 class Soldat;
 class Siege;
@@ -39,7 +39,7 @@ class Piece {
 		void setSiege(Piece* Ssiege);
 		void setSoldat(Piece* Ssoldat);
 		unsigned int regardeMenace() const;
-		bool deplacer(Terrain & t, std::string s);
+		bool deplacer(Terrain & t, const std::string & s);
 
 		void testRegression();
 };

@@ -4,7 +4,7 @@
 #include "Terrain.h"
 #include <assert.h>
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
 
 Piece::Piece() {}
@@ -36,7 +36,7 @@ void Piece::setSiege(Piece* Ssiege) {}
 
 unsigned int Piece::regardeMenace() const {return 0;}
 
-bool Piece::deplacer(Terrain & t, string s) {return false;}
+bool Piece::deplacer(Terrain & t, const string & s) {return false;}
 
 void Piece::testRegression() {
 	cout << "Test Piece" << endl;

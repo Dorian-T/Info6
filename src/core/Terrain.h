@@ -1,6 +1,8 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
+#include <string>
+
 class Piece;
 
 class Terrain {
@@ -9,7 +11,7 @@ class Terrain {
 
 	public:
 		Terrain();
-        TerrainTest()
+        Terrain(const std::string & fichier);
 		~Terrain();
 
 		Piece* getPiece(unsigned int x, unsigned int y) const;

@@ -1,4 +1,6 @@
 #include "../core/Piece.h"
+#include "../core/Terrain.h"
+#include <string>
 #include <vector>
 
 class Joueur {
@@ -10,7 +12,7 @@ class Joueur {
 		bool coordonneesValides(Terrain & t, int x, int y);
 		void joueHumain(Terrain & t);
 		unsigned int hChoixCoordonnees(Terrain & t);
-		string hChoixDirection();
+		std::string hChoixDirection();
 
 		void joueRobot(Terrain & t);
 

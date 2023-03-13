@@ -4,6 +4,7 @@
 #include "Terrain.h"
 #include <iostream>
 #include <assert.h>
+#include <string>
 using namespace std;
 
 Soldat::Soldat() {
@@ -33,7 +34,7 @@ void Soldat::setSiege(Piece * Ssiege) {
 	siege = Ssiege;
 }
 
-bool Soldat::deplacer(Terrain & t, string s) {
+bool Soldat::deplacer(Terrain & t, const string & s) {
 	if(s == "h") return deplacerH(t);
 	else if(s == "hd") return deplacerHD(t);
 	else if(s == "d") return deplacerD(t);
