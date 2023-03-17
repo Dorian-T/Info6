@@ -35,7 +35,7 @@ void Soldat::setSiege(Piece * Ssiege) {
 }
 
 bool Soldat::deplacer(Terrain & t, const string & s) {
-	if(s == "h") return deplacerH(t);
+	if(s == "h") {cout << "je suis la" << endl; return deplacerH(t);  }
 	else if(s == "hd") return deplacerHD(t);
 	else if(s == "d") return deplacerD(t);
 	else if(s == "bd") return deplacerBD(t);
@@ -46,15 +46,15 @@ bool Soldat::deplacer(Terrain & t, const string & s) {
 	else return false;
 }
 
-bool Soldat::deplacerH(Terrain & t) {
-	if(type == fantassin || type == archer)
-		if(couleur == rouge)
+bool Soldat::deplacerH(Terrain & t) { cout << "0";
+	if(type == fantassin || type == archer) { cout << "1";
+		if(couleur == rouge) { cout << "2";
 			if(t.verifieCase(x, y, x, y-1, false)) y--;
-			else return false;
+			else return false;}
 		else
 			if(t.verifieCase(x, y, x, y+1, false)) y++;
-			else return false;
-	else return false;
+			else return false;}
+	else { cout << "3"; return false;}
 	return true;
 }
 

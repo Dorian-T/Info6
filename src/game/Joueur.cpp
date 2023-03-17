@@ -1,4 +1,5 @@
 #include "../core/Piece.h"
+#include "../core/Soldat.h"
 #include "../core/Terrain.h"
 #include "Joueur.h"
 #include <iostream>
@@ -29,10 +30,15 @@ void Joueur::joueHumain(Terrain & t) {
 	string s;
 	Piece* P;
 	do {
-		i = hChoixCoordonnees(t);
-		P = t.getPiece(i % 10, i / 10);
+		do {
+			i = hChoixCoordonnees(t);
+			P = t.getPiece(i % 10, i / 10);
+		} while(P->getType() == donjon || P->getType() == tour_de_siege);
+		Soldat S(i%10, i/10, P->getCouleur(), P->getType());
 		s = hChoixDirection();
-	} while((P->getType() == tour_de_siege || P->getType() == donjon) && !P->deplacer(t, s));
+		if(S.deplacer(t, s)) cout << "deplacement reussi" << endl;
+		else cout << "deplacement impossible" << endl;
+	} while(!P->deplacer(t, s));
 }
 
 unsigned int Joueur::hChoixCoordonnees(Terrain & t) {

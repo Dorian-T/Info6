@@ -34,6 +34,13 @@ class Piece {
 		Couleur getCouleur() const;
 		Type getType() const;
 
+		unsigned int getX() const { // chut
+			return x;
+		}
+		unsigned int getY() const {
+			return y;
+		}
+
 		Piece* getSiege() const;
 		Piece* getSoldat() const;
 		void setSiege(Piece* Ssiege);
