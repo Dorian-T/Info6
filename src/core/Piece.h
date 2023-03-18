@@ -29,7 +29,7 @@ class Piece {
 	public:
 		Piece(); // utile ?
 		Piece(unsigned int Px, unsigned int Py); // utile ?
-		Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur);
+		Piece(unsigned int Px, unsigned int Py, Couleur Pcouleur); // pas de constructeur avec le type ?
 
 		Couleur getCouleur() const;
 		Type getType() const;

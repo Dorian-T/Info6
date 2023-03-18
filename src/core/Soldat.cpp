@@ -217,8 +217,9 @@ void Soldat::testRegression() {
 	Sr.setSiege(Si);
 	assert(Sr.getSiege() == Si);
 	cout << "\tTest de setSiege et getSiege : OK" << endl;
-    
-    // rajouter les tests de deplacement
+
+	Terrain t("data/testTerrain.txt");    
+    assert(Sr.deplacerH(t));
 
 	cout << "Test de la classe Soldat : OK" << endl << endl;
 }

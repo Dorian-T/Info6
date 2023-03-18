@@ -45,7 +45,7 @@ void Donjon::regardeMenace(Terrain & t) {
 
 void Donjon::testRegression(Terrain & t) {
 	cout << "Test Donjon" << endl;
-	cout << "\tTest constructeur : OK" << endl;
+	cout << "\tTest constructeur par defaut : OK" << endl;
 	Donjon D(1,2,rouge);
 	assert(D.x == 1 && D.y == 2 && D.couleur == rouge);
 	assert(D.getMenace() == 0);

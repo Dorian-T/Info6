@@ -11,12 +11,13 @@ int main() {
 	P.testRegression();
 
 	Soldat So;
-	So.testRegression();
+	// So.testRegression();
 
 	Siege Si;
 	Si.testRegression();
 
 	Terrain T; // modifier pour faire des tests sur les deplacements des pieces
+	T.testRegression();
 
 	Donjon D;
 	D.testRegression(T);

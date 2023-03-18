@@ -40,13 +40,19 @@ bool Piece::deplacer(Terrain & t, const string & s) {return false;}
 
 void Piece::testRegression() {
 	cout << "Test Piece" << endl;
+
 	cout << "\tTest constructeur par defaut : OK" << endl;
+
 	Piece P(1, 2);
 	assert(P.x == 1); assert(P.y == 2);
 	cout << "\tTest constructeur parametre 1 : OK" << endl;
+
 	Piece P2(2, 3, rouge);
-	assert(P2.x == 2); assert(P2.y == 3); assert(P2.getCouleur() == rouge);
+	assert(P2.x == 2); assert(P2.y == 3); assert(P2.couleur == rouge);
 	cout << "\tTest constructeur parametre 2 : OK" << endl;
+
+	assert(P2.getCouleur() == rouge);
 	cout << "\tTest getCouleur : OK" << endl;
+
 	cout << "Test Piece : OK" << endl << endl;
 }

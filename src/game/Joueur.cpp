@@ -34,7 +34,7 @@ void Joueur::joueHumain(Terrain & t) {
 			i = hChoixCoordonnees(t);
 			P = t.getPiece(i % 10, i / 10);
 		} while(P->getType() == donjon || P->getType() == tour_de_siege);
-		Soldat S(i%10, i/10, P->getCouleur(), P->getType());
+		Soldat S(i%10, i/10, P->getCouleur(), P->getType()); // deplace pas le bon soldat !
 		s = hChoixDirection();
 		if(S.deplacer(t, s)) cout << "deplacement reussi" << endl;
 		else cout << "deplacement impossible" << endl;

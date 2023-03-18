@@ -106,6 +106,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 				return false;
 		}
 		else { // si la case n'est pas vide
+			cout << "case non vide"; // pourquoi ca s'affiche pas ???
 			if(grille[ny][nx]->getCouleur() == grille[ax][ay]->getCouleur()) { // si la case est de la couleur alliee
 				if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
 					if(grille[ny][nx]->getSoldat() == NULL) {
@@ -170,4 +171,23 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 
 void Terrain::testRegression() {
 	cout << "Test de la classe Terrain" << endl;
+
+	assert(getPiece(0, 0)->getType() == fantassin);
+	assert(getPiece(3, 4) == NULL);
+	assert(getPiece(6, 8)->getType() == fantassin);
+	cout << "\tTest constructeur par defaut : OK" << endl;
+
+	Terrain test("data/testTerrain.txt");
+	assert(test.getPiece(1, 1)->getType() == fantassin);
+	cout << "\tTest constructeur parametre : OK" << endl;
+
+	cout << "\tTest getPiece : OK" << endl;
+
+	cout << "affiche toi STP !"; // ca s'affiche pas !!
+	if(test.getPiece(1, 0) == NULL) cout << "oui oui c'est vide";
+	else cout << "probleme";
+	assert(test.verifieCase(1, 1, 1, 0, false));
+	cout << "\tTest verifieCase() : OK" << endl;
+
+	cout << "Test Terrain : OK" << endl << endl;
 }
