@@ -181,11 +181,10 @@ void Terrain::testRegression() {
 	assert(test.getPiece(1, 1)->getType() == fantassin);
 	cout << "\tTest constructeur parametre : OK" << endl;
 	cout << "test 42" << endl;
-	cout << "\tTest getPiece : OK" << endl << "bibabouba";
+	cout << "\tTest getPiece : OK" << endl;
 
-	cout << "affiche toi STP !"; // ca s'affiche pas !!
-	if(test.getPiece(1, 0) == NULL) cout << "oui oui c'est vide";
-	else cout << "probleme";
+	if(test.getPiece(1, 0) == NULL) cout << "oui oui c'est vide" << endl;
+	else cout << "probleme" << endl;
 	assert(test.verifieCase(1, 1, 1, 0, false));
 	cout << "\tTest verifieCase() : OK" << endl;
 
