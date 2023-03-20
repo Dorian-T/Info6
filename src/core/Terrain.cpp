@@ -180,8 +180,8 @@ void Terrain::testRegression() {
 	Terrain test("data/testTerrain.txt");
 	assert(test.getPiece(1, 1)->getType() == fantassin);
 	cout << "\tTest constructeur parametre : OK" << endl;
-
-	cout << "\tTest getPiece : OK" << endl;
+	cout << "test 42" << endl;
+	cout << "\tTest getPiece : OK" << endl << "bibabouba";
 
 	cout << "affiche toi STP !"; // ca s'affiche pas !!
 	if(test.getPiece(1, 0) == NULL) cout << "oui oui c'est vide";
