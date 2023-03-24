@@ -26,6 +26,14 @@ Piece::~Piece() {
 	if(siege != NULL) delete siege;
 }
 
+unsigned int Piece::getX() const {
+	return x;
+}
+
+unsigned int Piece::getY() const {
+	return y;
+}
+
 Couleur Piece::getCouleur() const {
 	return couleur;
 }
@@ -252,21 +260,33 @@ void Piece::calculMenaceCase(Terrain & t, Piece * p, Type ty) {
 				else menace += 2;
 }
 
-// void Piece::testRegression() {
-// 	cout << "Test Piece" << endl;
+void Piece::testRegression() {
+	cout << endl << "Test Piece" << endl;
 
-// 	cout << "\tTest constructeur par defaut : OK" << endl;
+	assert(x == 0); assert(y == 0); assert(couleur == rouge); assert(type == fantassin); assert(siege == NULL); assert(menace == 0);
+	cout << "\tTest constructeur par defaut : OK" << endl;
 
-// 	Piece P(1, 2);
-// 	assert(P.x == 1); assert(P.y == 2);
-// 	cout << "\tTest constructeur parametre 1 : OK" << endl;
+	assert(getX() == 0);
+	cout << "\tTest getX : OK" << endl;
 
-// 	Piece P2(2, 3, rouge);
-// 	assert(P2.x == 2); assert(P2.y == 3); assert(P2.couleur == rouge);
-// 	cout << "\tTest constructeur parametre 2 : OK" << endl;
+	assert(getY() == 0);
+	cout << "\tTest getY : OK" << endl;
 
-// 	assert(P2.getCouleur() == rouge);
-// 	cout << "\tTest getCouleur : OK" << endl;
+	assert(getCouleur() == rouge);
+	cout << "\tTest getCouleur : OK" << endl;
 
-// 	cout << "Test Piece : OK" << endl << endl;
-// }
+	assert(getType() == fantassin);
+	cout << "\tTest getType : OK" << endl;
+
+	assert(getSiege() == NULL);
+	cout << "\tTest getSiege : OK" << endl;
+
+	Piece P(1, 2, rouge, paladin);
+	assert(P.getX() == 1); assert(P.getY() == 2); assert(P.getCouleur() == rouge); assert(P.getType() == paladin); assert(P.getSiege() == NULL);
+	cout << "\tTest constructeur parametre : OK" << endl;
+
+	// TODO : test deplacer
+	// TODO : test calculMenace
+
+	cout << "Test Piece : OK" << endl;
+}

@@ -47,17 +47,13 @@ class Piece {
 		~Piece();
 
 		// accesseurs
+		unsigned int getX() const;
+		unsigned int getY() const;
 		Couleur getCouleur() const;
 		Type getType() const;
 		Piece* getSiege() const;
 		unsigned int getMenace(Terrain & t);
 
-		// unsigned int getX() const { // chut
-		// 	return x;
-		// }
-		// unsigned int getY() const {
-		// 	return y;
-		// }
 
 		// mutateurs
 		void setSiege(Piece* S);
