@@ -29,8 +29,9 @@ Piece* Piece::getSiege() const {
 	return siege;
 }
 
-unsigned int Piece::getMenace() const {
+unsigned int Piece::getMenace(Terrain & t) {
 	assert(type == donjon);
+	calculMenace(t);
 	return menace;
 }
 

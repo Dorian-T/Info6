@@ -6,8 +6,9 @@
 class Piece;
 
 class Terrain {
+
 	private:
-        Piece* grille[9][7];
+        Piece* grille[9][7]; // tableau statique de pointeurs sur Piece
 
 	public:
 		Terrain();

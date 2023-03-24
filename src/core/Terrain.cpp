@@ -1,7 +1,4 @@
 #include "Piece.h"
-#include "Soldat.h"
-#include "Siege.h"
-#include "Donjon.h"
 #include "Terrain.h"
 #include <assert.h>
 #include <fstream>
@@ -10,57 +7,57 @@
 using namespace std;
 
 Terrain::Terrain() {
-	grille[0][0] = new Soldat(0, 0, noir, fantassin);
-	grille[0][1] = new Donjon(1, 0, noir);
-	grille[0][2] = new Soldat(2, 0, noir, fantassin);
-	grille[0][3] = new Soldat(3, 0, noir, archer);
-	grille[0][4] = new Soldat(4, 0, noir, fantassin);
-	grille[0][5] = new Donjon(5, 0, noir);
-	grille[0][6] = new Soldat(6, 0, noir, fantassin);
+	grille[0][0] = new Piece(0, 0, noir, fantassin);
+	grille[0][1] = new Piece(1, 0, noir, donjon);
+	grille[0][2] = new Piece(2, 0, noir, fantassin);
+	grille[0][3] = new Piece(3, 0, noir, archer);
+	grille[0][4] = new Piece(4, 0, noir, fantassin);
+	grille[0][5] = new Piece(5, 0, noir, donjon);
+	grille[0][6] = new Piece(6, 0, noir, fantassin);
 
-	grille[1][0] = new Soldat(0, 1, noir, paladin);
-	grille[1][1] = new Soldat(1, 1, noir, archer);
-	grille[1][2] = new Soldat(2, 1, noir, paladin);
-	grille[1][3] = new Soldat(3, 1, noir, fantassin);
-	grille[1][4] = new Soldat(4, 1, noir, paladin);
-	grille[1][5] = new Soldat(5, 1, noir, archer);
-	grille[1][6] = new Soldat(6, 1, noir, paladin);
+	grille[1][0] = new Piece(0, 1, noir, paladin);
+	grille[1][1] = new Piece(1, 1, noir, archer);
+	grille[1][2] = new Piece(2, 1, noir, paladin);
+	grille[1][3] = new Piece(3, 1, noir, fantassin);
+	grille[1][4] = new Piece(4, 1, noir, paladin);
+	grille[1][5] = new Piece(5, 1, noir, archer);
+	grille[1][6] = new Piece(6, 1, noir, paladin);
 
-	grille[2][0] = new Soldat(0, 2, noir, fantassin);
-	grille[2][1] = new Soldat(1, 2, noir, paladin);
-	grille[2][2] = new Soldat(2, 2, noir, fantassin);
-	grille[2][3] = new Siege(3, 2, noir);
-	grille[2][4] = new Soldat(4, 2, noir, fantassin);
-	grille[2][5] = new Soldat(5, 2, noir, paladin);
-	grille[2][6] = new Soldat(6, 2, noir, fantassin);
+	grille[2][0] = new Piece(0, 2, noir, fantassin);
+	grille[2][1] = new Piece(1, 2, noir, paladin);
+	grille[2][2] = new Piece(2, 2, noir, fantassin);
+	grille[2][3] = new Piece(3, 2, noir, tour_de_siege);
+	grille[2][4] = new Piece(4, 2, noir, fantassin);
+	grille[2][5] = new Piece(5, 2, noir, paladin);
+	grille[2][6] = new Piece(6, 2, noir, fantassin);
 
 	for(int i = 3; i < 6; i++)
 		for(int j = 0; j < 9; j++)
 			grille[i][j] = NULL;
 
-	grille[6][0] = new Soldat(0, 6, rouge, fantassin);
-	grille[6][1] = new Soldat(1, 6, rouge, paladin);
-	grille[6][2] = new Soldat(2, 6, rouge, fantassin);
-	grille[6][3] = new Siege(3, 6, rouge);
-	grille[6][4] = new Soldat(4, 6, rouge, fantassin);
-	grille[6][5] = new Soldat(5, 6, rouge, paladin);
-	grille[6][6] = new Soldat(6, 6, rouge, fantassin);
+	grille[6][0] = new Piece(0, 6, rouge, fantassin);
+	grille[6][1] = new Piece(1, 6, rouge, paladin);
+	grille[6][2] = new Piece(2, 6, rouge, fantassin);
+	grille[6][3] = new Piece(3, 6, rouge, tour_de_siege);
+	grille[6][4] = new Piece(4, 6, rouge, fantassin);
+	grille[6][5] = new Piece(5, 6, rouge, paladin);
+	grille[6][6] = new Piece(6, 6, rouge, fantassin);
 
-	grille[7][0] = new Soldat(0, 7, rouge, paladin);
-	grille[7][1] = new Soldat(1, 7, rouge, archer);
-	grille[7][2] = new Soldat(2, 7, rouge, paladin);
-	grille[7][3] = new Soldat(3, 7, rouge, fantassin);
-	grille[7][4] = new Soldat(4, 7, rouge, paladin);
-	grille[7][5] = new Soldat(5, 7, rouge, archer);
-	grille[7][6] = new Soldat(6, 7, rouge, paladin);
+	grille[7][0] = new Piece(0, 7, rouge, paladin);
+	grille[7][1] = new Piece(1, 7, rouge, archer);
+	grille[7][2] = new Piece(2, 7, rouge, paladin);
+	grille[7][3] = new Piece(3, 7, rouge, fantassin);
+	grille[7][4] = new Piece(4, 7, rouge, paladin);
+	grille[7][5] = new Piece(5, 7, rouge, archer);
+	grille[7][6] = new Piece(6, 7, rouge, paladin);
 
-	grille[8][0] = new Soldat(0, 8, rouge, fantassin);
-	grille[8][1] = new Donjon(1, 8, rouge);
-	grille[8][2] = new Soldat(2, 8, rouge, fantassin);
-	grille[8][3] = new Soldat(3, 8, rouge, archer);
-	grille[8][4] = new Soldat(4, 8, rouge, fantassin);
-	grille[8][5] = new Donjon(5, 8, rouge);
-	grille[8][6] = new Soldat(6, 8, rouge, fantassin);
+	grille[8][0] = new Piece(0, 8, rouge, fantassin);
+	grille[8][1] = new Piece(1, 8, rouge, donjon);
+	grille[8][2] = new Piece(2, 8, rouge, fantassin);
+	grille[8][3] = new Piece(3, 8, rouge, archer);
+	grille[8][4] = new Piece(4, 8, rouge, fantassin);
+	grille[8][5] = new Piece(5, 8, rouge, donjon);
+	grille[8][6] = new Piece(6, 8, rouge, fantassin);
 }
 
 Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noir
@@ -70,16 +67,16 @@ Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noi
 		for(int i = 0; i < 9; i++)
 			for(int j = 0; j < 7; j++) {
 				f >> c;
-				if(c == 'F') grille[i][j] = new Soldat(j, i, rouge, fantassin);
-				else if(c == 'A') grille[i][j] = new Soldat(j, i, rouge, archer);
-				else if(c == 'P') grille[i][j] = new Soldat(j, i, rouge, paladin);
-				else if(c == 'S') grille[i][j] = new Siege(j, i, rouge);
-				else if(c == 'D') grille[i][j] = new Donjon(j, i, rouge);
-				else if(c == 'f') grille[i][j] = new Soldat(j, i, noir, fantassin);
-				else if(c == 'a') grille[i][j] = new Soldat(j, i, noir, archer);
-				else if(c == 'p') grille[i][j] = new Soldat(j, i, noir, paladin);
-				else if(c == 's') grille[i][j] = new Siege(j, i, noir);
-				else if(c == 'd') grille[i][j] = new Donjon(j, i, noir);
+				if(c == 'F') grille[i][j] = new Piece(j, i, rouge, fantassin);
+				else if(c == 'A') grille[i][j] = new Piece(j, i, rouge, archer);
+				else if(c == 'P') grille[i][j] = new Piece(j, i, rouge, paladin);
+				else if(c == 'S') grille[i][j] = new Piece(j, i, rouge, tour_de_siege);
+				else if(c == 'D') grille[i][j] = new Piece(j, i, rouge, donjon);
+				else if(c == 'f') grille[i][j] = new Piece(j, i, noir, fantassin);
+				else if(c == 'a') grille[i][j] = new Piece(j, i, noir, archer);
+				else if(c == 'p') grille[i][j] = new Piece(j, i, noir, paladin);
+				else if(c == 's') grille[i][j] = new Piece(j, i, noir, tour_de_siege);
+				else if(c == 'd') grille[i][j] = new Piece(j, i, noir, donjon);
 				else grille[i][j] = NULL;
 			}
 	}
@@ -109,15 +106,15 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 			cout << "case non vide" << endl;
 			if(grille[ny][nx]->getCouleur() == grille[ax][ay]->getCouleur()) { // si la case est de la couleur alliee
 				if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
-					if(grille[ny][nx]->getSoldat() == NULL) {
-						grille[ny][nx]->setSoldat(grille[ax][ay]);
+					if(grille[ny][nx]->getSiege() == NULL) {
+						grille[ny][nx]->setSiege(grille[ax][ay]);
 						quitteSiege = true;
 					}
-					else if(grille[ny][nx]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
+					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ax][ay]->getCouleur())
 						return false;
 					else {
-						delete grille[ny][nx]->getSoldat();
-						grille[ny][nx]->setSoldat(grille[ax][ay]);
+						delete grille[ny][nx]->getSiege();
+						grille[ny][nx]->setSiege(grille[ax][ay]);
 						quitteSiege = true;
 					}
 				}
@@ -130,13 +127,13 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 					quitteSiege = true;
 				}
 				else if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
-					if(grille[ny][nx]->getSoldat() == NULL)
+					if(grille[ny][nx]->getSiege() == NULL)
 						return false;
-					else if(grille[ny][nx]->getSoldat()->getCouleur() == grille[ax][ay]->getCouleur())
+					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ax][ay]->getCouleur())
 						return false;
 					else {
-						delete grille[ny][nx]->getSoldat();
-						grille[ny][nx]->setSoldat(grille[ax][ay]);
+						delete grille[ny][nx]->getSiege();
+						grille[ny][nx]->setSiege(grille[ax][ay]);
 						quitteSiege = true;
 					}
 				}
@@ -144,7 +141,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 					if(grille[ny][nx]->getCouleur() == grille[ax][ay]->getCouleur())
 						return false;
 					else {
-						if(grille[ny][nx]->regardeMenace() > 1) {
+						if(grille[ny][nx]->getMenace(*this) > 1) {
 							delete grille[ny][nx];
 							quitteSiege = true;
 						}
@@ -159,7 +156,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 			grille[ny][nx] = grille[ax][ay];
 			grille[ax][ay] = grille[ny][nx]->getSiege();
 			grille[ny][nx]->setSiege(NULL);
-			grille[ax][ay]->setSoldat(NULL);
+			grille[ax][ay]->setSiege(NULL);
 		}
 		else {
 			grille[ny][nx] = grille[ax][ay];

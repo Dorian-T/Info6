@@ -49,7 +49,7 @@ class Piece {
 		Couleur getCouleur() const;
 		Type getType() const;
 		Piece* getSiege() const;
-		unsigned int getMenace() const;
+		unsigned int getMenace(Terrain & t);
 
 		// unsigned int getX() const { // chut
 		// 	return x;
