@@ -167,7 +167,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 }
 
 void Terrain::testRegression() {
-	cout << "Test de la classe Terrain" << endl;
+	cout << endl << "Test de la classe Terrain" << endl;
 
 	assert(getPiece(0, 0)->getType() == fantassin);
 	assert(getPiece(3, 4) == NULL);
@@ -177,13 +177,10 @@ void Terrain::testRegression() {
 	Terrain test("data/testTerrain.txt");
 	assert(test.getPiece(1, 1)->getType() == fantassin);
 	cout << "\tTest constructeur parametre : OK" << endl;
-	cout << "test 42" << endl;
 	cout << "\tTest getPiece : OK" << endl;
 
-	if(test.getPiece(1, 0) == NULL) cout << "oui oui c'est vide" << endl;
-	else cout << "probleme" << endl;
 	assert(test.verifieCase(1, 1, 1, 0, false));
-	cout << "\tTest verifieCase() : OK" << endl;
+	cout << "\tTest verifieCase : OK" << endl;
 
 	cout << "Test Terrain : OK" << endl << endl;
 }
