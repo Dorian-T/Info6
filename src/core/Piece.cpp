@@ -5,11 +5,21 @@
 #include <string>
 using namespace std;
 
+Piece::Piece() {
+	x = 0;
+	y = 0;
+	couleur = rouge;
+	type = fantassin;
+	siege = NULL;
+	menace = 0;
+}
+
 Piece::Piece(unsigned int X, unsigned int Y, Couleur C, Type T) {
 	x = X;
 	y = Y;
 	couleur = C;
 	type = T;
+	menace = 0;
 }
 
 Piece::~Piece() {

@@ -36,7 +36,7 @@ void Jeu::joueurSuivant() {
 	joueur1 = !joueur1;
 }
 
-void Jeu::affiche() {
+void Jeu::affiche() { // A mofifier pour mettre en minuscule les pieces noires
 	Piece* P;
 	for(int i = 0; i < 9; i++) {
 		for(int j = 0; j < 7; j++) {

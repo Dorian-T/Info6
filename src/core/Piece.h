@@ -42,6 +42,7 @@ class Piece {
 		void calculMenaceCase(Terrain & t, Piece * p, Type ty);
 
 	public:
+		Piece();
 		Piece(unsigned int X, unsigned int Y, Couleur C, Type T);
 		~Piece();
 
