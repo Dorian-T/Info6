@@ -28,16 +28,16 @@ bool Joueur::coordonneesValides(Terrain & t, int x, int y) {
 void Joueur::joueHumain(Terrain & t) {
 	unsigned int i;
 	string s;
-	Piece* P;
+	Soldat* P;
 	do {
 		do {
 			i = hChoixCoordonnees(t);
-			P = t.getPiece(i % 10, i / 10);
-		} while(P->getType() == donjon || P->getType() == tour_de_siege);
-		Soldat S(i%10, i/10, P->getCouleur(), P->getType()); // deplace pas le bon soldat !
+			P = t.getPiece(i % 10, i / 10); // problème : on veut deplacer un soldat mais on a une piece
+		} while(P->getType() == donjon || P->getType() == tour_de_siege); // si on deplace une piece, on a toujours faux
+		// Soldat S(i%10, i/10, P->getCouleur(), P->getType()); // deplace pas le bon soldat !
 		s = hChoixDirection();
-		if(S.deplacer(t, s)) cout << "deplacement reussi" << endl;
-		else cout << "deplacement impossible" << endl;
+		// if(S.deplacer(t, s)) cout << "deplacement reussi" << endl;
+		// else cout << "deplacement impossible" << endl;
 	} while(!P->deplacer(t, s));
 }
 
