@@ -105,13 +105,13 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 		else { // si la case n'est pas vide
 			if(grille[ny][nx]->getCouleur() == grille[ay][ax]->getCouleur()) { // si la case est de la couleur alliee
 				if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
-					if(grille[ny][nx]->getSiege() == NULL) {
+					if(grille[ny][nx]->getSiege() == NULL) { // si le siege est vide
 						grille[ny][nx]->setSiege(grille[ay][ax]);
 						quitteSiege = true;
 					}
-					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ay][ax]->getCouleur())
+					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ay][ax]->getCouleur()) // si le siege est occupe par un allie
 						return false;
-					else {
+					else { // si le siege est occupe par un ennemi
 						delete grille[ny][nx]->getSiege();
 						grille[ny][nx]->setSiege(grille[ay][ax]);
 						quitteSiege = true;
