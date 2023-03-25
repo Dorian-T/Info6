@@ -3,7 +3,8 @@
 #include "../core/Terrain.h"
 #include "Joueur.h"
 #include <iostream>
-#include <string.h>
+#include <string>
+#include <vector>
 using namespace std;
 
 Joueur::Joueur(Couleur c, bool r) {
@@ -27,14 +28,37 @@ bool Joueur::coordonneesValides(Terrain & t, int x, int y) {
 
 void Joueur::joueHumain(Terrain & t) {
 	unsigned int i;
+	vector<string> v;
 	string s;
 	Piece * P;
 	do {
+		// coordonnees
 		do {
 			i = hChoixCoordonnees(t);
 			P = t.getPiece(i % 10, i / 10);
+			if(P->getType() == donjon || P->getType() == tour_de_siege) cout << "Cette piece n'est pas deplacable." << endl;
 		} while(P->getType() == donjon || P->getType() == tour_de_siege);
-		s = hChoixDirection();
+
+		// direction
+		cout << "Entrez une direction (";
+		if(P->getType() == fantassin) {
+			cout << "h, d, b, g) : ";
+			do {
+				cin >> s;
+			} while (s != "h" && s != "d" && s != "b" && s != "g");
+		}
+		else if(P->getType() == paladin) {
+			cout << "hd, bd, bg, hg) : ";
+			do {
+				cin >> s;
+			} while (s != "hd" && s != "bd" && s != "bg" && s != "hg");
+		}
+		else {
+			cout << "h, hd, d, bd, b, bg, g, hg) : ";
+			do {
+				cin >> s;
+			} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
+		}
 	} while(!P->deplacer(t, s));
 }
 
@@ -45,15 +69,6 @@ unsigned int Joueur::hChoixCoordonnees(Terrain & t) {
 		cin >> i;
 	} while (!coordonneesValides(t, i % 10, i / 10));
 	return i;
-}
-
-string Joueur::hChoixDirection() {
-	string s;
-	cout << "Entrez une direction (h, hd, d, bd, b, bg, g, hg) : ";
-	do {
-		cin >> s;
-	} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
-	return s;
 }
 
 void Joueur::joueRobot(Terrain & t) {

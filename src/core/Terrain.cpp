@@ -99,12 +99,10 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 		return false;
 	else { // si la case est dans le terrain
 		if(grille[ny][nx] == NULL) { // si la case est vide
-			cout << "case vide" << endl;
 			if(recule)
 				return false;
 		}
 		else { // si la case n'est pas vide
-			cout << "case non vide" << endl;
 			if(grille[ny][nx]->getCouleur() == grille[ay][ax]->getCouleur()) { // si la case est de la couleur alliee
 				if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
 					if(grille[ny][nx]->getSiege() == NULL) {
