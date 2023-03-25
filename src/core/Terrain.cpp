@@ -99,22 +99,23 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 		return false;
 	else { // si la case est dans le terrain
 		if(grille[ny][nx] == NULL) { // si la case est vide
+			cout << "case vide" << endl;
 			if(recule)
 				return false;
 		}
 		else { // si la case n'est pas vide
 			cout << "case non vide" << endl;
-			if(grille[ny][nx]->getCouleur() == grille[ax][ay]->getCouleur()) { // si la case est de la couleur alliee
+			if(grille[ny][nx]->getCouleur() == grille[ay][ax]->getCouleur()) { // si la case est de la couleur alliee
 				if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
 					if(grille[ny][nx]->getSiege() == NULL) {
-						grille[ny][nx]->setSiege(grille[ax][ay]);
+						grille[ny][nx]->setSiege(grille[ay][ax]);
 						quitteSiege = true;
 					}
-					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ax][ay]->getCouleur())
+					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ay][ax]->getCouleur())
 						return false;
 					else {
 						delete grille[ny][nx]->getSiege();
-						grille[ny][nx]->setSiege(grille[ax][ay]);
+						grille[ny][nx]->setSiege(grille[ay][ax]);
 						quitteSiege = true;
 					}
 				}
@@ -133,12 +134,12 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 						return false;
 					else {
 						delete grille[ny][nx]->getSiege();
-						grille[ny][nx]->setSiege(grille[ax][ay]);
+						grille[ny][nx]->setSiege(grille[ay][ax]);
 						quitteSiege = true;
 					}
 				}
 				else if(grille[ny][nx]->getType() == donjon) { // si la case est un donjon
-					if(grille[ny][nx]->getCouleur() == grille[ax][ay]->getCouleur())
+					if(grille[ny][nx]->getCouleur() == grille[ay][ax]->getCouleur())
 						return false;
 					else {
 						if(grille[ny][nx]->getMenace(*this) > 1) {
@@ -152,15 +153,15 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 				}
 			}
 		}
-		if(quitteSiege && grille[ax][ay]->getSiege() != NULL) {
-			grille[ny][nx] = grille[ax][ay];
-			grille[ax][ay] = grille[ny][nx]->getSiege();
+		if(quitteSiege && grille[ay][ax]->getSiege() != NULL) {
+			grille[ny][nx] = grille[ay][ax];
+			grille[ay][ax] = grille[ny][nx]->getSiege();
 			grille[ny][nx]->setSiege(NULL);
-			grille[ax][ay]->setSiege(NULL);
+			grille[ay][ax]->setSiege(NULL);
 		}
 		else {
-			grille[ny][nx] = grille[ax][ay];
-			grille[ax][ay] = NULL;
+			grille[ny][nx] = grille[ay][ax];
+			grille[ay][ax] = NULL;
 		}
 		return true;
 	}

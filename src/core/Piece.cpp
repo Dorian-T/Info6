@@ -116,7 +116,7 @@ bool Piece::deplacerD(Terrain & t) {
 			if(t.verifieCase(x, y, x+1, y, false)) x++;
 			else return false;
 		else
-			if(t.verifieCase(x, y, x+1, y, false)) x--;
+			if(t.verifieCase(x, y, x-1, y, false)) x--;
 			else return false;
 	else return false;
 	return true;
