@@ -1,9 +1,15 @@
 #include "Jeu.h"
 #include "../core/Piece.h"
+#include <ctime>
+#include <fstream>
 #include <iostream>
+#include <string>
 using namespace std;
 
 Jeu::Jeu() {
+	time_t tmm = time(NULL);
+	string dt = ctime(&tmm);
+	nomFichierSauvegarde = "data/sauvegarde - " + dt + ".txt";
 	char c;
 	cout << "Est-ce que le joueur 1 est un robot ? (o/n) ";
 	cin >> c;
@@ -16,7 +22,8 @@ Jeu::Jeu() {
 }
 
 void Jeu::boucle() {
-	affiche();
+	cout << terrain;
+	sauvegarde(nomFichierSauvegarde);
 	while (!fin) {
 		if (joueur1) {
 			cout << "Joueur 1 : ";
@@ -27,7 +34,8 @@ void Jeu::boucle() {
 			J2.Joue(terrain);
 		}
 		joueurSuivant();
-		affiche();
+		cout << terrain;
+		sauvegarde(nomFichierSauvegarde);
 	}
 	finDePartie();
 }
@@ -36,7 +44,7 @@ void Jeu::joueurSuivant() {
 	joueur1 = !joueur1;
 }
 
-void Jeu::affiche() { // A mofifier pour mettre en minuscule les pieces noires
+void Jeu::affiche() {
 	Piece* P;
 	for(int i = 0; i < 9; i++) {
 		for(int j = 0; j < 7; j++) {
@@ -87,4 +95,15 @@ void Jeu::affiche() { // A mofifier pour mettre en minuscule les pieces noires
 
 void Jeu::finDePartie() {
 	cout << endl << endl << "Bravo au gagnant !";
+}
+
+void Jeu::sauvegarde(const string & nomFichier) {
+	ofstream fichier(nomFichier.c_str(), ios::app);
+	if(fichier) {
+		fichier << terrain;
+		fichier << endl << endl;
+		fichier.close();
+	}
+	else
+		cout << "Impossible d'ouvrir le fichier " << nomFichier << endl;
 }

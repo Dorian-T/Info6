@@ -165,6 +165,56 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 	}
 }
 
+ostream &operator<<(ostream & os, const Terrain & t) {
+	Piece* P;
+	for(int i = 0; i < 9; i++) {
+		for(int j = 0; j < 7; j++) {
+			P = t.getPiece(j, i);
+			if (P == NULL)
+				os << ".  ";
+			else
+				if(P->getCouleur() == rouge)
+					switch (P->getType()) {
+						case donjon:
+							os << "D  ";
+							break;
+						case tour_de_siege:
+							os << "T  ";
+							break;
+						case fantassin:
+							os << "F  ";
+							break;
+						case paladin:
+							os << "P  ";
+							break;
+						case archer:
+							os << "A  ";
+							break;
+					}
+				else
+					switch (P->getType()) {
+						case donjon:
+							os << "d  ";
+							break;
+						case tour_de_siege:
+							os << "t  ";
+							break;
+						case fantassin:
+							os << "f  ";
+							break;
+						case paladin:
+							os << "p  ";
+							break;
+						case archer:
+							os << "a  ";
+							break;
+					}
+		}
+		os << endl;
+	}
+	return os;
+}
+
 void Terrain::testRegression() {
 	cout << endl << "Test de la classe Terrain" << endl;
 
