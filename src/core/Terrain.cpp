@@ -94,7 +94,7 @@ Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
 }
 
 bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule) {
-	bool quitteSiege = false;
+	bool mange = false;
 	if(nx < 0 || nx > 7 || ny < 0 || ny > 9) // si la case n'est pas dans le terrain
 		return false;
 	else { // si la case est dans le terrain
@@ -107,14 +107,13 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 				if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
 					if(grille[ny][nx]->getSiege() == NULL) { // si le siege est vide
 						grille[ny][nx]->setSiege(grille[ay][ax]);
-						quitteSiege = true;
 					}
 					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ay][ax]->getCouleur()) // si le siege est occupe par un allie
 						return false;
 					else { // si le siege est occupe par un ennemi
 						delete grille[ny][nx]->getSiege();
 						grille[ny][nx]->setSiege(grille[ay][ax]);
-						quitteSiege = true;
+						mange = true;
 					}
 				}
 				else // si la case n'est pas un siege
@@ -123,7 +122,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 			else { // si la case est de la couleur adverse
 				if(grille[ny][nx]->getType() == fantassin || grille[ny][nx]->getType() == paladin || grille[ny][nx]->getType() == archer) { // si la case est un soldat
 					delete grille[ny][nx];
-					quitteSiege = true;
+					mange = true;
 				}
 				else if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
 					if(grille[ny][nx]->getSiege() == NULL)
@@ -133,16 +132,16 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 					else {
 						delete grille[ny][nx]->getSiege();
 						grille[ny][nx]->setSiege(grille[ay][ax]);
-						quitteSiege = true;
+						mange = true;
 					}
 				}
 				else if(grille[ny][nx]->getType() == donjon) { // si la case est un donjon
 					if(grille[ny][nx]->getCouleur() == grille[ay][ax]->getCouleur())
 						return false;
 					else {
-						if(grille[ny][nx]->getMenace(*this) > 1) {
+						if(grille[ny][nx]->getMenace(*this) >= 2) {
 							delete grille[ny][nx];
-							quitteSiege = true;
+							mange = true;
 						}
 						else
 							return false;
@@ -151,11 +150,13 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 				}
 			}
 		}
-		if(quitteSiege && grille[ay][ax]->getSiege() != NULL) {
-			grille[ny][nx] = grille[ay][ax];
-			grille[ay][ax] = grille[ny][nx]->getSiege();
-			grille[ny][nx]->setSiege(NULL);
-			grille[ay][ax]->setSiege(NULL);
+		if(grille[ay][ax]->getSiege() != NULL) {
+			if(mange || grille[ay][ax]->getSiege()->getCouleur() != grille[ay][ax]->getCouleur()) {
+				grille[ny][nx] = grille[ay][ax];
+				grille[ay][ax] = grille[ny][nx]->getSiege();
+				grille[ny][nx]->setSiege(NULL);
+				grille[ay][ax]->setSiege(NULL);
+			}
 		}
 		else {
 			grille[ny][nx] = grille[ay][ax];
