@@ -85,7 +85,11 @@ Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noi
 
 Terrain::~Terrain() {
 	for(int i = 0; i < 9; i++)
-		for(int j = 0; j < 7; j++) delete grille[i][j];
+		for(int j = 0; j < 7; j++) {
+			if(grille[i][j]->getSiege() != NULL)
+				delete grille[i][j]->getSiege();
+			delete grille[i][j];
+		}
 }
 
 Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
@@ -94,73 +98,59 @@ Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
 }
 
 bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule) {
-	bool mange = false;
+	Piece *temp = NULL;
 	if(nx < 0 || nx > 7 || ny < 0 || ny > 9) // si la case n'est pas dans le terrain
 		return false;
 	else { // si la case est dans le terrain
 		if(grille[ny][nx] == NULL) { // si la case est vide
 			if(recule)
 				return false;
+			else {
+				grille[ny][nx] = grille[ay][ax];
+				if(grille[ny][nx]->getSiege() != NULL && grille[ny][nx]->getSiege()->getCouleur() != grille[ny][nx]->getCouleur()) { // segfault à la descente d'un donjon
+					grille[ay][ax] = grille[ny][nx]->getSiege();
+					grille[ny][nx]->setSiege(NULL);
+				}
+				else
+					grille[ay][ax] = NULL;
+			}
 		}
 		else { // si la case n'est pas vide
 			if(grille[ny][nx]->getCouleur() == grille[ay][ax]->getCouleur()) { // si la case est de la couleur alliee
 				if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
-					if(grille[ny][nx]->getSiege() == NULL) { // si le siege est vide
-						grille[ny][nx]->setSiege(grille[ay][ax]);
-					}
-					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ay][ax]->getCouleur()) // si le siege est occupe par un allie
-						return false;
-					else { // si le siege est occupe par un ennemi
-						delete grille[ny][nx]->getSiege();
-						grille[ny][nx]->setSiege(grille[ay][ax]);
-						mange = true;
-					}
+						temp = grille[ay][ax]->getSiege();
+						grille[ay][ax]->setSiege(grille[ny][nx]);
+						grille[ny][nx] = grille[ay][ax];
+						grille[ay][ax] = temp;
+						temp = NULL;
 				}
 				else // si la case n'est pas un siege
 					return false;
 			}
 			else { // si la case est de la couleur adverse
 				if(grille[ny][nx]->getType() == fantassin || grille[ny][nx]->getType() == paladin || grille[ny][nx]->getType() == archer) { // si la case est un soldat
+					temp = grille[ay][ax]->getSiege();
+					grille[ay][ax]->setSiege(grille[ny][nx]->getSiege());
 					delete grille[ny][nx];
-					mange = true;
-				}
-				else if(grille[ny][nx]->getType() == tour_de_siege) { // si la case est un siege
-					if(grille[ny][nx]->getSiege() == NULL)
-						return false;
-					else if(grille[ny][nx]->getSiege()->getCouleur() == grille[ax][ay]->getCouleur())
-						return false;
-					else {
-						delete grille[ny][nx]->getSiege();
-						grille[ny][nx]->setSiege(grille[ay][ax]);
-						mange = true;
-					}
+					grille[ny][nx] = grille[ay][ax];
+					grille[ay][ax] = temp;
+					temp = NULL;
 				}
 				else if(grille[ny][nx]->getType() == donjon) { // si la case est un donjon
-					if(grille[ny][nx]->getCouleur() == grille[ay][ax]->getCouleur())
-						return false;
-					else {
 						if(grille[ny][nx]->getMenace(*this) >= 2) {
 							delete grille[ny][nx];
-							mange = true;
+							grille[ny][nx] = grille[ay][ax];
+							grille[ay][ax] = grille[ny][nx]->getSiege();
+							grille[ny][nx]->setSiege(NULL);
+							// mange = true;
 						}
 						else
 							return false;
 					// ne pas oublier que si les 2 donjons sont detruits, c'est la fin de partie
-					}
 				}
+				else
+					return false;
 			}
-		}
-		if(grille[ay][ax]->getSiege() != NULL) {
-			if(mange || grille[ay][ax]->getSiege()->getCouleur() != grille[ay][ax]->getCouleur()) {
-				grille[ny][nx] = grille[ay][ax];
-				grille[ay][ax] = grille[ny][nx]->getSiege();
-				grille[ny][nx]->setSiege(NULL);
-				grille[ay][ax]->setSiege(NULL);
-			}
-		}
-		else {
-			grille[ny][nx] = grille[ay][ax];
-			grille[ay][ax] = NULL;
 		}
 		return true;
 	}
@@ -172,44 +162,49 @@ ostream &operator<<(ostream & os, const Terrain & t) {
 		for(int j = 0; j < 7; j++) {
 			P = t.getPiece(j, i);
 			if (P == NULL)
-				os << ".  ";
-			else
+				os << " . ";
+			else {
+				if(P->getType() != donjon && P->getType() != tour_de_siege && P->getSiege() != NULL) os << "|";
+				else os << " ";
 				if(P->getCouleur() == rouge)
 					switch (P->getType()) {
 						case donjon:
-							os << "D  ";
+							os << "D";
 							break;
 						case tour_de_siege:
-							os << "T  ";
+							os << "T";
 							break;
 						case fantassin:
-							os << "F  ";
+							os << "F";
 							break;
 						case paladin:
-							os << "P  ";
+							os << "P";
 							break;
 						case archer:
-							os << "A  ";
+							os << "A";
 							break;
 					}
 				else
 					switch (P->getType()) {
 						case donjon:
-							os << "d  ";
+							os << "d";
 							break;
 						case tour_de_siege:
-							os << "t  ";
+							os << "t";
 							break;
 						case fantassin:
-							os << "f  ";
+							os << "f";
 							break;
 						case paladin:
-							os << "p  ";
+							os << "p";
 							break;
 						case archer:
-							os << "a  ";
+							os << "a";
 							break;
 					}
+				if(P->getType() != donjon && P->getType() != tour_de_siege && P->getSiege() != NULL) os << "|";
+				else os << " ";
+			}
 		}
 		os << endl;
 	}

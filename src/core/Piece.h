@@ -25,7 +25,7 @@ class Piece {
 		unsigned int x, y; // position
 		Couleur couleur; // couleur
 		Type type; // type
-		Piece* siege; // pointeur vers la tour de siege du soldat ou vers le soldat de la tour de siege
+		Piece* siege; // pointeur vers la tour de siege du soldat
 		unsigned int menace; // nombre de menaces que recoit le donjon
 
 		// fonctions de deplacement des fantassins, paladins et archers

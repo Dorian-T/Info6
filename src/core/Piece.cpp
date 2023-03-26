@@ -43,7 +43,7 @@ Type Piece::getType() const {
 }
 
 Piece* Piece::getSiege() const {
-	assert(type != donjon);
+	assert(type != donjon && type != tour_de_siege);
 	return siege;
 }
 
@@ -54,15 +54,9 @@ unsigned int Piece::getMenace(Terrain & t) {
 }
 
 void Piece::setSiege(Piece* S) {
-	if(type == fantassin || type == paladin || type == archer) {
-		assert(S->getType() == tour_de_siege);
-		siege = S;
-	}
-	else if(type == tour_de_siege) {
-		assert(S->getType() == fantassin || S->getType() == paladin || S->getType() == archer);
-		siege = S;
-	}
-	else assert(false);
+	assert(type != donjon && type != tour_de_siege);
+	assert(S->getType() == tour_de_siege);
+	siege = S;
 }
 
 bool Piece::deplacer(Terrain & t, const string & s) {
