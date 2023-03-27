@@ -1,5 +1,4 @@
 #include "../core/Piece.h"
-#include "../core/Soldat.h"
 #include "../core/Terrain.h"
 #include "Joueur.h"
 #include <iostream>

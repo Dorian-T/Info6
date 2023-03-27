@@ -22,7 +22,7 @@ obj/Piece.o: $(CORE_PATH)Piece.cpp $(CORE_PATH)Piece.h
 obj/Terrain.o: $(CORE_PATH)Terrain.cpp $(CORE_PATH)Terrain.h $(CORE_PATH)Piece.h
 	g++ $(FLAGS) -c $(CORE_PATH)Terrain.cpp -o obj/Terrain.o
 
-obj/tests.o: $(CORE_PATH)tests.cpp $(CORE_PATH)Piece.h $(CORE_PATH)Soldat.h $(CORE_PATH)Siege.h $(CORE_PATH)Donjon.h $(CORE_PATH)Terrain.h
+obj/tests.o: $(CORE_PATH)tests.cpp $(CORE_HEADERS)
 	g++ $(FLAGS) -c $(CORE_PATH)tests.cpp -o obj/tests.o
 
 
