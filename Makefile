@@ -11,10 +11,6 @@ GAME_OBJS = obj/Joueur.o obj/main.o obj/jeu.o
 all: bin/tests bin/main
 
 
-
-
-
-
 # core
 
 bin/tests: $(CORE_OBJS) obj/tests.o
