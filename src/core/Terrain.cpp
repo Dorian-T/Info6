@@ -86,8 +86,6 @@ Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noi
 Terrain::~Terrain() {
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 7; j++) {
-			if(grille[i][j]->getSiege() != NULL)
-				delete grille[i][j]->getSiege();
 			delete grille[i][j];
 		}
 }
