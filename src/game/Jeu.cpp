@@ -45,7 +45,7 @@ void Jeu::joueurSuivant() {
 }
 
 void Jeu::finDePartie() {
-	cout << endl << endl << "Bravo au gagnant !";
+	cout << endl << endl << "Bravo au gagnant !"; // Bien penser au cas d'égalité aussi
 }
 
 void Jeu::sauvegarde(const string & nomFichier) {
