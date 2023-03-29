@@ -13,7 +13,7 @@ Jeu::Jeu() {
 	char c;
 	cout << "Est-ce que le joueur 1 est un robot ? (o/n) ";
 	cin >> c;
-	if(c == 'o') J1 = Joueur(rouge, true);
+	if(c == 'o') J1 = Joueur(rouge, true); // mettre un mutateur à la place
 	cout << "Est-ce que le joueur 2 est un robot ? (o/n) ";
 	cin >> c;
 	if(c == 'o') J2 = Joueur(noir, true);
