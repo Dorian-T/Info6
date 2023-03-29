@@ -19,6 +19,7 @@ Piece::Piece(unsigned int X, unsigned int Y, Couleur C, Type T) {
 	y = Y;
 	couleur = C;
 	type = T;
+	siege = NULL;
 	menace = 0;
 }
 
