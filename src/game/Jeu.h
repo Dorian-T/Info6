@@ -15,7 +15,6 @@ class Jeu {
 		std::string nomFichierSauvegarde;
 
 		void joueurSuivant(); // change le joueur courant
-		void affiche(); // affiche le plateau
 		void finDePartie(); // affiche le gagnant
 
 		void sauvegarde(const std::string & nomFichier); // sauvegarde la partie
