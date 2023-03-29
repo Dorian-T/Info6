@@ -52,6 +52,8 @@ class Piece {
 		Couleur getCouleur() const;
 		Type getType() const;
 		Piece* getSiege() const;
+
+		// calcul la menace d'un donjon et la retourne
 		unsigned int getMenace(Terrain & t);
 
 
@@ -60,9 +62,6 @@ class Piece {
 
 		// deplace les fantassins, paladins et archers
 		bool deplacer(Terrain & t, const std::string & s);
-
-		// calcul la menace d'un donjon
-		void calculMenace(Terrain & t);
 
 		void testRegression();
 };

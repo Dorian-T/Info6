@@ -49,7 +49,20 @@ Piece* Piece::getSiege() const {
 
 unsigned int Piece::getMenace(Terrain & t) {
 	assert(type == donjon);
-	calculMenace(t);
+	if (couleur == rouge) {
+		calculMenaceCase(t, t.getPiece(x-1, y), fantassin);
+		calculMenaceCase(t, t.getPiece(x-1, y-1), paladin);
+		calculMenaceCase(t, t.getPiece(x, y-1), fantassin);
+		calculMenaceCase(t, t.getPiece(x+1, y-1), paladin);
+		calculMenaceCase(t, t.getPiece(x+1, y), fantassin);
+	}
+	else {
+		calculMenaceCase(t, t.getPiece(x-1, y), fantassin);
+		calculMenaceCase(t, t.getPiece(x-1, y+1), paladin);
+		calculMenaceCase(t, t.getPiece(x, y+1), fantassin);
+		calculMenaceCase(t, t.getPiece(x+1, y+1), paladin);
+		calculMenaceCase(t, t.getPiece(x+1, y), fantassin);
+	}
 	return menace;
 }
 
@@ -227,23 +240,6 @@ bool Piece::deplacerHG(Terrain & t) {
 		}
 	else return false;
 	return true;
-}
-
-void Piece::calculMenace(Terrain & t) {
-	if (couleur == rouge) {
-		calculMenaceCase(t, t.getPiece(x-1, y), fantassin);
-		calculMenaceCase(t, t.getPiece(x-1, y-1), paladin);
-		calculMenaceCase(t, t.getPiece(x, y-1), fantassin);
-		calculMenaceCase(t, t.getPiece(x+1, y-1), paladin);
-		calculMenaceCase(t, t.getPiece(x+1, y), fantassin);
-	}
-	else {
-		calculMenaceCase(t, t.getPiece(x-1, y), fantassin);
-		calculMenaceCase(t, t.getPiece(x-1, y+1), paladin);
-		calculMenaceCase(t, t.getPiece(x, y+1), fantassin);
-		calculMenaceCase(t, t.getPiece(x+1, y+1), paladin);
-		calculMenaceCase(t, t.getPiece(x+1, y), fantassin);
-	}
 }
 
 void Piece::calculMenaceCase(Terrain & t, Piece * p, Type ty) {
