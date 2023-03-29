@@ -66,6 +66,15 @@ unsigned int Piece::getMenace(Terrain & t) {
 	return menace;
 }
 
+void Piece::calculMenaceCase(Terrain & t, Piece * p, Type ty) {
+	if(p != NULL)
+		if(p->getCouleur() != couleur)
+			if(p->getType() == ty || p->getType() == archer) {
+				if(p->getSiege() == NULL) menace++;
+				else menace += 2;
+			}
+}
+
 void Piece::setSiege(Piece* S) {
 	assert(type != donjon && type != tour_de_siege);
 	assert(S->getType() == tour_de_siege);
@@ -240,15 +249,6 @@ bool Piece::deplacerHG(Terrain & t) {
 		}
 	else return false;
 	return true;
-}
-
-void Piece::calculMenaceCase(Terrain & t, Piece * p, Type ty) {
-	if(p != NULL)
-		if(p->getCouleur() != couleur)
-			if(p->getType() == ty || p->getType() == archer) {
-				if(p->getSiege() == NULL) menace++;
-				else menace += 2;
-			}
 }
 
 void Piece::testRegression() {
