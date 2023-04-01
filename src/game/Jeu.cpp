@@ -7,8 +7,8 @@
 using namespace std;
 
 Jeu::Jeu() {
-	time_t tmm = time(NULL);
-	string dt = ctime(&tmm);
+	string dt;
+	date(dt);
 	nomFichierSauvegarde = "data/sauvegarde - " + dt + ".txt";
 	char c;
 	cout << "Est-ce que le joueur 1 est un robot ? (o/n) ";
@@ -46,6 +46,41 @@ void Jeu::joueurSuivant() {
 
 void Jeu::finDePartie() {
 	cout << endl << endl << "Bravo au gagnant !"; // Bien penser au cas d'égalité aussi
+}
+
+void Jeu::mois(string & mois) {
+	if(mois == "Jan") mois = "01";
+	else if(mois == "Feb") mois = "02";
+	else if(mois == "Mar") mois = "03";
+	else if(mois == "Apr") mois = "04";
+	else if(mois == "May") mois = "05";
+	else if(mois == "Jun") mois = "06";
+	else if(mois == "Jul") mois = "07";
+	else if(mois == "Aug") mois = "08";
+	else if(mois == "Sep") mois = "09";
+	else if(mois == "Oct") mois = "10";
+	else if(mois == "Nov") mois = "11";
+	else if(mois == "Dec") mois = "12";
+}
+
+void Jeu::date(string & date) {
+	time_t t = time(NULL);
+	date = ctime(&t);
+    vector<string> tab;
+    string morceau;
+	int i = 0;
+	while(date[i] != '\0') {
+		if(date[i] != ' ')
+			morceau += date[i];
+		else if(morceau != "") {
+			tab.push_back(morceau);
+			morceau = "";
+		}
+		i++;
+	}
+	tab.push_back(morceau);
+	mois(tab[1]);
+	date = tab[1] + "-" + tab[2] + " " + tab[3];
 }
 
 void Jeu::sauvegarde(const string & nomFichier) {

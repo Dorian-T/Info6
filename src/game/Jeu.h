@@ -17,9 +17,11 @@ class Jeu {
 		void joueurSuivant(); // change le joueur courant
 		void finDePartie(); // affiche le gagnant
 
+		void mois(std::string & mois); // renvoie le mois en chiffres
 		void sauvegarde(const std::string & nomFichier); // sauvegarde la partie
 
 	public:
+		void date(std::string & date); // renvoie la date et l'heure actuelle formatee
 		Jeu();
 		void boucle();
 };
