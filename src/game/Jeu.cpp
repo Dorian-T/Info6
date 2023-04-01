@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-Jeu::Jeu(): terrain("data/fin.txt") {
+Jeu::Jeu() {
 	string dt;
 	date(dt);
 	nomFichierSauvegarde = "data/sauvegarde - " + dt + ".txt";
