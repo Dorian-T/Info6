@@ -59,6 +59,10 @@ void Jeu::finDePartie() {
 	}
 }
 
+void Jeu::jour(string & jour) {
+	if(jour[0] != '0') jour = "0" + jour;
+}
+
 void Jeu::mois(string & mois) {
 	if(mois == "Jan") mois = "01";
 	else if(mois == "Feb") mois = "02";
@@ -91,6 +95,7 @@ void Jeu::date(string & date) {
 	}
 	tab.push_back(morceau);
 	mois(tab[1]);
+	jour(tab[2]);
 	date = tab[1] + "-" + tab[2] + " " + tab[3];
 }
 
