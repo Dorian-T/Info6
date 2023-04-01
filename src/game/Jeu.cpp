@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-Jeu::Jeu() {
+Jeu::Jeu(): terrain("data/fin.txt") {
 	string dt;
 	date(dt);
 	nomFichierSauvegarde = "data/sauvegarde - " + dt + ".txt";
@@ -36,8 +36,8 @@ void Jeu::boucle() {
 		joueurSuivant();
 		cout << terrain;
 		sauvegarde(nomFichierSauvegarde);
+		finDePartie();
 	}
-	finDePartie();
 }
 
 void Jeu::joueurSuivant() {
@@ -45,7 +45,18 @@ void Jeu::joueurSuivant() {
 }
 
 void Jeu::finDePartie() {
-	cout << endl << endl << "Bravo au gagnant !"; // Bien penser au cas d'égalité aussi
+	Piece* P1 = terrain.getPiece(1, 0);
+	Piece* P2 = terrain.getPiece(5, 0);
+	if((P1 == NULL || P1->getType() != donjon) && (P2 == NULL || P2->getType() != donjon)) {
+		cout << endl << endl << "Le joueur 1 a gagne !" << endl;
+		fin = true;
+	}
+	P1 = terrain.getPiece(1, 8);
+	P2 = terrain.getPiece(5, 8);
+	if((P1 == NULL || P1->getType() != donjon) && (P2 == NULL || P2->getType() != donjon)) {
+		cout << endl << endl << "Le joueur 2 a gagne !" << endl;
+		fin = true;
+	}
 }
 
 void Jeu::mois(string & mois) {

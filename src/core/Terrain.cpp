@@ -219,6 +219,7 @@ void Terrain::testRegression() {
 
 	Terrain test("data/testTerrain.txt");
 	assert(test.getPiece(1, 1)->getType() == fantassin);
+	cout << test;
 	cout << "\tTest constructeur parametre : OK" << endl;
 	cout << "\tTest getPiece : OK" << endl;
 
