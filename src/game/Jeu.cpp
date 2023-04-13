@@ -1,5 +1,6 @@
 #include "Jeu.h"
 #include "../core/Piece.h"
+#include "../core/Terrain.h"
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -9,32 +10,39 @@ using namespace std;
 Jeu::Jeu() {
 	string dt;
 	date(dt);
-	nomFichierSauvegarde = "data/sauvegarde - " + dt + ".txt";
+	nomFichierSauvegarde = "data/sauvegardes/sauvegarde - " + dt + ".txt";
+	terrain = new Terrain();
 	char c;
 	cout << "Est-ce que le joueur 1 est un robot ? (o/n) ";
 	cin >> c;
-	if(c == 'o') J1 = Joueur(rouge, true); // mettre un mutateur à la place
+	if(c == 'o') J1 = new Joueur(rouge, true);
+	else J1 = new Joueur(rouge, false);
 	cout << "Est-ce que le joueur 2 est un robot ? (o/n) ";
 	cin >> c;
-	if(c == 'o') J2 = Joueur(noir, true);
+	if(c == 'o') J2 = new Joueur(noir, true);
+	else J2 = new Joueur(noir, false);
 	joueur1 = true;
 	fin = false;
 }
 
+Jeu::Jeu(const string & s): Jeu() {
+	terrain = new Terrain(s);
+}
+
 void Jeu::boucle() {
-	cout << terrain;
+	cout << *terrain;
 	sauvegarde(nomFichierSauvegarde);
 	while (!fin) {
 		if (joueur1) {
 			cout << "Joueur 1 : ";
-			J1.Joue(terrain);
+			J1->Joue(*terrain);
 		}
 		else {
 			cout << "Joueur 2 : ";
-			J2.Joue(terrain);
+			J2->Joue(*terrain);
 		}
 		joueurSuivant();
-		cout << terrain;
+		cout << *terrain;
 		sauvegarde(nomFichierSauvegarde);
 		finDePartie();
 	}
@@ -45,14 +53,14 @@ void Jeu::joueurSuivant() {
 }
 
 void Jeu::finDePartie() {
-	Piece* P1 = terrain.getPiece(1, 0);
-	Piece* P2 = terrain.getPiece(5, 0);
+	Piece* P1 = terrain->getPiece(1, 0);
+	Piece* P2 = terrain->getPiece(5, 0);
 	if((P1 == NULL || P1->getType() != donjon) && (P2 == NULL || P2->getType() != donjon)) {
 		cout << endl << endl << "Le joueur 1 a gagne !" << endl;
 		fin = true;
 	}
-	P1 = terrain.getPiece(1, 8);
-	P2 = terrain.getPiece(5, 8);
+	P1 = terrain->getPiece(1, 8);
+	P2 = terrain->getPiece(5, 8);
 	if((P1 == NULL || P1->getType() != donjon) && (P2 == NULL || P2->getType() != donjon)) {
 		cout << endl << endl << "Le joueur 2 a gagne !" << endl;
 		fin = true;

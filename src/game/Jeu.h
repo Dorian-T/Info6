@@ -4,13 +4,13 @@
 
 class Jeu {
 	private:
-		Joueur J1 = Joueur(rouge, false);
-		Joueur J2 = Joueur(noir, false);
+		Joueur *J1;
+		Joueur *J2;
 
 		bool joueur1;
 		bool fin;
 
-		Terrain terrain;
+		Terrain *terrain;
 
 		std::string nomFichierSauvegarde;
 
@@ -24,5 +24,6 @@ class Jeu {
 
 	public:
 		Jeu();
+		Jeu(const std::string & s);
 		void boucle();
 };

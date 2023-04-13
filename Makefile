@@ -5,7 +5,7 @@ CORE_OBJS = obj/Piece.o obj/Terrain.o
 CORE_HEADERS = $(CORE_PATH)Piece.h $(CORE_PATH)Terrain.h
 
 GAME_PATH = src/game/
-GAME_OBJS = obj/Joueur.o obj/jeu.o
+GAME_OBJS = obj/Joueur.o obj/Jeu.o
 GAME_HEADERS = $(GAME_PATH)Joueur.h $(GAME_PATH)Jeu.h
 
 
@@ -35,10 +35,10 @@ bin/main: $(GAME_OBJS) $(CORE_OBJS) obj/main.o
 obj/Joueur.o: $(GAME_PATH)Joueur.cpp $(GAME_PATH)Joueur.h $(CORE_HEADERS)
 	g++ $(FLAGS) -c $(GAME_PATH)Joueur.cpp -o obj/Joueur.o
 
-obj/jeu.o: $(GAME_PATH)Jeu.cpp $(GAME_PATH)Jeu.h $(GAME_PATH)Joueur.h $(CORE_HEADERS)
-	g++ $(FLAGS) -c $(GAME_PATH)Jeu.cpp -o obj/jeu.o
+obj/Jeu.o: $(GAME_PATH)Jeu.cpp $(GAME_PATH)Jeu.h $(GAME_PATH)Joueur.h $(CORE_HEADERS)
+	g++ $(FLAGS) -c $(GAME_PATH)Jeu.cpp -o obj/Jeu.o
 
-obj/main.o: $(GAME_PATH)Jeu.h $(CORE_HEADERS)
+obj/main.o: $(GAME_PATH)main.cpp $(GAME_HEADERS) $(CORE_HEADERS)
 	g++ $(FLAGS) -c $(GAME_PATH)main.cpp -o obj/main.o
 
 
