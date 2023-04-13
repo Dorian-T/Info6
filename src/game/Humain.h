@@ -2,7 +2,6 @@
 #define HUMAIN_H
 
 #include "../core/Terrain.h"
-#include "Joueur.h"
 
 #include <string>
 
