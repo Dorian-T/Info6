@@ -12,7 +12,7 @@ class Terrain {
         Piece* grille[9][7]; // tableau statique de pointeurs sur Piece
 
 	public:
-		Terrain();
+		Terrain(); // TODO : à supprimer
         Terrain(const std::string & fichier);
 		~Terrain();
 
