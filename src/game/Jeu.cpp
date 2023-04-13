@@ -1,26 +1,24 @@
-#include "Jeu.h"
 #include "../core/Piece.h"
 #include "../core/Terrain.h"
+#include "Humain.h"
+#include "Robot.h"
+#include "Jeu.h"
+
 #include <ctime>
 #include <fstream>
 #include <iostream>
 #include <string>
+
 using namespace std;
+
 
 Jeu::Jeu() {
 	string dt;
 	date(dt);
 	nomFichierSauvegarde = "data/sauvegardes/sauvegarde - " + dt + ".txt";
 	terrain = new Terrain();
-	char c;
-	cout << "Est-ce que le joueur 1 est un robot ? (o/n) ";
-	cin >> c;
-	if(c == 'o') J1 = new Joueur(rouge, true);
-	else J1 = new Joueur(rouge, false);
-	cout << "Est-ce que le joueur 2 est un robot ? (o/n) ";
-	cin >> c;
-	if(c == 'o') J2 = new Joueur(noir, true);
-	else J2 = new Joueur(noir, false);
+	J1 = new Humain(rouge);
+	J2 = new Humain(noir);
 	joueur1 = true;
 	fin = false;
 }
@@ -35,11 +33,11 @@ void Jeu::boucle() {
 	while (!fin) {
 		if (joueur1) {
 			cout << "Joueur 1 : ";
-			J1->Joue(*terrain);
+			J1->joue(*terrain);
 		}
 		else {
 			cout << "Joueur 2 : ";
-			J2->Joue(*terrain);
+			J2->joue(*terrain);
 		}
 		joueurSuivant();
 		cout << *terrain;

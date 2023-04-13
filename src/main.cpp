@@ -1,10 +1,10 @@
-#include "Jeu.h"
-#include "../core/Terrain.h"
+#include "game/Jeu.h"
+#include "core/Terrain.h"
 #include <iostream>
 using namespace std;
 
 int main() {
-	Jeu J("data/tour_de_siege.txt");
+	Jeu J("data/classique.txt");
 	J.boucle();
 	return 0;
 }

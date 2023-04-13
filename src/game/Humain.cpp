@@ -1,31 +1,19 @@
 #include "../core/Piece.h"
 #include "../core/Terrain.h"
-#include "Joueur.h"
+#include "Humain.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
+
 using namespace std;
 
-Joueur::Joueur(Couleur c, bool r) {
-	robot = false;
+
+Humain::Humain(Couleur c) {
 	couleur = c;
 }
 
-void Joueur::Joue(Terrain & t) {
-	if (robot) joueRobot(t);
-	else joueHumain(t);
-}
-
-bool Joueur::coordonneesValides(Terrain & t, int x, int y) {
-	if(x < 0 || x > 6 || y < 0 || y > 8) return false;
-	Piece* P = t.getPiece(x, y);
-	if(P == NULL) return false;
-	if(P->getCouleur() != couleur) return false;
-	if(P->getType() == donjon || P->getType() == tour_de_siege) return false;
-	return true;
-}
-
-void Joueur::joueHumain(Terrain & t) {
+void Humain::joue(Terrain & t) {
 	unsigned int i;
 	vector<string> v;
 	string s;
@@ -33,7 +21,7 @@ void Joueur::joueHumain(Terrain & t) {
 	do {
 		// coordonnees
 		do {
-			i = hChoixCoordonnees(t);
+			i = choixCoordonnees(t);
 			P = t.getPiece(i % 10, i / 10);
 			if(P->getType() == donjon || P->getType() == tour_de_siege) cout << "Cette piece n'est pas deplacable." << endl;
 		} while(P->getType() == donjon || P->getType() == tour_de_siege);
@@ -61,7 +49,7 @@ void Joueur::joueHumain(Terrain & t) {
 	} while(!P->deplacer(t, s));
 }
 
-unsigned int Joueur::hChoixCoordonnees(Terrain & t) {
+unsigned int Humain::choixCoordonnees(Terrain & t) {
 	unsigned int i;
 	cout << "Entrez les coordonnees de la piece a deplacer (yx) : ";
 	do {
@@ -70,6 +58,11 @@ unsigned int Joueur::hChoixCoordonnees(Terrain & t) {
 	return i;
 }
 
-void Joueur::joueRobot(Terrain & t) {
-	// TODO
+bool Humain::coordonneesValides(Terrain & t, int x, int y) {
+	if(x < 0 || x > 6 || y < 0 || y > 8) return false;
+	Piece* P = t.getPiece(x, y);
+	if(P == NULL) return false;
+	if(P->getCouleur() != couleur) return false;
+	if(P->getType() == donjon || P->getType() == tour_de_siege) return false;
+	return true;
 }

@@ -5,17 +5,21 @@ CORE_OBJS = obj/Piece.o obj/Terrain.o
 CORE_HEADERS = $(CORE_PATH)Piece.h $(CORE_PATH)Terrain.h
 
 GAME_PATH = src/game/
-GAME_OBJS = obj/Joueur.o obj/Jeu.o
-GAME_HEADERS = $(GAME_PATH)Joueur.h $(GAME_PATH)Jeu.h
+GAME_OBJS = obj/Humain.o obj/Jeu.o
+GAME_HEADERS = $(GAME_PATH)Humain.h $(GAME_PATH)Jeu.h
 
 
 all: bin/tests bin/main
 
 
-# core
+bin/main: obj/main.o $(GAME_OBJS) $(CORE_OBJS)
+	g++ $(FLAGS) obj/main.o $(GAME_OBJS) $(CORE_OBJS) -o bin/main
 
-bin/tests: $(CORE_OBJS) $(GAME_OBJS) obj/tests.o
-	g++ $(FLAGS) $(CORE_OBJS) $(GAME_OBJS) obj/tests.o -o bin/tests
+obj/main.o: src/main.cpp $(GAME_HEADERS) $(CORE_HEADERS)
+	g++ $(FLAGS) -c src/main.cpp -o obj/main.o
+
+
+# core
 
 obj/Piece.o: $(CORE_PATH)Piece.cpp $(CORE_PATH)Piece.h
 	g++ $(FLAGS) -c $(CORE_PATH)Piece.cpp -o obj/Piece.o
@@ -23,23 +27,21 @@ obj/Piece.o: $(CORE_PATH)Piece.cpp $(CORE_PATH)Piece.h
 obj/Terrain.o: $(CORE_PATH)Terrain.cpp $(CORE_PATH)Terrain.h $(CORE_PATH)Piece.h
 	g++ $(FLAGS) -c $(CORE_PATH)Terrain.cpp -o obj/Terrain.o
 
+
+bin/tests: $(CORE_OBJS) $(GAME_OBJS) obj/tests.o
+	g++ $(FLAGS) $(CORE_OBJS) $(GAME_OBJS) obj/tests.o -o bin/tests
+
 obj/tests.o: $(CORE_PATH)tests.cpp $(CORE_HEADERS) $(GAME_HEADERS)
 	g++ $(FLAGS) -c $(CORE_PATH)tests.cpp -o obj/tests.o
 
 
 # game
 
-bin/main: $(GAME_OBJS) $(CORE_OBJS) obj/main.o
-	g++ $(FLAGS) $(GAME_OBJS) $(CORE_OBJS) obj/main.o -o bin/main
+obj/Humain.o: $(GAME_PATH)Humain.cpp $(GAME_PATH)Humain.h $(CORE_HEADERS)
+	g++ $(FLAGS) -c $(GAME_PATH)Humain.cpp -o obj/Humain.o
 
-obj/Joueur.o: $(GAME_PATH)Joueur.cpp $(GAME_PATH)Joueur.h $(CORE_HEADERS)
-	g++ $(FLAGS) -c $(GAME_PATH)Joueur.cpp -o obj/Joueur.o
-
-obj/Jeu.o: $(GAME_PATH)Jeu.cpp $(GAME_PATH)Jeu.h $(GAME_PATH)Joueur.h $(CORE_HEADERS)
+obj/Jeu.o: $(GAME_PATH)Jeu.cpp $(GAME_PATH)Jeu.h $(GAME_PATH)Humain.h $(CORE_HEADERS)
 	g++ $(FLAGS) -c $(GAME_PATH)Jeu.cpp -o obj/Jeu.o
-
-obj/main.o: $(GAME_PATH)main.cpp $(GAME_HEADERS) $(CORE_HEADERS)
-	g++ $(FLAGS) -c $(GAME_PATH)main.cpp -o obj/main.o
 
 
 clean:

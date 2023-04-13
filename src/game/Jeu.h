@@ -1,11 +1,14 @@
-#include "Joueur.h"
 #include "../core/Terrain.h"
+#include "Humain.h"
+#include "Robot.h"
+
 #include <string>
+
 
 class Jeu {
 	private:
-		Joueur *J1;
-		Joueur *J2;
+		Humain *J1;
+		Humain *J2;
 
 		bool joueur1;
 		bool fin;
