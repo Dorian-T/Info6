@@ -44,6 +44,7 @@ class Piece {
 	public:
 		Piece();
 		Piece(unsigned int X, unsigned int Y, Couleur C, Type T);
+		Piece(const Piece & p);
 		~Piece();
 
 		// accesseurs

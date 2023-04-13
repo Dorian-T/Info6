@@ -23,6 +23,16 @@ Piece::Piece(unsigned int X, unsigned int Y, Couleur C, Type T) {
 	menace = 0;
 }
 
+Piece::Piece(const Piece & p) {
+	x = p.x;
+	y = p.y;
+	couleur = p.couleur;
+	type = p.type;
+	if(p.siege != NULL) siege = new Piece(*(p.siege));
+	else siege = NULL;
+	menace = p.menace;
+}
+
 Piece::~Piece() {
 	if(siege != NULL) delete siege;
 }
@@ -276,6 +286,16 @@ void Piece::testRegression() {
 	Piece P(1, 2, rouge, paladin);
 	assert(P.getX() == 1); assert(P.getY() == 2); assert(P.getCouleur() == rouge); assert(P.getType() == paladin); assert(P.getSiege() == NULL);
 	cout << "\tTest constructeur parametre : OK" << endl;
+
+	Piece *S = new Piece(1, 2, rouge, tour_de_siege);
+	P.setSiege(S);
+	assert(P.getSiege() == S);
+	cout << "\tTest setSiege : OK" << endl;
+
+	Piece copie(P);
+	assert(copie.getX() == 1); assert(copie.getY() == 2); assert(copie.getCouleur() == rouge); assert(copie.getType() == paladin);
+	assert(copie.getSiege() != NULL); assert(copie.getSiege()->getX() == 1); assert(copie.getSiege()->getY() == 2); assert(copie.getSiege()->getCouleur() == rouge); assert(copie.getSiege()->getType() == tour_de_siege);
+	cout << "\tTest constructeur par copie : OK" << endl;
 
 	// TODO : test deplacer
 	// TODO : test calculMenace
