@@ -16,6 +16,7 @@ class Terrain {
 	public:
 		Terrain(); // TODO : à supprimer
         Terrain(const std::string & fichier);
+		Terrain(const Terrain & t);
 		~Terrain();
 
 		Piece* getPiece(unsigned int x, unsigned int y) const;

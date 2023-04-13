@@ -85,6 +85,16 @@ Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noi
 	else cout << "Erreur lors de l'ouverture du fichier " << fichier << endl;
 }
 
+Terrain::Terrain(const Terrain & t) {
+	for(int i = 0; i < 9; i++)
+		for(int j = 0; j < 7; j++) {
+			if(t.grille[i][j] != NULL)
+				grille[i][j] = new Piece(*t.grille[i][j]);
+			else
+				grille[i][j] = NULL;
+		}
+}
+
 Terrain::~Terrain() {
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 7; j++) {
@@ -224,9 +234,25 @@ void Terrain::testRegression() {
 
 	Terrain test("data/testTerrain.txt");
 	assert(test.getPiece(1, 1)->getType() == fantassin);
-	cout << test;
 	cout << "\tTest constructeur parametre : OK" << endl;
 	cout << "\tTest getPiece : OK" << endl;
+
+	Terrain T("data/classique.txt");
+	Terrain copie(T);
+	for(int i = 0; i < 9; i++)
+		for(int j = 0; j < 7; j++) {
+			if(T.getPiece(j, i) == NULL)
+				assert(copie.getPiece(j, i) == NULL);
+			else {
+				assert(copie.getPiece(j, i)->getType() == T.getPiece(j, i)->getType());
+				assert(copie.getPiece(j, i)->getCouleur() == T.getPiece(j, i)->getCouleur());
+				if(T.getPiece(j, i)->getType() != donjon && T.getPiece(j, i)->getType() != tour_de_siege && T.getPiece(j, i)->getSiege() != NULL) {
+					assert(copie.getPiece(j, i)->getSiege()->getType() == T.getPiece(j, i)->getSiege()->getType());
+					assert(copie.getPiece(j, i)->getSiege()->getCouleur() == T.getPiece(j, i)->getSiege()->getCouleur());
+				}
+			}
+		}
+	cout << "\tTest constructeur par copie : OK" << endl;
 
 	assert(test.verifieCoup(1, 1, 1, 0, false));
 	cout << "\tTest verifieCoup : OK" << endl;
