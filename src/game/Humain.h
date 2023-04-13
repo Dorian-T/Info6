@@ -1,6 +1,7 @@
 #ifndef HUMAIN_H
 #define HUMAIN_H
 
+#include "../core/Piece.h"
 #include "../core/Terrain.h"
 
 #include <string>
