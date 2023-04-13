@@ -70,12 +70,12 @@ Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noi
 				if(c == 'F') grille[i][j] = new Piece(j, i, rouge, fantassin);
 				else if(c == 'A') grille[i][j] = new Piece(j, i, rouge, archer);
 				else if(c == 'P') grille[i][j] = new Piece(j, i, rouge, paladin);
-				else if(c == 'S') grille[i][j] = new Piece(j, i, rouge, tour_de_siege);
+				else if(c == 'T') grille[i][j] = new Piece(j, i, rouge, tour_de_siege);
 				else if(c == 'D') grille[i][j] = new Piece(j, i, rouge, donjon);
 				else if(c == 'f') grille[i][j] = new Piece(j, i, noir, fantassin);
 				else if(c == 'a') grille[i][j] = new Piece(j, i, noir, archer);
 				else if(c == 'p') grille[i][j] = new Piece(j, i, noir, paladin);
-				else if(c == 's') grille[i][j] = new Piece(j, i, noir, tour_de_siege);
+				else if(c == 't') grille[i][j] = new Piece(j, i, noir, tour_de_siege);
 				else if(c == 'd') grille[i][j] = new Piece(j, i, noir, donjon);
 				else grille[i][j] = NULL;
 			}
@@ -104,6 +104,10 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 			if(recule)
 				return false;
 			else {
+				if(grille[ay][ax]->getSiege() != NULL) {
+					cout << "adresse siege : " << grille[ay][ax]->getSiege() << endl;
+					cout << "couleur siege : " << grille[ay][ax]->getSiege()->getCouleur() << endl;
+				}
 				grille[ny][nx] = grille[ay][ax];
 				if(grille[ny][nx]->getSiege() != NULL && grille[ny][nx]->getSiege()->getCouleur() != grille[ny][nx]->getCouleur()) { // segfault à la descente d'un donjon
 					grille[ay][ax] = grille[ny][nx]->getSiege();
@@ -121,6 +125,7 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 						grille[ny][nx] = grille[ay][ax];
 						grille[ay][ax] = temp;
 						temp = NULL;
+						cout << "couleur siege : " << grille[ny][nx]->getSiege()->getCouleur() << endl;
 				}
 				else // si la case n'est pas un siege
 					return false;
@@ -140,11 +145,9 @@ bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, uns
 							grille[ny][nx] = grille[ay][ax];
 							grille[ay][ax] = grille[ny][nx]->getSiege();
 							grille[ny][nx]->setSiege(NULL);
-							// mange = true;
 						}
 						else
 							return false;
-					// ne pas oublier que si les 2 donjons sont detruits, c'est la fin de partie
 				}
 				else
 					return false;
