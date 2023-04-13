@@ -100,10 +100,10 @@ bool Piece::deplacer(Terrain & t, const string & s) {
 bool Piece::deplacerH(Terrain & t) {
 	if(type == fantassin || type == archer)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x, y-1, false)) y--;
+			if(t.verifieCoup(x, y, x, y-1, false)) y--;
 			else return false;
 		else
-			if(t.verifieCase(x, y, x, y+1, false)) y++;
+			if(t.verifieCoup(x, y, x, y+1, false)) y++;
 			else return false;
 	else return false;
 	return true;
@@ -112,13 +112,13 @@ bool Piece::deplacerH(Terrain & t) {
 bool Piece::deplacerHD(Terrain & t) {
 	if(type == paladin || type == archer)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x+1, y-1, false)) {
+			if(t.verifieCoup(x, y, x+1, y-1, false)) {
 				x++;
 				y--;
 			}
 			else return false;
 		else
-			if(t.verifieCase(x, y, x-1, y+1, false)) {
+			if(t.verifieCoup(x, y, x-1, y+1, false)) {
 				x--;
 				y++;
 			}
@@ -130,10 +130,10 @@ bool Piece::deplacerHD(Terrain & t) {
 bool Piece::deplacerD(Terrain & t) {
 	if(type == fantassin || type == archer)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x+1, y, false)) x++;
+			if(t.verifieCoup(x, y, x+1, y, false)) x++;
 			else return false;
 		else
-			if(t.verifieCase(x, y, x-1, y, false)) x--;
+			if(t.verifieCoup(x, y, x-1, y, false)) x--;
 			else return false;
 	else return false;
 	return true;
@@ -142,26 +142,26 @@ bool Piece::deplacerD(Terrain & t) {
 bool Piece::deplacerBD(Terrain & t) {
 	if(type == paladin)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x+1, y+1, true)) {
+			if(t.verifieCoup(x, y, x+1, y+1, true)) {
 				x++;
 				y++;
 			}
 			else return false;
 		else
-			if(t.verifieCase(x, y, x-1, y-1, true)) {
+			if(t.verifieCoup(x, y, x-1, y-1, true)) {
 				x--;
 				y--;
 			}
 			else return false;
 	else if(type == archer)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x+1, y+1, false)) {
+			if(t.verifieCoup(x, y, x+1, y+1, false)) {
 				x++;
 				y++;
 			}
 			else return false;
 		else
-			if(t.verifieCase(x, y, x-1, y-1, false)) {
+			if(t.verifieCoup(x, y, x-1, y-1, false)) {
 				x--;
 				y--;
 			}
@@ -173,17 +173,17 @@ bool Piece::deplacerBD(Terrain & t) {
 bool Piece::deplacerB(Terrain & t) {
 	if(type == fantassin)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x, y+1, true)) y++;
+			if(t.verifieCoup(x, y, x, y+1, true)) y++;
 			else return false;
 		else
-			if(t.verifieCase(x, y, x, y-1, true)) y--;
+			if(t.verifieCoup(x, y, x, y-1, true)) y--;
 			else return false;
 	else if(type == archer)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x, y+1, false)) y++;
+			if(t.verifieCoup(x, y, x, y+1, false)) y++;
 			else return false;
 		else
-			if(t.verifieCase(x, y, x, y-1, false)) y--;
+			if(t.verifieCoup(x, y, x, y-1, false)) y--;
 			else return false;
 	else return false;
 	return true;
@@ -192,26 +192,26 @@ bool Piece::deplacerB(Terrain & t) {
 bool Piece::deplacerBG(Terrain & t) {
 	if(type == paladin)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x-1, y+1, true)) {
+			if(t.verifieCoup(x, y, x-1, y+1, true)) {
 				x--;
 				y++;
 			}
 			else return false;
 		else
-			if(t.verifieCase(x, y, x+1, y-1, true)) {
+			if(t.verifieCoup(x, y, x+1, y-1, true)) {
 				x++;
 				y--;
 			}
 			else return false;
 	else if(type == archer)
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x-1, y+1, false)) {
+			if(t.verifieCoup(x, y, x-1, y+1, false)) {
 				x--;
 				y++;
 			}
 			else return false;
 		else
-			if(t.verifieCase(x, y, x+1, y-1, false)) {
+			if(t.verifieCoup(x, y, x+1, y-1, false)) {
 				x++;
 				y--;
 			}
@@ -223,10 +223,10 @@ bool Piece::deplacerBG(Terrain & t) {
 bool Piece::deplacerG(Terrain & t) {
 	if(type == fantassin || type == archer) {
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x-1, y, false)) x--;
+			if(t.verifieCoup(x, y, x-1, y, false)) x--;
 			else return false;
 		else
-			if(t.verifieCase(x, y, x+1, y, false)) x++;
+			if(t.verifieCoup(x, y, x+1, y, false)) x++;
 			else return false;
 	}
 	else return false;
@@ -236,13 +236,13 @@ bool Piece::deplacerG(Terrain & t) {
 bool Piece::deplacerHG(Terrain & t) {
 	if(type == paladin || type == archer) {
 		if(couleur == rouge)
-			if(t.verifieCase(x, y, x-1, y-1, false)) {
+			if(t.verifieCoup(x, y, x-1, y-1, false)) {
 				x--;
 				y--;
 			}
 			else return false;
 		else
-			if(t.verifieCase(x, y, x+1, y+1, false)) {
+			if(t.verifieCoup(x, y, x+1, y+1, false)) {
 				x++;
 				y++;
 			}

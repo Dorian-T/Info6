@@ -1,9 +1,11 @@
 #include "Piece.h"
 #include "Terrain.h"
+
 #include <assert.h>
 #include <fstream>
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 Terrain::Terrain() {
@@ -95,7 +97,7 @@ Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
 	return grille[y][x];
 }
 
-bool Terrain::verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule) {
+bool Terrain::verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule) {
 	Piece *temp = NULL;
 	if(nx < 0 || nx > 7 || ny < 0 || ny > 9) // si la case n'est pas dans le terrain
 		return false;
@@ -226,8 +228,8 @@ void Terrain::testRegression() {
 	cout << "\tTest constructeur parametre : OK" << endl;
 	cout << "\tTest getPiece : OK" << endl;
 
-	assert(test.verifieCase(1, 1, 1, 0, false));
-	cout << "\tTest verifieCase : OK" << endl;
+	assert(test.verifieCoup(1, 1, 1, 0, false));
+	cout << "\tTest verifieCoup : OK" << endl;
 
 	cout << "Test Terrain : OK" << endl << endl;
 }
