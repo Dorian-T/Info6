@@ -11,6 +11,8 @@ class Terrain {
 	private:
         Piece* grille[9][7]; // tableau statique de pointeurs sur Piece
 
+		void realiseCoup(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule);
+
 	public:
 		Terrain(); // TODO : à supprimer
         Terrain(const std::string & fichier);
@@ -18,7 +20,7 @@ class Terrain {
 
 		Piece* getPiece(unsigned int x, unsigned int y) const;
 
-		bool verifieCase(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule);
+		bool verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule);
 
 		friend std::ostream& operator<<(std::ostream& os, const Terrain& t);
 
