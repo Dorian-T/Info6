@@ -176,7 +176,20 @@ void Robot::deplacerArcher(Terrain & t, unsigned int x, unsigned int y) {
 // évaluation :
 
 void Robot::evaluer(const Terrain & t) {
-	// TODO
+	int score, total = 0;
+	for(unsigned int y = 0; y < 9; y++)
+		for(unsigned int x = 0; x < 7; x++) {
+			Piece * P = t.getPiece(x, y);
+			if(P != NULL && P->getType() != donjon && P->getType() != tour_de_siege) {
+				score = 0;
+				// TODO : évaluer la pièce
+				if(P->getCouleur() == couleur) total += score;
+				else total -= score;
+			}
+		}
+	if(total > meilleurScore) {
+		// TODO
+	}
 }
 
 void Robot::trouverDonjon(const Terrain & t) {
