@@ -14,48 +14,19 @@ Humain::Humain(Couleur c) {
 }
 
 void Humain::joue(Terrain & t) {
-	unsigned int i;
-	vector<string> v;
-	string s;
-	Piece * P;
+	Piece *P;
 	do {
-		// coordonnees
-		do {
-			i = choixCoordonnees(t);
-			P = t.getPiece(i % 10, i / 10);
-			if(P->getType() == donjon || P->getType() == tour_de_siege) cout << "Cette piece n'est pas deplacable." << endl;
-		} while(P->getType() == donjon || P->getType() == tour_de_siege);
-
-		// direction
-		cout << "Entrez une direction (";
-		if(P->getType() == fantassin) {
-			cout << "h, d, b, g) : ";
-			do {
-				cin >> s;
-			} while (s != "h" && s != "d" && s != "b" && s != "g");
-		}
-		else if(P->getType() == paladin) {
-			cout << "hd, bd, bg, hg) : ";
-			do {
-				cin >> s;
-			} while (s != "hd" && s != "bd" && s != "bg" && s != "hg");
-		}
-		else {
-			cout << "h, hd, d, bd, b, bg, g, hg) : ";
-			do {
-				cin >> s;
-			} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
-		}
-	} while(!P->deplacer(t, s));
+		P = choixCoordonnees(t);
+	} while(!choixDirection(t, P));
 }
 
-unsigned int Humain::choixCoordonnees(Terrain & t) {
+Piece* Humain::choixCoordonnees(Terrain & t) {
 	unsigned int i;
-	cout << "Entrez les coordonnees de la piece a deplacer (yx) : ";
 	do {
+		cout << "Entrez les coordonnees de la piece a deplacer (yx) : ";
 		cin >> i;
 	} while (!coordonneesValides(t, i % 10, i / 10));
-	return i;
+	return t.getPiece(i % 10, i / 10);
 }
 
 bool Humain::coordonneesValides(Terrain & t, int x, int y) {
@@ -65,4 +36,24 @@ bool Humain::coordonneesValides(Terrain & t, int x, int y) {
 	if(P->getCouleur() != couleur) return false;
 	if(P->getType() == donjon || P->getType() == tour_de_siege) return false;
 	return true;
+}
+
+bool Humain::choixDirection(Terrain & t, Piece * P) {
+	string s;
+	do {
+		cout << "Entrez une direction (";
+		if(P->getType() == fantassin) {
+			cout << "h, d, b, g) : ";
+			cin >> s;
+		}
+		else if(P->getType() == paladin) {
+			cout << "hd, bd, bg, hg) : ";
+			cin >> s;
+		}
+		else {
+			cout << "h, hd, d, bd, b, bg, g, hg) : ";
+			cin >> s;
+		}
+	} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
+	return P->deplacer(t, s);
 }

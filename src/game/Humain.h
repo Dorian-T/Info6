@@ -12,8 +12,8 @@ class Humain {
 		Couleur couleur;
 
 		bool coordonneesValides(Terrain & t, int x, int y);
-		unsigned int choixCoordonnees(Terrain & t);
-		std::string choixDirection();
+		Piece* choixCoordonnees(Terrain & t);
+		bool choixDirection(Terrain & t, Piece * P);
 
 	public:
 		Humain(Couleur c);
