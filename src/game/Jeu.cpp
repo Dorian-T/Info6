@@ -108,7 +108,7 @@ void Jeu::date(string & date) {
 void Jeu::sauvegarde(const string & nomFichier) {
 	ofstream fichier(nomFichier.c_str(), ios::app);
 	if(fichier) {
-		fichier << terrain;
+		fichier << *terrain;
 		fichier << endl << endl;
 		fichier.close();
 	}
