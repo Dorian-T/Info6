@@ -46,35 +46,35 @@ void Robot::deplacerFantassin(Terrain & t, unsigned int x, unsigned int y) {
 	assert(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == fantassin);
 	if(couleur == rouge) {
 		if(y-1 >= 0 && t.verifieCoup(x, y, x, y-1, false)) {
-			evaluer(t);
+			evaluer(t, x*10+y, x*10+y-1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(y+1 < 9 && t.verifieCoup(x, y, x, y+1, true)) {
-			evaluer(t);
+			evaluer(t, x*10+y, x*10+y+1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 	}
 	else {
 		if(y+1 < 9 && t.verifieCoup(x, y, x, y+1, false)) {
-			evaluer(t);
+			evaluer(t, x*10+y, x*10+y+1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(y-1 >= 0 && t.verifieCoup(x, y, x, y-1, true)) {
-			evaluer(t);
+			evaluer(t, x*10+y, x*10+y-1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 	}
 	if(x+1 < 7 && t.verifieCoup(x, y, x+1, y, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x+1)*10+y);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(x-1 >= 0 && t.verifieCoup(x, y, x-1, y, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x-1)*10+y);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
@@ -84,44 +84,44 @@ void Robot::deplacerPaladin(Terrain & t, unsigned int x, unsigned int y) {
 	assert(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == paladin);
 	if(couleur == rouge) {
 		if(x+1 < 7 && y-1 >= 0 && t.verifieCoup(x, y, x+1, y-1, false)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x+1)*10+y-1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(x-1 >= 0 && y-1 >= 0 && t.verifieCoup(x, y, x-1, y-1, false)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x-1)*10+y-1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(x+1 < 7 && y+1 < 9 && t.verifieCoup(x, y, x+1, y+1, true)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x+1)*10+y+1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(x-1 >= 0 && y+1 < 9 && t.verifieCoup(x, y, x-1, y+1, true)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x-1)*10+y+1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 	}
 	else {
 		if(x+1 < 7 && y+1 < 9 && t.verifieCoup(x, y, x+1, y+1, false)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x+1)*10+y+1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(x-1 >= 0 && y+1 < 9 && t.verifieCoup(x, y, x-1, y+1, false)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x-1)*10+y+1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(x+1 < 7 && y-1 >= 0 && t.verifieCoup(x, y, x+1, y-1, true)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x+1)*10+y-1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 		if(x-1 >= 0 && y-1 >= 0 && t.verifieCoup(x, y, x-1, y-1, true)) {
-			evaluer(t);
+			evaluer(t, x*10+y, (x-1)*10+y-1);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
@@ -131,42 +131,42 @@ void Robot::deplacerPaladin(Terrain & t, unsigned int x, unsigned int y) {
 void Robot::deplacerArcher(Terrain & t, unsigned int x, unsigned int y) {
 	assert(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == archer);
 	if(y-1 >= 0 && t.verifieCoup(x, y, x, y-1, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, x*10+y-1);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(x+1 < 7 && y-1 >= 0 && t.verifieCoup(x, y, x+1, y-1, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x+1)*10+y-1);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(x+1 < 7 && t.verifieCoup(x, y, x+1, y, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x+1)*10+y);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(x+1 < 7 && y+1 < 9 && t.verifieCoup(x, y, x+1, y+1, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x+1)*10+y+1);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(y+1 < 9 && t.verifieCoup(x, y, x, y+1, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, x*10+y+1);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(x-1 >= 0 && y+1 < 9 && t.verifieCoup(x, y, x-1, y+1, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x-1)*10+y+1);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(x-1 >= 0 && t.verifieCoup(x, y, x-1, y, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x-1)*10+y);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
 	if(x-1 >= 0 && y-1 >= 0 && t.verifieCoup(x, y, x-1, y-1, false)) {
-		evaluer(t);
+		evaluer(t, x*10+y, (x-1)*10+y-1);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
@@ -175,7 +175,7 @@ void Robot::deplacerArcher(Terrain & t, unsigned int x, unsigned int y) {
 
 // évaluation :
 
-void Robot::evaluer(const Terrain & t) {
+void Robot::evaluer(const Terrain & t, unsigned int depart, unsigned int arrivee) {
 	int score, total = 0;
 	for(unsigned int y = 0; y < 9; y++)
 		for(unsigned int x = 0; x < 7; x++) {
@@ -192,7 +192,8 @@ void Robot::evaluer(const Terrain & t) {
 			}
 		}
 	if(total > meilleurScore) {
-		// TODO
+		meilleurCoupDepart = depart;
+		meilleurCoupArrivee = arrivee;
 	}
 }
 

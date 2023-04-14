@@ -29,7 +29,7 @@ class Robot {
 
 
 		// évaluation :
-		void evaluer(const Terrain & t);
+		void evaluer(const Terrain & t, unsigned int depart, unsigned int arrivee);
 		void trouverDonjon(const Terrain & t);
 
 		int evaluerPiece(Type t);
