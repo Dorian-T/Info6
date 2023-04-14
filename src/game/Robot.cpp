@@ -4,6 +4,7 @@
 
 #include <assert.h>
 #include <iostream>
+#include <math.h>
 #include <string>
 #include <vector>
 
@@ -21,7 +22,11 @@ Robot::~Robot() {
 }
 
 
+
+// déplacements :
+
 void Robot::joue(Terrain & t) {
+	trouverDonjon(t);
 	Piece * P;
 	for(unsigned int y = 9; y > 0; y--)
 		for(unsigned int x = 0; x < 7; x++) {
@@ -167,6 +172,39 @@ void Robot::deplacerArcher(Terrain & t, unsigned int x, unsigned int y) {
 	}
 }
 
+
+// évaluation :
+
 void Robot::evaluer(const Terrain & t) {
 	// TODO
+}
+
+void Robot::trouverDonjon(const Terrain & t) {
+	donjon1 = NULL;
+	donjon2 = NULL;
+	for(unsigned int y = 0; y < 9; y++)
+		for(unsigned int x = 0; x < 7; x++)
+			if(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == donjon) {
+				if(donjon1 == NULL) donjon1 = t.getPiece(x, y);
+				else donjon2 = t.getPiece(x, y);
+			}
+}
+
+int Robot::evaluerPosition(unsigned int x, unsigned int y, const Terrain & t) {
+	return (11 - distance(x, y, donjon1->getX(), donjon1->getY())) + (11 - distance(x, y, donjon2->getX(), donjon2->getY()));
+}
+
+int Robot::distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2) {
+	return (int) sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+}
+
+
+void Robot::testRegression() {
+	cout << "Test de Robot" << endl;
+
+	assert(couleur == rouge); assert(copieTerrain == NULL);
+	cout << "\tTest constructeur : OK" << endl;
+
+	assert(distance(4, 6, 3, 4) == (int) sqrt(5));
+	cout << "\tTest distance : OK" << endl;
 }

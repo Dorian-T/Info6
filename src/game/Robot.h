@@ -8,16 +8,16 @@
 #include <vector>
 
 
-struct Coup {
-	Piece * piece;
-	std::string direction;
-	int score;
-};
-
 class Robot {
 	private:
 		Couleur couleur;
+
+		// pour les évaluations :
 		Terrain *copieTerrain;
+		Piece *donjon1;
+		Piece *donjon2;
+
+		// coup à jouer :
 		unsigned int meilleurCoupDepart;
 		unsigned int meilleurCoupArrivee;
 		float meilleurScore;
@@ -27,12 +27,17 @@ class Robot {
 		void deplacerArcher(Terrain & t, unsigned int x, unsigned int y);
 
 		void evaluer(const Terrain & t);
+		void trouverDonjon(const Terrain & t);
+		int evaluerPosition(unsigned int x, unsigned int y, const Terrain & t);
+		int distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2);
 
 	public:
 		Robot(Couleur c);
 		~Robot();
 
 		void joue(Terrain & t);
+
+		void testRegression();
 };
 
 #endif
