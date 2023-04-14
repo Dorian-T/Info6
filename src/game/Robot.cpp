@@ -180,9 +180,13 @@ void Robot::evaluer(const Terrain & t) {
 	for(unsigned int y = 0; y < 9; y++)
 		for(unsigned int x = 0; x < 7; x++) {
 			Piece * P = t.getPiece(x, y);
-			if(P != NULL && P->getType() != donjon && P->getType() != tour_de_siege) {
-				score = 0;
-				// TODO : évaluer la pièce
+			if(P != NULL && P->getType() != tour_de_siege) {
+				score = evaluerPiece(P->getType());
+				// TODO : évaluer les menaces reçues
+				// TODO : évaluer les menaces faites
+				// TODO : évaluer la présence d'une tour de siège
+				score += evaluerPosition(*P, t);
+
 				if(P->getCouleur() == couleur) total += score;
 				else total -= score;
 			}
@@ -203,8 +207,30 @@ void Robot::trouverDonjon(const Terrain & t) {
 			}
 }
 
-int Robot::evaluerPosition(unsigned int x, unsigned int y, const Terrain & t) {
-	return (11 - distance(x, y, donjon1->getX(), donjon1->getY())) + (11 - distance(x, y, donjon2->getX(), donjon2->getY()));
+int Robot::evaluerPiece(Type t) {
+	switch (t) {
+		case donjon:
+			return 1000;
+		case archer:
+			return 400;
+		case fantassin:
+			return 200;
+		case paladin:
+			return 140;
+		default:
+			return 0;
+	}
+}
+
+int Robot::evaluerPosition(const Piece & P, const Terrain & t) {
+	assert(donjon1 != NULL || donjon2 != NULL);
+	if(P.getType() == donjon) return 0;
+	else {
+		int score = 0;
+		if(donjon1 != NULL) score += distance(P.getX(), P.getY(), donjon1->getX(), donjon1->getY());
+		if(donjon2 != NULL) score += distance(P.getX(), P.getY(), donjon2->getX(), donjon2->getY());
+		return score;
+	}
 }
 
 int Robot::distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2) {
