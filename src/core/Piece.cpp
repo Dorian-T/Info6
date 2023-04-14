@@ -88,7 +88,7 @@ void Piece::calculMenaceCase(Terrain & t, Piece * p, Type ty) {
 
 void Piece::setSiege(Piece* S) {
 	assert(type != donjon && type != tour_de_siege);
-	assert(S->getType() == tour_de_siege);
+	assert(S == NULL || S->getType() == tour_de_siege);
 	siege = S;
 }
 

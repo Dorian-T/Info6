@@ -222,6 +222,11 @@ int Robot::evaluerPiece(Type t) {
 	}
 }
 
+int Robot::evaluerSiege(const Piece & P) {
+	if(P.getSiege() != NULL && P.getSiege()->getCouleur() == P.getCouleur()) return 20;
+	else return 0;
+}
+
 int Robot::evaluerPosition(const Piece & P, const Terrain & t) {
 	assert(donjon1 != NULL || donjon2 != NULL);
 	if(P.getType() == donjon) return 0;
@@ -243,6 +248,23 @@ void Robot::testRegression() {
 
 	assert(couleur == rouge); assert(copieTerrain == NULL);
 	cout << "\tTest constructeur : OK" << endl;
+
+	assert(evaluerPiece(donjon) == 1000); assert(evaluerPiece(archer) == 400); assert(evaluerPiece(fantassin) == 200); assert(evaluerPiece(paladin) == 140); assert(evaluerPiece(tour_de_siege) == 0);
+	cout << "\tTest evaluerPiece : OK" << endl;
+
+	Piece P(0, 0, rouge, archer);
+	Piece * S1 = new Piece(0, 0, noir, tour_de_siege);
+	Piece * S2 = new Piece(0, 0, rouge, tour_de_siege);
+	assert(evaluerSiege(P) == 0);
+	P.setSiege(S1);
+	assert(evaluerSiege(P) == 0);
+	delete S1; P.setSiege(NULL);
+	P.setSiege(S2);
+	assert(evaluerSiege(P) == 20);
+	delete S2; P.setSiege(NULL);
+	cout << "\tTest evaluerSiege : OK" << endl;
+
+	// TODO : test evaluerPosition
 
 	assert(distance(4, 6, 3, 4) == (int) sqrt(5));
 	cout << "\tTest distance : OK" << endl;

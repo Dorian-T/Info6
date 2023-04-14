@@ -29,6 +29,7 @@ class Robot {
 		void evaluer(const Terrain & t);
 		void trouverDonjon(const Terrain & t);
 		int evaluerPiece(Type t);
+		int evaluerSiege(const Piece & P);
 		int evaluerPosition(const Piece & P, const Terrain & t);
 		int distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2);
 
