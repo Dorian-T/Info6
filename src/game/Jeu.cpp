@@ -32,11 +32,11 @@ void Jeu::boucle() {
 	sauvegarde(nomFichierSauvegarde);
 	while (!fin) {
 		if (joueur1) {
-			cout << "Joueur 1 : ";
+			cout << "Joueur 1 :" << endl;
 			J1->joue(*terrain);
 		}
 		else {
-			cout << "Joueur 2 : ";
+			cout << "Joueur 2 :" << endl;
 			J2->joue(*terrain);
 		}
 		joueurSuivant();
