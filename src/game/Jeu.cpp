@@ -15,7 +15,7 @@ using namespace std;
 Jeu::Jeu() {
 	string dt;
 	date(dt);
-	nomFichierSauvegarde = "data/sauvegardes/sauvegarde - " + dt + ".txt";
+	nomFichierSauvegarde = "data/sauvegardes/" + dt + ".txt";
 	terrain = new Terrain();
 	J1 = new Humain(rouge);
 	J2 = new Robot(noir);

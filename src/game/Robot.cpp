@@ -22,7 +22,6 @@ Robot::~Robot() {
 }
 
 
-
 // déplacements :
 
 void Robot::joue(Terrain & t) {
@@ -37,12 +36,15 @@ void Robot::joue(Terrain & t) {
 				else if(P->getType() == paladin) deplacerPaladin(*copieTerrain, x, y);
 				else deplacerArcher(*copieTerrain, x, y);
 				delete copieTerrain;
+				copieTerrain = NULL;
 			}
 		}
+	cout << "meilleurCoup (dans joue) : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
 	t.verifieCoup(meilleurCoupDepart%10, meilleurCoupDepart/10, meilleurCoupArrivee%10, meilleurCoupArrivee/10, false);
 }
 
 void Robot::deplacerFantassin(Terrain & t, unsigned int x, unsigned int y) {
+	cout << "deplacerFantassin" << endl;
 	assert(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == fantassin);
 	if(couleur == rouge) {
 		if(y-1 >= 0 && t.verifieCoup(x, y, x, y-1, false)) {
@@ -176,9 +178,11 @@ void Robot::deplacerArcher(Terrain & t, unsigned int x, unsigned int y) {
 // évaluation :
 
 void Robot::evaluer(const Terrain & t, unsigned int depart, unsigned int arrivee) {
+	cout << "evaluation du coup " << depart << " -> " << arrivee << endl;
 	int score, total = 0;
 	for(unsigned int y = 0; y < 9; y++)
 		for(unsigned int x = 0; x < 7; x++) {
+			cout << "evaluation de la piece " << x << " " << y << endl;
 			Piece * P = t.getPiece(x, y);
 			if(P != NULL && P->getType() != tour_de_siege) {
 				score = evaluerPiece(P->getType());
@@ -189,11 +193,14 @@ void Robot::evaluer(const Terrain & t, unsigned int depart, unsigned int arrivee
 
 				if(P->getCouleur() == couleur) total += score;
 				else total -= score;
+				cout << "score de la piece " << x << " " << y << " : " << score << endl;
 			}
 		}
 	if(total > meilleurScore) {
 		meilleurCoupDepart = depart;
 		meilleurCoupArrivee = arrivee;
+		cout << "nouveau meilleur score : " << total << endl;
+		cout << "nouveau meilleur coup : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
 	}
 }
 
