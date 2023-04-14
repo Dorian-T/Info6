@@ -22,14 +22,27 @@ class Robot {
 		unsigned int meilleurCoupArrivee;
 		float meilleurScore;
 
+
 		void deplacerFantassin(Terrain & t, unsigned int x, unsigned int y);
 		void deplacerPaladin(Terrain & t, unsigned int x, unsigned int y);
 		void deplacerArcher(Terrain & t, unsigned int x, unsigned int y);
 
+
+		// évaluation :
 		void evaluer(const Terrain & t);
 		void trouverDonjon(const Terrain & t);
+
 		int evaluerPiece(Type t);
+
+		int evaluerMenace(const Piece & P, const Terrain & t);
+
+		int evaluerAttaque(const Piece & P, const Terrain & t);
+		int evaluerAttaqueFantassin(const Piece & P, const Terrain & t);
+		int evaluerAttaquePaladin(const Piece & P, const Terrain & t);
+		int evaluerAttaqueArcher(const Piece & P, const Terrain & t);
+
 		int evaluerSiege(const Piece & P);
+
 		int evaluerPosition(const Piece & P, const Terrain & t);
 		int distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2);
 

@@ -182,9 +182,9 @@ void Robot::evaluer(const Terrain & t) {
 			Piece * P = t.getPiece(x, y);
 			if(P != NULL && P->getType() != tour_de_siege) {
 				score = evaluerPiece(P->getType());
-				// TODO : évaluer les menaces reçues
-				// TODO : évaluer les menaces faites
-				// TODO : évaluer la présence d'une tour de siège
+				score += evaluerMenace(*P, t);
+				score += evaluerAttaque(*P, t);
+				score += evaluerSiege(*P);
 				score += evaluerPosition(*P, t);
 
 				if(P->getCouleur() == couleur) total += score;
@@ -220,6 +220,84 @@ int Robot::evaluerPiece(Type t) {
 		default:
 			return 0;
 	}
+}
+
+int Robot::evaluerMenace(const Piece & P, const Terrain & t) {
+	// TODO
+	return 0;
+}
+
+int Robot::evaluerAttaque(const Piece & P, const Terrain & t) {
+	if(P.getType() == fantassin) return evaluerAttaqueFantassin(P, t);
+	else if(P.getType() == paladin) return evaluerAttaquePaladin(P, t);
+	else if(P.getType() == archer) return evaluerAttaqueArcher(P, t);
+	else return 0;
+}
+
+int Robot::evaluerAttaqueFantassin(const Piece & P, const Terrain & t) {
+	int score = 0;
+
+	Piece *E = t.getPiece(P.getX(), P.getY()-1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()+1, P.getY());
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX(), P.getY()+1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()-1, P.getY());
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	return score;
+}
+
+int Robot::evaluerAttaquePaladin(const Piece & P, const Terrain & t) {
+	int score = 0;
+
+	Piece *E = t.getPiece(P.getX()+1, P.getY()-1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()+1, P.getY()+1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()-1, P.getY()+1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()-1, P.getY()-1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	return score;
+}
+
+int Robot::evaluerAttaqueArcher(const Piece & P, const Terrain & t) {
+	int score = 0;
+
+	Piece *E = t.getPiece(P.getX(), P.getY()-1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()+1, P.getY()-1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()+1, P.getY());
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()+1, P.getY()+1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX(), P.getY()+1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()-1, P.getY()+1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()-1, P.getY());
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	E = t.getPiece(P.getX()-1, P.getY()-1);
+	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
+
+	return score;
 }
 
 int Robot::evaluerSiege(const Piece & P) {
