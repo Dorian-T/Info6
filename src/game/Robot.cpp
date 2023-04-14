@@ -223,8 +223,24 @@ int Robot::evaluerPiece(Type t) {
 }
 
 int Robot::evaluerMenace(const Piece & P, const Terrain & t) {
-	// TODO
-	return 0;
+	Piece *E1 = t.getPiece(P.getX(), P.getY()-1);
+	Piece *E2 = t.getPiece(P.getX()+1, P.getY()-1);
+	Piece *E3 = t.getPiece(P.getX()+1, P.getY());
+	Piece *E4 = t.getPiece(P.getX()+1, P.getY()+1);
+	Piece *E5 = t.getPiece(P.getX(), P.getY()+1);
+	Piece *E6 = t.getPiece(P.getX()-1, P.getY()+1);
+	Piece *E7 = t.getPiece(P.getX()-1, P.getY());
+	Piece *E8 = t.getPiece(P.getX()-1, P.getY()-1);
+	if((E1 != NULL && E1->getCouleur() != P.getCouleur() && (E1->getType() == archer || E1->getType() == fantassin))
+		|| (E2 != NULL && E2->getCouleur() != P.getCouleur() && (E2->getType() == archer || E2->getType() == paladin))
+		|| (E3 != NULL && E3->getCouleur() != P.getCouleur() && (E3->getType() == archer || E3->getType() == fantassin))
+		|| (E4 != NULL && E4->getCouleur() != P.getCouleur() && (E4->getType() == archer || E4->getType() == paladin))
+		|| (E5 != NULL && E5->getCouleur() != P.getCouleur() && (E5->getType() == archer || E5->getType() == fantassin))
+		|| (E6 != NULL && E6->getCouleur() != P.getCouleur() && (E6->getType() == archer || E6->getType() == paladin))
+		|| (E7 != NULL && E7->getCouleur() != P.getCouleur() && (E7->getType() == archer || E7->getType() == fantassin))
+		|| (E8 != NULL && E8->getCouleur() != P.getCouleur() && (E8->getType() == archer || E8->getType() == paladin)))
+		return evaluerPiece(P.getType()) * 0.75;
+	else return 0;
 }
 
 int Robot::evaluerAttaque(const Piece & P, const Terrain & t) {
