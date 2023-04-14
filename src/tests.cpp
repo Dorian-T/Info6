@@ -1,6 +1,6 @@
-#include "Piece.h"
-#include "Terrain.h"
-#include "../game/Jeu.h"
+#include "core/Piece.h"
+#include "core/Terrain.h"
+#include "game/Jeu.h"
 #include <iostream>
 #include <string>
 using namespace std;
