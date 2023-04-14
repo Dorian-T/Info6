@@ -8,7 +8,7 @@
 class Jeu {
 	private:
 		Humain *J1;
-		Humain *J2;
+		Robot *J2;
 
 		bool joueur1;
 		bool fin;

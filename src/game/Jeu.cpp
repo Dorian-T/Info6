@@ -18,7 +18,7 @@ Jeu::Jeu() {
 	nomFichierSauvegarde = "data/sauvegardes/sauvegarde - " + dt + ".txt";
 	terrain = new Terrain();
 	J1 = new Humain(rouge);
-	J2 = new Humain(noir);
+	J2 = new Robot(noir);
 	joueur1 = true;
 	fin = false;
 }

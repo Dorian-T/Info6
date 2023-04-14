@@ -28,7 +28,7 @@ Robot::~Robot() {
 void Robot::joue(Terrain & t) {
 	trouverDonjon(t);
 	Piece * P;
-	for(unsigned int y = 9; y > 0; y--)
+	for(unsigned int y = 0; y < 9; y--)
 		for(unsigned int x = 0; x < 7; x++) {
 			P = t.getPiece(x, y);
 			if(P != NULL && P->getCouleur() == couleur && P->getType() != donjon && P->getType() != tour_de_siege) {
@@ -45,35 +45,35 @@ void Robot::joue(Terrain & t) {
 void Robot::deplacerFantassin(Terrain & t, unsigned int x, unsigned int y) {
 	assert(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == fantassin);
 	if(couleur == rouge) {
-		if(t.verifieCoup(x, y, x, y-1, false)) {
+		if(y-1 >= 0 && t.verifieCoup(x, y, x, y-1, false)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x, y+1, true)) {
+		if(y+1 < 9 && t.verifieCoup(x, y, x, y+1, true)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 	}
 	else {
-		if(t.verifieCoup(x, y, x, y+1, false)) {
+		if(y+1 < 9 && t.verifieCoup(x, y, x, y+1, false)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x, y-1, true)) {
+		if(y-1 >= 0 && t.verifieCoup(x, y, x, y-1, true)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 	}
-	if(t.verifieCoup(x, y, x+1, y, false)) {
+	if(x+1 < 7 && t.verifieCoup(x, y, x+1, y, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x-1, y, false)) {
+	if(x-1 >= 0 && t.verifieCoup(x, y, x-1, y, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
@@ -83,44 +83,44 @@ void Robot::deplacerFantassin(Terrain & t, unsigned int x, unsigned int y) {
 void Robot::deplacerPaladin(Terrain & t, unsigned int x, unsigned int y) {
 	assert(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == paladin);
 	if(couleur == rouge) {
-		if(t.verifieCoup(x, y, x+1, y-1, false)) {
+		if(x+1 < 7 && y-1 >= 0 && t.verifieCoup(x, y, x+1, y-1, false)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x-1, y-1, false)) {
+		if(x-1 >= 0 && y-1 >= 0 && t.verifieCoup(x, y, x-1, y-1, false)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x+1, y+1, true)) {
+		if(x+1 < 7 && y+1 < 9 && t.verifieCoup(x, y, x+1, y+1, true)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x-1, y+1, true)) {
+		if(x-1 >= 0 && y+1 < 9 && t.verifieCoup(x, y, x-1, y+1, true)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
 	}
 	else {
-		if(t.verifieCoup(x, y, x+1, y+1, false)) {
+		if(x+1 < 7 && y+1 < 9 && t.verifieCoup(x, y, x+1, y+1, false)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x-1, y+1, false)) {
+		if(x-1 >= 0 && y+1 < 9 && t.verifieCoup(x, y, x-1, y+1, false)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x+1, y-1, true)) {
+		if(x+1 < 7 && y-1 >= 0 && t.verifieCoup(x, y, x+1, y-1, true)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
 		}
-		if(t.verifieCoup(x, y, x-1, y-1, true)) {
+		if(x-1 >= 0 && y-1 >= 0 && t.verifieCoup(x, y, x-1, y-1, true)) {
 			evaluer(t);
 			delete copieTerrain;
 			copieTerrain = new Terrain(t);
@@ -130,42 +130,42 @@ void Robot::deplacerPaladin(Terrain & t, unsigned int x, unsigned int y) {
 
 void Robot::deplacerArcher(Terrain & t, unsigned int x, unsigned int y) {
 	assert(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == archer);
-	if(t.verifieCoup(x, y, x, y-1, false)) {
+	if(y-1 >= 0 && t.verifieCoup(x, y, x, y-1, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x+1, y-1, false)) {
+	if(x+1 < 7 && y-1 >= 0 && t.verifieCoup(x, y, x+1, y-1, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x+1, y, false)) {
+	if(x+1 < 7 && t.verifieCoup(x, y, x+1, y, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x+1, y+1, false)) {
+	if(x+1 < 7 && y+1 < 9 && t.verifieCoup(x, y, x+1, y+1, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x, y+1, false)) {
+	if(y+1 < 9 && t.verifieCoup(x, y, x, y+1, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x-1, y+1, false)) {
+	if(x-1 >= 0 && y+1 < 9 && t.verifieCoup(x, y, x-1, y+1, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x-1, y, false)) {
+	if(x-1 >= 0 && t.verifieCoup(x, y, x-1, y, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
 	}
-	if(t.verifieCoup(x, y, x-1, y-1, false)) {
+	if(x-1 >= 0 && y-1 >= 0 && t.verifieCoup(x, y, x-1, y-1, false)) {
 		evaluer(t);
 		delete copieTerrain;
 		copieTerrain = new Terrain(t);
@@ -223,14 +223,18 @@ int Robot::evaluerPiece(Type t) {
 }
 
 int Robot::evaluerMenace(const Piece & P, const Terrain & t) {
-	Piece *E1 = t.getPiece(P.getX(), P.getY()-1);
-	Piece *E2 = t.getPiece(P.getX()+1, P.getY()-1);
-	Piece *E3 = t.getPiece(P.getX()+1, P.getY());
-	Piece *E4 = t.getPiece(P.getX()+1, P.getY()+1);
-	Piece *E5 = t.getPiece(P.getX(), P.getY()+1);
-	Piece *E6 = t.getPiece(P.getX()-1, P.getY()+1);
-	Piece *E7 = t.getPiece(P.getX()-1, P.getY());
-	Piece *E8 = t.getPiece(P.getX()-1, P.getY()-1);
+	int score = 0;
+	Piece *E1 = NULL, *E2 = NULL, *E3 = NULL, *E4 = NULL, *E5 = NULL, *E6 = NULL, *E7 = NULL, *E8 = NULL;
+
+	if(P.getY()-1 >= 0) E1 = t.getPiece(P.getX(), P.getY()-1);
+	if(P.getX()+1 < 7 && P.getY()-1 >= 0) E2 = t.getPiece(P.getX()+1, P.getY()-1);
+	if(P.getX()+1 < 7) E3 = t.getPiece(P.getX()+1, P.getY());
+	if(P.getX()+1 < 7 && P.getY()+1 < 9) E4 = t.getPiece(P.getX()+1, P.getY()+1);
+	if(P.getY()+1 < 9) E5 = t.getPiece(P.getX(), P.getY()+1);
+	if(P.getX()-1 >= 0 && P.getY()+1 < 9) E6 = t.getPiece(P.getX()-1, P.getY()+1);
+	if(P.getX()-1 >= 0) E7 = t.getPiece(P.getX()-1, P.getY());
+	if(P.getX()-1 >= 0 && P.getY()-1 >= 0) E8 = t.getPiece(P.getX()-1, P.getY()-1);
+
 	if((E1 != NULL && E1->getCouleur() != P.getCouleur() && (E1->getType() == archer || E1->getType() == fantassin))
 		|| (E2 != NULL && E2->getCouleur() != P.getCouleur() && (E2->getType() == archer || E2->getType() == paladin))
 		|| (E3 != NULL && E3->getCouleur() != P.getCouleur() && (E3->getType() == archer || E3->getType() == fantassin))
@@ -239,8 +243,10 @@ int Robot::evaluerMenace(const Piece & P, const Terrain & t) {
 		|| (E6 != NULL && E6->getCouleur() != P.getCouleur() && (E6->getType() == archer || E6->getType() == paladin))
 		|| (E7 != NULL && E7->getCouleur() != P.getCouleur() && (E7->getType() == archer || E7->getType() == fantassin))
 		|| (E8 != NULL && E8->getCouleur() != P.getCouleur() && (E8->getType() == archer || E8->getType() == paladin)))
-		return evaluerPiece(P.getType()) * 0.75;
-	else return 0;
+		score = evaluerPiece(P.getType()) * 0.75;
+	
+	delete E1; delete E2; delete E3; delete E4; delete E5; delete E6; delete E7; delete E8;
+	return score;
 }
 
 int Robot::evaluerAttaque(const Piece & P, const Terrain & t) {
@@ -252,67 +258,73 @@ int Robot::evaluerAttaque(const Piece & P, const Terrain & t) {
 
 int Robot::evaluerAttaqueFantassin(const Piece & P, const Terrain & t) {
 	int score = 0;
+	Piece *E = NULL;
 
-	Piece *E = t.getPiece(P.getX(), P.getY()-1);
+	if(P.getY()-1 >= 0) E = t.getPiece(P.getX(), P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()+1, P.getY());
+	if(P.getX()+1 < 7) E = t.getPiece(P.getX()+1, P.getY());
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX(), P.getY()+1);
+	if(P.getY()+1 < 9) E = t.getPiece(P.getX(), P.getY()+1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()-1, P.getY());
+	if(P.getX()-1 >= 0) E = t.getPiece(P.getX()-1, P.getY());
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
+	delete E;
 	return score;
 }
 
 int Robot::evaluerAttaquePaladin(const Piece & P, const Terrain & t) {
 	int score = 0;
+	Piece *E = NULL;
 
-	Piece *E = t.getPiece(P.getX()+1, P.getY()-1);
+	if(P.getX()+1 < 7 && P.getY()-1 >= 0) E = t.getPiece(P.getX()+1, P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()+1, P.getY()+1);
+	if(P.getX()+1 < 7 && P.getY()+1 < 9) E = t.getPiece(P.getX()+1, P.getY()+1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()-1, P.getY()+1);
+	if(P.getX()-1 >= 0 && P.getY()+1 < 9) E = t.getPiece(P.getX()-1, P.getY()+1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()-1, P.getY()-1);
+	if(P.getX()-1 >= 0 && P.getY()-1 >= 0) E = t.getPiece(P.getX()-1, P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
+	delete E;
 	return score;
 }
 
 int Robot::evaluerAttaqueArcher(const Piece & P, const Terrain & t) {
 	int score = 0;
+	Piece *E = NULL;
 
-	Piece *E = t.getPiece(P.getX(), P.getY()-1);
+	if(P.getY()-1 >= 0) E = t.getPiece(P.getX(), P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()+1, P.getY()-1);
+	if(P.getX()+1 < 7 && P.getY()-1 >= 0) E = t.getPiece(P.getX()+1, P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()+1, P.getY());
+	if(P.getX()+1 < 7) E = t.getPiece(P.getX()+1, P.getY());
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()+1, P.getY()+1);
+	if(P.getX()+1 < 7 && P.getY()+1 < 9) E = t.getPiece(P.getX()+1, P.getY()+1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX(), P.getY()+1);
+	if(P.getY()+1 < 9) E = t.getPiece(P.getX(), P.getY()+1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()-1, P.getY()+1);
+	if(P.getX()-1 >= 0 && P.getY()+1 < 9) E = t.getPiece(P.getX()-1, P.getY()+1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()-1, P.getY());
+	if(P.getX()-1 >= 0) E = t.getPiece(P.getX()-1, P.getY());
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	E = t.getPiece(P.getX()-1, P.getY()-1);
+	if(P.getX()-1 >= 0 && P.getY()-1 >= 0) E = t.getPiece(P.getX()-1, P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
+	delete E;
 	return score;
 }
 
