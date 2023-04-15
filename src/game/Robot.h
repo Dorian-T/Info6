@@ -23,27 +23,27 @@ class Robot {
 		float meilleurScore;
 
 
-		void deplacerFantassin(Terrain & t, unsigned int x, unsigned int y);
-		void deplacerPaladin(Terrain & t, unsigned int x, unsigned int y);
-		void deplacerArcher(Terrain & t, unsigned int x, unsigned int y);
+		void deplacerFantassin(const Terrain & t, unsigned int x, unsigned int y);
+		void deplacerPaladin(const Terrain & t, unsigned int x, unsigned int y);
+		void deplacerArcher(const Terrain & t, unsigned int x, unsigned int y);
 
 
 		// évaluation :
-		void evaluer(const Terrain & t, unsigned int depart, unsigned int arrivee);
+		void evaluer(unsigned int depart, unsigned int arrivee);
 		void trouverDonjon(const Terrain & t);
 
 		int evaluerPiece(Type t);
 
-		int evaluerMenace(const Piece & P, const Terrain & t);
+		int evaluerMenace(const Piece & P);
 
-		int evaluerAttaque(const Piece & P, const Terrain & t);
-		int evaluerAttaqueFantassin(const Piece & P, const Terrain & t);
-		int evaluerAttaquePaladin(const Piece & P, const Terrain & t);
-		int evaluerAttaqueArcher(const Piece & P, const Terrain & t);
+		int evaluerAttaque(const Piece & P);
+		int evaluerAttaqueFantassin(const Piece & P);
+		int evaluerAttaquePaladin(const Piece & P);
+		int evaluerAttaqueArcher(const Piece & P);
 
 		int evaluerSiege(const Piece & P);
 
-		int evaluerPosition(const Piece & P, const Terrain & t);
+		int evaluerPosition(const Piece & P);
 		int distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2);
 
 	public:

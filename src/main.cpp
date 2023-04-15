@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-	Jeu J("data/classique.txt");
+	Jeu J("data/debug.txt");
 	J.boucle();
 	return 0;
 }
