@@ -42,9 +42,8 @@ class Piece {
 		void calculMenaceCase(Terrain & t, Piece * p, Type ty);
 
 	public:
-		Piece();
 		Piece(unsigned int X, unsigned int Y, Couleur C, Type T);
-		Piece(const Piece & p);
+		Piece(const Piece & P);
 		~Piece();
 
 		// accesseurs
@@ -53,13 +52,11 @@ class Piece {
 		Couleur getCouleur() const;
 		Type getType() const;
 		Piece* getSiege() const;
+		unsigned int getMenace(Terrain & t); // calcul la menace d'un donjon et la retourne
 
-		// calcul la menace d'un donjon et la retourne
-		unsigned int getMenace(Terrain & t);
-
-
-		// mutateurs
+		// mutateur
 		void setSiege(Piece* S);
+
 
 		// deplace les fantassins, paladins et archers
 		bool deplacer(Terrain & t, const std::string & s);

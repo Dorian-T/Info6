@@ -62,10 +62,6 @@ bool Terrain::verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, uns
 			if(recule)
 				return false;
 			else {
-				if(grille[ay][ax]->getSiege() != NULL) {
-					cout << "adresse siege : " << grille[ay][ax]->getSiege() << endl;
-					cout << "couleur siege : " << grille[ay][ax]->getSiege()->getCouleur() << endl;
-				}
 				grille[ny][nx] = grille[ay][ax];
 				if(grille[ny][nx]->getSiege() != NULL && grille[ny][nx]->getSiege()->getCouleur() != grille[ny][nx]->getCouleur()) { // segfault à la descente d'un donjon
 					grille[ay][ax] = grille[ny][nx]->getSiege();
@@ -83,7 +79,6 @@ bool Terrain::verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, uns
 						grille[ny][nx] = grille[ay][ax];
 						grille[ay][ax] = temp;
 						temp = NULL;
-						cout << "couleur siege : " << grille[ny][nx]->getSiege()->getCouleur() << endl;
 				}
 				else // si la case n'est pas un siege
 					return false;

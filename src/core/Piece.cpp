@@ -1,18 +1,12 @@
 #include "Piece.h"
 #include "Terrain.h"
+
 #include <assert.h>
 #include <iostream>
 #include <string>
+
 using namespace std;
 
-Piece::Piece() {
-	x = 0;
-	y = 0;
-	couleur = rouge;
-	type = fantassin;
-	siege = NULL;
-	menace = 0;
-}
 
 Piece::Piece(unsigned int X, unsigned int Y, Couleur C, Type T) {
 	x = X;
@@ -23,14 +17,14 @@ Piece::Piece(unsigned int X, unsigned int Y, Couleur C, Type T) {
 	menace = 0;
 }
 
-Piece::Piece(const Piece & p) {
-	x = p.x;
-	y = p.y;
-	couleur = p.couleur;
-	type = p.type;
-	if(p.siege != NULL) siege = new Piece(*(p.siege));
+Piece::Piece(const Piece & P) {
+	x = P.x;
+	y = P.y;
+	couleur = P.couleur;
+	type = P.type;
+	if(P.siege != NULL) siege = new Piece(*(P.siege));
 	else siege = NULL;
-	menace = p.menace;
+	menace = P.menace;
 }
 
 Piece::~Piece() {
@@ -265,36 +259,31 @@ bool Piece::deplacerHG(Terrain & t) {
 void Piece::testRegression() {
 	cout << endl << "Test Piece" << endl;
 
-	assert(x == 0); assert(y == 0); assert(couleur == rouge); assert(type == fantassin); assert(siege == NULL); assert(menace == 0);
-	cout << "\tTest constructeur par defaut : OK" << endl;
-
-	assert(getX() == 0);
-	cout << "\tTest getX : OK" << endl;
-
-	assert(getY() == 0);
-	cout << "\tTest getY : OK" << endl;
-
-	assert(getCouleur() == rouge);
-	cout << "\tTest getCouleur : OK" << endl;
-
-	assert(getType() == fantassin);
-	cout << "\tTest getType : OK" << endl;
-
-	assert(getSiege() == NULL);
-	cout << "\tTest getSiege : OK" << endl;
-
-	Piece P(1, 2, rouge, paladin);
-	assert(P.getX() == 1); assert(P.getY() == 2); assert(P.getCouleur() == rouge); assert(P.getType() == paladin); assert(P.getSiege() == NULL);
+	assert(x == 1); assert(y == 2);
+	assert(couleur == rouge); assert(type == paladin);
+	assert(siege == NULL);
 	cout << "\tTest constructeur parametre : OK" << endl;
 
+	assert(getX() == x); assert(getY() == y);
+	cout << "\tTest getX et getY : OK" << endl;
+
+	assert(getCouleur() == couleur); assert(getType() == type);
+	cout << "\tTest getCouleur et getType : OK" << endl;
+
+	assert(getSiege() == siege);
+	cout << "\tTest getSiege : OK" << endl;
+
 	Piece *S = new Piece(1, 2, rouge, tour_de_siege);
-	P.setSiege(S);
-	assert(P.getSiege() == S);
+	setSiege(S);
+	assert(siege == S);
 	cout << "\tTest setSiege : OK" << endl;
 
-	Piece copie(P);
-	assert(copie.getX() == 1); assert(copie.getY() == 2); assert(copie.getCouleur() == rouge); assert(copie.getType() == paladin);
-	assert(copie.getSiege() != NULL); assert(copie.getSiege()->getX() == 1); assert(copie.getSiege()->getY() == 2); assert(copie.getSiege()->getCouleur() == rouge); assert(copie.getSiege()->getType() == tour_de_siege);
+	Piece copie(*this);
+	assert(copie.getX() == x); assert(copie.getY() == y);
+	assert(copie.getCouleur() == couleur); assert(copie.getType() == type);
+	assert(copie.getSiege() != NULL);
+	assert(copie.getSiege()->getX() == S->getX()); assert(copie.getSiege()->getY() == S->getY());
+	assert(copie.getSiege()->getCouleur() == S->getCouleur()); assert(copie.getSiege()->getType() == S->getType());
 	cout << "\tTest constructeur par copie : OK" << endl;
 
 	// TODO : test deplacer

@@ -361,7 +361,7 @@ int Robot::distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned 
 
 
 void Robot::testRegression() {
-	cout << "Test de Robot" << endl;
+	cout << endl << "Test de Robot" << endl;
 
 	assert(couleur == rouge); assert(copieTerrain == NULL);
 	cout << "\tTest constructeur : OK" << endl;
