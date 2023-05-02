@@ -1,4 +1,4 @@
-obj/*
-bin/*
-data/sauvegarde*
-.vscode/*
+obj/
+bin/
+data/sauvegardes/
+.vscode/
