@@ -14,7 +14,6 @@ class Terrain {
 		void realiseCoup(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule);
 
 	public:
-		Terrain(); // TODO : à supprimer
         Terrain(const std::string & fichier);
 		Terrain(const Terrain & t);
 		~Terrain();

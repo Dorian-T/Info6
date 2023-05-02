@@ -26,7 +26,6 @@ class Jeu {
 		void sauvegarde(const std::string & nomFichier); // sauvegarde la partie
 
 	public:
-		Jeu();
-		Jeu(const std::string & s);
+		Jeu(const std::string & filename);
 		void boucle();
 };

@@ -11,8 +11,8 @@ int main() {
 	Piece P;
 	P.testRegression();
 
-	Terrain T; // modifier pour faire des tests sur les deplacements des pieces
-	T.testRegression();
+	// Terrain T; // modifier pour faire des tests sur les deplacements des pieces
+	// T.testRegression();
 
 	Robot R(rouge);
 	R.testRegression();

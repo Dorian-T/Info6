@@ -12,19 +12,15 @@
 using namespace std;
 
 
-Jeu::Jeu() {
+Jeu::Jeu(const string & filename) {
 	string dt;
 	date(dt);
 	nomFichierSauvegarde = "data/sauvegardes/" + dt + ".txt";
-	terrain = new Terrain();
+	terrain = new Terrain(filename);
 	J1 = new Humain(rouge);
 	J2 = new Robot(noir);
 	joueur1 = true;
 	fin = false;
-}
-
-Jeu::Jeu(const string & s): Jeu() {
-	terrain = new Terrain(s);
 }
 
 void Jeu::boucle() {

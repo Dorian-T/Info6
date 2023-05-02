@@ -8,60 +8,6 @@
 
 using namespace std;
 
-Terrain::Terrain() {
-	grille[0][0] = new Piece(0, 0, noir, fantassin);
-	grille[0][1] = new Piece(1, 0, noir, donjon);
-	grille[0][2] = new Piece(2, 0, noir, fantassin);
-	grille[0][3] = new Piece(3, 0, noir, archer);
-	grille[0][4] = new Piece(4, 0, noir, fantassin);
-	grille[0][5] = new Piece(5, 0, noir, donjon);
-	grille[0][6] = new Piece(6, 0, noir, fantassin);
-
-	grille[1][0] = new Piece(0, 1, noir, paladin);
-	grille[1][1] = new Piece(1, 1, noir, archer);
-	grille[1][2] = new Piece(2, 1, noir, paladin);
-	grille[1][3] = new Piece(3, 1, noir, fantassin);
-	grille[1][4] = new Piece(4, 1, noir, paladin);
-	grille[1][5] = new Piece(5, 1, noir, archer);
-	grille[1][6] = new Piece(6, 1, noir, paladin);
-
-	grille[2][0] = new Piece(0, 2, noir, fantassin);
-	grille[2][1] = new Piece(1, 2, noir, paladin);
-	grille[2][2] = new Piece(2, 2, noir, fantassin);
-	grille[2][3] = new Piece(3, 2, noir, tour_de_siege);
-	grille[2][4] = new Piece(4, 2, noir, fantassin);
-	grille[2][5] = new Piece(5, 2, noir, paladin);
-	grille[2][6] = new Piece(6, 2, noir, fantassin);
-
-	for(int i = 3; i < 6; i++)
-		for(int j = 0; j < 9; j++)
-			grille[i][j] = NULL;
-
-	grille[6][0] = new Piece(0, 6, rouge, fantassin);
-	grille[6][1] = new Piece(1, 6, rouge, paladin);
-	grille[6][2] = new Piece(2, 6, rouge, fantassin);
-	grille[6][3] = new Piece(3, 6, rouge, tour_de_siege);
-	grille[6][4] = new Piece(4, 6, rouge, fantassin);
-	grille[6][5] = new Piece(5, 6, rouge, paladin);
-	grille[6][6] = new Piece(6, 6, rouge, fantassin);
-
-	grille[7][0] = new Piece(0, 7, rouge, paladin);
-	grille[7][1] = new Piece(1, 7, rouge, archer);
-	grille[7][2] = new Piece(2, 7, rouge, paladin);
-	grille[7][3] = new Piece(3, 7, rouge, fantassin);
-	grille[7][4] = new Piece(4, 7, rouge, paladin);
-	grille[7][5] = new Piece(5, 7, rouge, archer);
-	grille[7][6] = new Piece(6, 7, rouge, paladin);
-
-	grille[8][0] = new Piece(0, 8, rouge, fantassin);
-	grille[8][1] = new Piece(1, 8, rouge, donjon);
-	grille[8][2] = new Piece(2, 8, rouge, fantassin);
-	grille[8][3] = new Piece(3, 8, rouge, archer);
-	grille[8][4] = new Piece(4, 8, rouge, fantassin);
-	grille[8][5] = new Piece(5, 8, rouge, donjon);
-	grille[8][6] = new Piece(6, 8, rouge, fantassin);
-}
-
 Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noir
 	ifstream f(fichier);
 	if(f.is_open()) {
