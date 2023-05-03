@@ -294,7 +294,6 @@ int Robot::evaluerAttaqueFantassin(const Piece & P) {
 	if(P.getX() >= 1) E = copieTerrain->getPiece(P.getX()-1, P.getY());
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	delete E;
 	return score;
 }
 
@@ -314,7 +313,6 @@ int Robot::evaluerAttaquePaladin(const Piece & P) {
 	if(P.getX() >= 1 && P.getY() >= 1) E = copieTerrain->getPiece(P.getX()-1, P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	delete E;
 	return score;
 }
 
@@ -346,7 +344,6 @@ int Robot::evaluerAttaqueArcher(const Piece & P) {
 	if(P.getX() >= 1 && P.getY() >= 1) E = copieTerrain->getPiece(P.getX()-1, P.getY()-1);
 	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
 
-	delete E;
 	return score;
 }
 
@@ -377,7 +374,7 @@ void Robot::testRegression() {
 	assert(couleur == noir);
 	assert(copieTerrain == NULL); assert(donjon1 == NULL); assert(donjon2 == NULL);
 	assert(meilleurCoupDepart == -1); assert(meilleurCoupArrivee == -1); assert(meilleurScore == 0);
-	cout << "\tTest constructeur : OK" << endl;
+	cout << "\tTest constructeur parametre : OK" << endl;
 
 	Terrain T1("data/terrains/classique.txt");
 	trouverDonjon(T1);
@@ -393,15 +390,26 @@ void Robot::testRegression() {
 	cout << "\tTest evaluerPiece : OK" << endl;
 
 	Terrain T2("data/terrains/testEvaluerMenace.txt");
-	T2.getPiece(3, 6)->deplacer(T2, "h");
+	T2.getPiece(5, 6)->deplacer(T2, "h");
 	copieTerrain = new Terrain(T2);
 	assert(evaluerMenace(*T2.getPiece(1, 1)) == 150);
 	assert(evaluerMenace(*T2.getPiece(5, 1)) == 0);
-	assert(evaluerMenace(*T2.getPiece(3, 4)) == 150);
+	assert(evaluerMenace(*T2.getPiece(5, 4)) == 150);
 	assert(evaluerMenace(*T2.getPiece(1, 7)) == 0);
 	assert(evaluerMenace(*T2.getPiece(5, 7)) == 150);
 	delete copieTerrain; copieTerrain = NULL;
 	cout << "\tTest evaluerMenace : OK" << endl;
+
+	Terrain T3("data/terrains/testEvaluerAttaque.txt");
+	copieTerrain = new Terrain(T3);
+	assert(evaluerAttaque(*T3.getPiece(3, 1)) == 100);
+	cout << "\tTest evaluerAttaqueFantassin : OK" << endl;
+	assert(evaluerAttaque(*T3.getPiece(3, 4)) == 100);
+	cout << "\tTest evaluerAttaquePaladin : OK" << endl;
+	assert(evaluerAttaque(*T3.getPiece(3, 7)) == 200);
+	cout << "\tTest evaluerAttaqueArcher : OK" << endl;
+	delete copieTerrain; copieTerrain = NULL;
+	cout << "\tTest evaluerAttaque : OK" << endl;
 
 	// Piece P(0, 0, rouge, archer);
 	// Piece * S1 = new Piece(0, 0, noir, tour_de_siege);
