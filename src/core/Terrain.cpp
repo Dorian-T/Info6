@@ -168,35 +168,31 @@ ostream &operator<<(ostream & os, const Terrain & t) {
 void Terrain::testRegression() {
 	cout << endl << "Test de la classe Terrain" << endl;
 
-	assert(getPiece(0, 0)->getType() == fantassin);
-	assert(getPiece(3, 4) == NULL);
-	assert(getPiece(6, 8)->getType() == fantassin);
-	cout << "\tTest constructeur par defaut : OK" << endl;
+	assert(grille[0][0]->getType() == fantassin); assert(grille[0][0]->getCouleur() == noir); assert(grille[0][0]->getX() == 0 && grille[0][0]->getY() == 0);
+	assert(grille[0][1]->getType() == donjon); assert(grille[0][1]->getCouleur() == noir); assert(grille[0][1]->getX() == 1 && grille[0][1]->getY() == 0);
+	assert(grille[0][3]->getType() == archer); assert(grille[0][3]->getCouleur() == noir); assert(grille[0][3]->getX() == 3 && grille[0][3]->getY() == 0);
+	assert(grille[1][0]->getType() == paladin); assert(grille[1][0]->getCouleur() == noir); assert(grille[1][0]->getX() == 0 && grille[1][0]->getY() == 1);
+	assert(grille[2][3]->getType() == tour_de_siege); assert(grille[2][3]->getCouleur() == noir); assert(grille[2][3]->getX() == 3 && grille[2][3]->getY() == 2);
+	cout << "\tconstructeur depuis un fichier : OK" << endl;
 
-	Terrain test("data/testTerrain.txt");
-	assert(test.getPiece(1, 1)->getType() == fantassin);
-	cout << "\tTest constructeur parametre : OK" << endl;
-	cout << "\tTest getPiece : OK" << endl;
+	assert(grille[1][0] == getPiece(0, 1));
+	cout << "\tgetPiece : OK" << endl;
 
-	Terrain T("data/classique.txt");
-	Terrain copie(T);
+	Terrain copie(*this);
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 7; j++) {
-			if(T.getPiece(j, i) == NULL)
+			if(grille[i][j] == NULL)
 				assert(copie.getPiece(j, i) == NULL);
 			else {
-				assert(copie.getPiece(j, i)->getType() == T.getPiece(j, i)->getType());
-				assert(copie.getPiece(j, i)->getCouleur() == T.getPiece(j, i)->getCouleur());
-				if(T.getPiece(j, i)->getType() != donjon && T.getPiece(j, i)->getType() != tour_de_siege && T.getPiece(j, i)->getSiege() != NULL) {
-					assert(copie.getPiece(j, i)->getSiege()->getType() == T.getPiece(j, i)->getSiege()->getType());
-					assert(copie.getPiece(j, i)->getSiege()->getCouleur() == T.getPiece(j, i)->getSiege()->getCouleur());
+				assert(copie.getPiece(j, i)->getType() == grille[i][j]->getType());
+				assert(copie.getPiece(j, i)->getCouleur() == grille[i][j]->getCouleur());
+				if(grille[i][j]->getType() != donjon && grille[i][j]->getType() != tour_de_siege && grille[i][j]->getSiege() != NULL) {
+					assert(copie.getPiece(j, i)->getSiege()->getType() == grille[i][j]->getSiege()->getType());
+					assert(copie.getPiece(j, i)->getSiege()->getCouleur() == grille[i][j]->getSiege()->getCouleur());
 				}
 			}
 		}
 	cout << "\tTest constructeur par copie : OK" << endl;
 
-	assert(test.verifieCoup(1, 1, 1, 0, false));
-	cout << "\tTest verifieCoup : OK" << endl;
-
-	cout << "Test Terrain : OK" << endl << endl;
+	cout << "Test Terrain : OK" << endl;
 }

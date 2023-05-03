@@ -286,8 +286,5 @@ void Piece::testRegression() {
 	assert(copie.getSiege()->getCouleur() == S->getCouleur()); assert(copie.getSiege()->getType() == S->getType());
 	cout << "\tTest constructeur par copie : OK" << endl;
 
-	// TODO : test deplacer
-	// TODO : test calculMenace
-
 	cout << "Test Piece : OK" << endl;
 }

@@ -11,8 +11,6 @@ class Terrain {
 	private:
         Piece* grille[9][7]; // tableau statique de pointeurs sur Piece
 
-		void realiseCoup(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule);
-
 	public:
         Terrain(const std::string & fichier);
 		Terrain(const Terrain & t);
