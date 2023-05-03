@@ -357,8 +357,8 @@ int Robot::evaluerPosition(const Piece & P) {
 	if(P.getType() == donjon) return 0;
 	else {
 		int score = 0;
-		if(donjon1 != NULL) score += distance(P.getX(), P.getY(), donjon1->getX(), donjon1->getY());
-		if(donjon2 != NULL) score += distance(P.getX(), P.getY(), donjon2->getX(), donjon2->getY());
+		if(donjon1 != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjon1->getX(), donjon1->getY());
+		if(donjon2 != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjon2->getX(), donjon2->getY());
 		return score;
 	}
 }
@@ -376,12 +376,6 @@ void Robot::testRegression() {
 	assert(meilleurCoupDepart == -1); assert(meilleurCoupArrivee == -1); assert(meilleurScore == 0);
 	cout << "\tTest constructeur parametre : OK" << endl;
 
-	Terrain T1("data/terrains/classique.txt");
-	trouverDonjon(T1);
-	assert(donjon1 != NULL); assert(donjon1->getX() == 1 && donjon1->getY() == 8);
-	assert(donjon2 != NULL); assert(donjon2->getX() == 5 && donjon2->getY() == 8);
-	cout << "\tTest trouverDonjon : OK" << endl;
-
 	assert(evaluerPiece(donjon) == 1000);
 	assert(evaluerPiece(archer) == 400);
 	assert(evaluerPiece(fantassin) == 200);
@@ -389,43 +383,51 @@ void Robot::testRegression() {
 	assert(evaluerPiece(tour_de_siege) == 0);
 	cout << "\tTest evaluerPiece : OK" << endl;
 
-	Terrain T2("data/terrains/testEvaluerMenace.txt");
-	T2.getPiece(5, 6)->deplacer(T2, "h");
-	copieTerrain = new Terrain(T2);
-	assert(evaluerMenace(*T2.getPiece(1, 1)) == 150);
-	assert(evaluerMenace(*T2.getPiece(5, 1)) == 0);
-	assert(evaluerMenace(*T2.getPiece(5, 4)) == 150);
-	assert(evaluerMenace(*T2.getPiece(1, 7)) == 0);
-	assert(evaluerMenace(*T2.getPiece(5, 7)) == 150);
+	Terrain T1("data/terrains/testEvaluerMenace.txt");
+	T1.getPiece(5, 6)->deplacer(T1, "h");
+	copieTerrain = new Terrain(T1);
+	assert(evaluerMenace(*T1.getPiece(1, 1)) == 150);
+	assert(evaluerMenace(*T1.getPiece(5, 1)) == 0);
+	assert(evaluerMenace(*T1.getPiece(5, 4)) == 150);
+	assert(evaluerMenace(*T1.getPiece(1, 7)) == 0);
+	assert(evaluerMenace(*T1.getPiece(5, 7)) == 150);
 	delete copieTerrain; copieTerrain = NULL;
 	cout << "\tTest evaluerMenace : OK" << endl;
 
-	Terrain T3("data/terrains/testEvaluerAttaque.txt");
-	copieTerrain = new Terrain(T3);
-	assert(evaluerAttaque(*T3.getPiece(3, 1)) == 100);
+	Terrain T2("data/terrains/testEvaluerAttaque.txt");
+	copieTerrain = new Terrain(T2);
+	assert(evaluerAttaque(*T2.getPiece(3, 1)) == 100);
 	cout << "\tTest evaluerAttaqueFantassin : OK" << endl;
-	assert(evaluerAttaque(*T3.getPiece(3, 4)) == 100);
+	assert(evaluerAttaque(*T2.getPiece(3, 4)) == 100);
 	cout << "\tTest evaluerAttaquePaladin : OK" << endl;
-	assert(evaluerAttaque(*T3.getPiece(3, 7)) == 200);
+	assert(evaluerAttaque(*T2.getPiece(3, 7)) == 200);
 	cout << "\tTest evaluerAttaqueArcher : OK" << endl;
 	delete copieTerrain; copieTerrain = NULL;
 	cout << "\tTest evaluerAttaque : OK" << endl;
 
-	// Piece P(0, 0, rouge, archer);
-	// Piece * S1 = new Piece(0, 0, noir, tour_de_siege);
-	// Piece * S2 = new Piece(0, 0, rouge, tour_de_siege);
-	// assert(evaluerSiege(P) == 0);
-	// P.setSiege(S1);
-	// assert(evaluerSiege(P) == 0);
-	// delete S1; P.setSiege(NULL);
-	// P.setSiege(S2);
-	// assert(evaluerSiege(P) == 20);
-	// delete S2; P.setSiege(NULL);
-	// cout << "\tTest evaluerSiege : OK" << endl;
+	Piece P(0, 0, rouge, archer);
+	Piece * S1 = new Piece(0, 0, noir, tour_de_siege);
+	Piece * S2 = new Piece(0, 0, rouge, tour_de_siege);
+	assert(evaluerSiege(P) == 0);
+	P.setSiege(S1);
+	assert(evaluerSiege(P) == 0);
+	delete S1; P.setSiege(NULL);
+	P.setSiege(S2);
+	assert(evaluerSiege(P) == 20);
+	delete S2; P.setSiege(NULL);
+	cout << "\tTest evaluerSiege : OK" << endl;
 
+	assert(distance(4, 6, 3, 4) == (int) sqrt(5));
+	cout << "\tTest distance : OK" << endl;
 
-	// assert(distance(4, 6, 3, 4) == (int) sqrt(5));
-	// cout << "\tTest distance : OK" << endl;
+	Terrain T3("data/terrains/classique.txt");
+	trouverDonjon(T3);
+	assert(donjon1 != NULL); assert(donjon1->getX() == 1 && donjon1->getY() == 8);
+	assert(donjon2 != NULL); assert(donjon2->getX() == 5 && donjon2->getY() == 8);
+	cout << "\tTest trouverDonjon : OK" << endl;
+
+	assert(evaluerPosition(*T3.getPiece(0, 2)) == 9);
+	cout << "\tTest evaluerPosition : OK" << endl;
 
 	cout << "Test de Robot : OK" << endl;
 }
