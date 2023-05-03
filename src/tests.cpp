@@ -28,10 +28,10 @@ int main() {
 	// modifier pour faire des tests sur les deplacements des pieces
 	T.testRegression();
 
-	Robot R(rouge);
+	Robot R(noir);
 	R.testRegression();
 
-	cout << "Tests : OK" << endl;
+	cout << endl << "Tests : OK" << endl;
 
 	return 0;
 }

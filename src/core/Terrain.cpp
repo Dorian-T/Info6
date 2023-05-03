@@ -43,9 +43,8 @@ Terrain::Terrain(const Terrain & t) {
 
 Terrain::~Terrain() {
 	for(int i = 0; i < 9; i++)
-		for(int j = 0; j < 7; j++) {
-			delete grille[i][j];
-		}
+		for(int j = 0; j < 7; j++)
+			if(grille[i][j] != NULL) delete grille[i][j];
 }
 
 Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {

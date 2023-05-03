@@ -18,8 +18,8 @@ class Robot {
 		Piece *donjon2;
 
 		// coup à jouer :
-		unsigned int meilleurCoupDepart;
-		unsigned int meilleurCoupArrivee;
+		int meilleurCoupDepart;
+		int meilleurCoupArrivee;
 		float meilleurScore;
 
 
