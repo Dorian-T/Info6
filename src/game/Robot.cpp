@@ -12,11 +12,11 @@ using namespace std;
 
 
 // constructeur et destructeur :
+
 Robot::Robot(Couleur c) {
 	couleur = c;
 	copieTerrain = NULL;
-	donjon1 = NULL;
-	donjon2 = NULL;
+	for(int i=0; i<4; i++) donjons[i] = NULL;
 	meilleurCoupDepart = -1;
 	meilleurCoupArrivee = -1;
 	meilleurScore = 0;
@@ -24,8 +24,6 @@ Robot::Robot(Couleur c) {
 
 Robot::~Robot() {
 	if(copieTerrain != NULL) delete copieTerrain;
-	if(donjon1 != NULL) delete donjon1;
-	if(donjon2 != NULL) delete donjon2;
 }
 
 
@@ -42,7 +40,7 @@ void Robot::joue(Terrain & t) {
 				// else deplacerArcher(t, x, y);
 			}
 		}
-	// cout << "meilleurCoup (dans joue) : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
+	cout << "meilleurCoup (dans joue) : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
 	if(meilleurCoupDepart != -1 && meilleurCoupArrivee != -1)
 		t.verifieCoup(meilleurCoupDepart%10, meilleurCoupDepart/10, meilleurCoupArrivee%10, meilleurCoupArrivee/10, false);
 	else
@@ -209,24 +207,30 @@ void Robot::evaluer(unsigned int depart, unsigned int arrivee) {
 				if(P->getCouleur() == couleur) total += score;
 				else total -= score;
 				cout << "score de la piece " << x << " " << y << " : " << score << endl;
+				if(total > meilleurScore) {
+					meilleurCoupDepart = depart;
+					meilleurCoupArrivee = arrivee;
+					cout << "nouveau meilleur score : " << total << endl;
+					cout << "nouveau meilleur coup : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
+				}
 			}
 		}
-	if(total > meilleurScore) {
-		meilleurCoupDepart = depart;
-		meilleurCoupArrivee = arrivee;
-		cout << "nouveau meilleur score : " << total << endl;
-		cout << "nouveau meilleur coup : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
-	}
 }
 
 void Robot::trouverDonjon(const Terrain & t) {
-	donjon1 = NULL;
-	donjon2 = NULL;
+	for(int i=0; i<4; i++) donjons[i] = NULL;
+
 	for(unsigned int y = 0; y < 9; y++)
 		for(unsigned int x = 0; x < 7; x++)
-			if(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == donjon && t.getPiece(x, y)->getCouleur() != couleur) {
-				if(donjon1 == NULL) donjon1 = t.getPiece(x, y);
-				else donjon2 = t.getPiece(x, y);
+			if(t.getPiece(x, y) != NULL && t.getPiece(x, y)->getType() == donjon) {
+				if(t.getPiece(x, y)->getCouleur() != couleur) {	// si c'est un donjon adverse
+					if(donjons[0] == NULL) donjons[0] = t.getPiece(x, y);
+					else donjons[1] = t.getPiece(x, y);
+				}
+				else {											// si c'est un donjon allié
+					if(donjons[2] == NULL) donjons[2] = t.getPiece(x, y);
+					else donjons[3] = t.getPiece(x, y);
+				}
 			}
 }
 
@@ -353,13 +357,20 @@ int Robot::evaluerSiege(const Piece & P) {
 }
 
 int Robot::evaluerPosition(const Piece & P) {
-	assert(donjon1 != NULL || donjon2 != NULL);
+	assert((donjons[0] != NULL || donjons[1] != NULL) && (donjons[2] != NULL || donjons[3] != NULL));
 	if(P.getType() == donjon) return 0;
 	else {
 		int score = 0;
-		if(donjon1 != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjon1->getX(), donjon1->getY());
-		if(donjon2 != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjon2->getX(), donjon2->getY());
-		return score;
+		if(P.getCouleur() == couleur) {	// Si la pièce est de la couleur du robot
+			if(donjons[0] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[0]->getX(), donjons[0]->getY());
+			if(donjons[1] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[1]->getX(), donjons[1]->getY());
+			return score;
+		}
+		else {							// Si la pièce est de la couleur de l'adversaire
+			if(donjons[2] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[2]->getX(), donjons[2]->getY());
+			if(donjons[3] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[3]->getX(), donjons[3]->getY());
+			return score;
+		}
 	}
 }
 
@@ -372,7 +383,8 @@ void Robot::testRegression() {
 	cout << endl << "Test de Robot" << endl;
 
 	assert(couleur == noir);
-	assert(copieTerrain == NULL); assert(donjon1 == NULL); assert(donjon2 == NULL);
+	assert(copieTerrain == NULL);
+	for(int i=0; i<4; i++) assert(donjons[i] == NULL);
 	assert(meilleurCoupDepart == -1); assert(meilleurCoupArrivee == -1); assert(meilleurScore == 0);
 	cout << "\tTest constructeur parametre : OK" << endl;
 
@@ -422,11 +434,14 @@ void Robot::testRegression() {
 
 	Terrain T3("data/terrains/classique.txt");
 	trouverDonjon(T3);
-	assert(donjon1 != NULL); assert(donjon1->getX() == 1 && donjon1->getY() == 8);
-	assert(donjon2 != NULL); assert(donjon2->getX() == 5 && donjon2->getY() == 8);
+	assert(donjons[0] != NULL); assert(donjons[0]->getX() == 1 && donjons[0]->getY() == 8);
+	assert(donjons[1] != NULL); assert(donjons[1]->getX() == 5 && donjons[1]->getY() == 8);
+	assert(donjons[2] != NULL); assert(donjons[2]->getX() == 1 && donjons[2]->getY() == 0);
+	assert(donjons[3] != NULL); assert(donjons[3]->getX() == 5 && donjons[3]->getY() == 0);
 	cout << "\tTest trouverDonjon : OK" << endl;
 
 	assert(evaluerPosition(*T3.getPiece(0, 2)) == 9);
+	assert(evaluerPosition(*T3.getPiece(0, 6)) == 9);
 	cout << "\tTest evaluerPosition : OK" << endl;
 
 	cout << "Test de Robot : OK" << endl;

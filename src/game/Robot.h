@@ -14,8 +14,7 @@ class Robot {
 
 		// pour les évaluations :
 		Terrain *copieTerrain;
-		Piece *donjon1;
-		Piece *donjon2;
+		Piece *donjons[4];
 
 		// coup à jouer :
 		int meilleurCoupDepart;
