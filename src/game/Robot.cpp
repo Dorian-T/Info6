@@ -19,7 +19,7 @@ Robot::Robot(Couleur c) {
 	for(int i=0; i<4; i++) donjons[i] = NULL;
 	meilleurCoupDepart = -1;
 	meilleurCoupArrivee = -1;
-	meilleurScore = 0;
+	meilleurScore = -1000000;
 }
 
 Robot::~Robot() {
@@ -92,99 +92,96 @@ void Robot::deplacerFantassin(const Terrain & t, unsigned int x, unsigned int y)
 	}
 	if(copieTerrain != NULL) delete copieTerrain;
 }
-// !!! faire comme pour fantassin !!!
+
 void Robot::deplacerPaladin(const Terrain & t, unsigned int x, unsigned int y) {
-	assert(copieTerrain->getPiece(x, y) != NULL && copieTerrain->getPiece(x, y)->getType() == paladin);
+	copieTerrain = new Terrain(t);
 	if(couleur == rouge) {
 		if(x+1 < 7 && y >= 1 && copieTerrain->verifieCoup(x, y, x+1, y-1, false)) {
 			evaluer(x*10+y, (x+1)*10+y-1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
+		if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 		if(x >= 1 && y >= 1 && copieTerrain->verifieCoup(x, y, x-1, y-1, false)) {
 			evaluer(x*10+y, (x-1)*10+y-1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
+		if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 		if(x+1 < 7 && y+1 < 9 && copieTerrain->verifieCoup(x, y, x+1, y+1, true)) {
 			evaluer(x*10+y, (x+1)*10+y+1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
+		if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 		if(x >= 1 && y+1 < 9 && copieTerrain->verifieCoup(x, y, x-1, y+1, true)) {
 			evaluer(x*10+y, (x-1)*10+y+1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
 	}
 	else {
 		if(x+1 < 7 && y+1 < 9 && copieTerrain->verifieCoup(x, y, x+1, y+1, false)) {
 			evaluer(x*10+y, (x+1)*10+y+1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
+		if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 		if(x >= 1 && y+1 < 9 && copieTerrain->verifieCoup(x, y, x-1, y+1, false)) {
 			evaluer(x*10+y, (x-1)*10+y+1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
+		if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 		if(x+1 < 7 && y >= 1 && copieTerrain->verifieCoup(x, y, x+1, y-1, true)) {
 			evaluer(x*10+y, (x+1)*10+y-1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
+		if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 		if(x >= 1 && y >= 1 && copieTerrain->verifieCoup(x, y, x-1, y-1, true)) {
 			evaluer(x*10+y, (x-1)*10+y-1);
-			delete copieTerrain;
-			copieTerrain = new Terrain(t);
+			delete copieTerrain; copieTerrain = NULL;
 		}
 	}
-	delete copieTerrain;
+	if(copieTerrain != NULL) delete copieTerrain;
 }
-// !!! faire comme pour fantassin !!!
+
 void Robot::deplacerArcher(const Terrain & t, unsigned int x, unsigned int y) {
-	assert(copieTerrain->getPiece(x, y) != NULL && copieTerrain->getPiece(x, y)->getType() == archer);
+	copieTerrain = new Terrain(t);
 	if(y >= 1 && copieTerrain->verifieCoup(x, y, x, y-1, false)) {
 		evaluer(x*10+y, x*10+y-1);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
+	if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 	if(x+1 < 7 && y >= 1 && copieTerrain->verifieCoup(x, y, x+1, y-1, false)) {
 		evaluer(x*10+y, (x+1)*10+y-1);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
+	if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 	if(x+1 < 7 && copieTerrain->verifieCoup(x, y, x+1, y, false)) {
 		evaluer(x*10+y, (x+1)*10+y);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
+	if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 	if(x+1 < 7 && y+1 < 9 && copieTerrain->verifieCoup(x, y, x+1, y+1, false)) {
 		evaluer(x*10+y, (x+1)*10+y+1);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
+	if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 	if(y+1 < 9 && copieTerrain->verifieCoup(x, y, x, y+1, false)) {
 		evaluer(x*10+y, x*10+y+1);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
+	if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 	if(x >= 1 && y+1 < 9 && copieTerrain->verifieCoup(x, y, x-1, y+1, false)) {
 		evaluer(x*10+y, (x-1)*10+y+1);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
+	if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 	if(x >= 1 && copieTerrain->verifieCoup(x, y, x-1, y, false)) {
 		evaluer(x*10+y, (x-1)*10+y);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
+	if(copieTerrain == NULL) copieTerrain = new Terrain(t);
 	if(x >= 1 && y >= 1 && copieTerrain->verifieCoup(x, y, x-1, y-1, false)) {
 		evaluer(x*10+y, (x-1)*10+y-1);
-		delete copieTerrain;
-		copieTerrain = new Terrain(t);
+		delete copieTerrain; copieTerrain = NULL;
 	}
-	delete copieTerrain;
+	if(copieTerrain != NULL) delete copieTerrain;
 }
 
 
@@ -195,26 +192,28 @@ void Robot::evaluer(unsigned int depart, unsigned int arrivee) {
 	int score, total = 0;
 	for(unsigned int y = 0; y < 9; y++)
 		for(unsigned int x = 0; x < 7; x++) {
-			cout << "\t" << x << " " << y << " evaluation" << endl;
 			Piece * P = copieTerrain->getPiece(x, y);
 			if(P != NULL && P->getType() != tour_de_siege) {
-				score = evaluerPiece(P->getType());
-				score += evaluerMenace(*P);
-				score += evaluerAttaque(*P);
-				score += evaluerSiege(*P);
-				score += evaluerPosition(*P);
+				score = evaluerPiece(P->getType()); cout << "\t\tpiece : " << score << endl;
+				score -= evaluerMenace(*P); cout << "\t\tmenace : " << score << endl;
+				score += evaluerAttaque(*P); cout << "\t\tattaque : " << score << endl;
+				score += evaluerSiege(*P); cout << "\t\tsiege : " << score << endl;
+				score += evaluerPosition(*P); cout << "\t\tposition : " << score << endl;
 
 				if(P->getCouleur() == couleur) total += score;
 				else total -= score;
-				cout << "score de la piece " << x << " " << y << " : " << score << endl;
-				if(total > meilleurScore) {
-					meilleurCoupDepart = depart;
-					meilleurCoupArrivee = arrivee;
-					cout << "nouveau meilleur score : " << total << endl;
-					cout << "nouveau meilleur coup : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
-				}
+				cout << "\tscore de la piece " << x << " " << y << " : " << score << endl;
+				cout << "\ttotal temporaire : " << total << endl;
 			}
 		}
+	cout << "total : " << total << " meilleur score : " << meilleurScore << endl;
+	if(total > meilleurScore) {
+		meilleurScore = total;
+		meilleurCoupDepart = depart;
+		meilleurCoupArrivee = arrivee;
+		cout << "nouveau meilleur score : " << meilleurScore << endl;
+		cout << "nouveau meilleur coup : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
+	}
 }
 
 void Robot::trouverDonjon(const Terrain & t) {
@@ -385,7 +384,7 @@ void Robot::testRegression() {
 	assert(couleur == noir);
 	assert(copieTerrain == NULL);
 	for(int i=0; i<4; i++) assert(donjons[i] == NULL);
-	assert(meilleurCoupDepart == -1); assert(meilleurCoupArrivee == -1); assert(meilleurScore == 0);
+	assert(meilleurCoupDepart == -1); assert(meilleurCoupArrivee == -1); assert(meilleurScore == -1000000);
 	cout << "\tTest constructeur parametre : OK" << endl;
 
 	assert(evaluerPiece(donjon) == 1000);
@@ -443,6 +442,20 @@ void Robot::testRegression() {
 	assert(evaluerPosition(*T3.getPiece(0, 2)) == 9);
 	assert(evaluerPosition(*T3.getPiece(0, 6)) == 9);
 	cout << "\tTest evaluerPosition : OK" << endl;
+
+	Terrain T4("data/terrains/testEvaluer.txt");
+	copieTerrain = new Terrain(T4); meilleurScore = -1000000; meilleurCoupDepart = -1; meilleurCoupArrivee = -1;
+	evaluer(33, 34);
+	assert(meilleurScore == -188);
+	assert(meilleurCoupDepart == 33); assert(meilleurCoupArrivee == 34);
+	delete copieTerrain; copieTerrain = NULL;
+	cout << "\tTest evaluer : OK" << endl;
+
+	Terrain T5("data/terrains/testDeplacerFantassin.txt");
+	meilleurScore = -1000000; meilleurCoupDepart = -1; meilleurCoupArrivee = -1;
+	deplacerFantassin(T5, 3, 4);
+	assert(meilleurCoupArrivee == 35);
+	cout << "\tTest deplacerFantassin : OK" << endl;
 
 	cout << "Test de Robot : OK" << endl;
 }

@@ -19,7 +19,7 @@ class Robot {
 		// coup à jouer :
 		int meilleurCoupDepart;
 		int meilleurCoupArrivee;
-		float meilleurScore;
+		int meilleurScore;
 
 
 		void deplacerFantassin(const Terrain & t, unsigned int x, unsigned int y);
