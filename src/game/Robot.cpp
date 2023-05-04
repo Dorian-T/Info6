@@ -36,13 +36,13 @@ void Robot::joue(Terrain & t) {
 			P = t.getPiece(x, y);
 			if(P != NULL && P->getCouleur() == couleur && P->getType() != donjon && P->getType() != tour_de_siege) {
 				if(P->getType() == fantassin) deplacerFantassin(t, x, y);
-				// else if(P->getType() == paladin) deplacerPaladin(t, x, y);
-				// else deplacerArcher(t, x, y);
+				else if(P->getType() == paladin) deplacerPaladin(t, x, y);
+				else deplacerArcher(t, x, y);
 			}
 		}
 	cout << "meilleurCoup (dans joue) : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
 	if(meilleurCoupDepart != -1 && meilleurCoupArrivee != -1)
-		t.verifieCoup(meilleurCoupDepart%10, meilleurCoupDepart/10, meilleurCoupArrivee%10, meilleurCoupArrivee/10, false);
+		t.verifieCoup(meilleurCoupDepart%10, meilleurCoupDepart/10, meilleurCoupArrivee%10, meilleurCoupArrivee/10, false); // pas toujours à false
 	else
 		cout << "pas de coup trouvé" << endl;
 }
@@ -90,7 +90,10 @@ void Robot::deplacerFantassin(const Terrain & t, unsigned int x, unsigned int y)
 		delete copieTerrain;
 		copieTerrain = NULL;
 	}
-	if(copieTerrain != NULL) delete copieTerrain;
+	if(copieTerrain != NULL) {
+		delete copieTerrain;
+		copieTerrain = NULL;
+	}
 }
 
 void Robot::deplacerPaladin(const Terrain & t, unsigned int x, unsigned int y) {
@@ -137,7 +140,10 @@ void Robot::deplacerPaladin(const Terrain & t, unsigned int x, unsigned int y) {
 			delete copieTerrain; copieTerrain = NULL;
 		}
 	}
-	if(copieTerrain != NULL) delete copieTerrain;
+	if(copieTerrain != NULL) {
+		delete copieTerrain;
+		copieTerrain = NULL;
+	}
 }
 
 void Robot::deplacerArcher(const Terrain & t, unsigned int x, unsigned int y) {
@@ -181,7 +187,10 @@ void Robot::deplacerArcher(const Terrain & t, unsigned int x, unsigned int y) {
 		evaluer(x*10+y, (x-1)*10+y-1);
 		delete copieTerrain; copieTerrain = NULL;
 	}
-	if(copieTerrain != NULL) delete copieTerrain;
+	if(copieTerrain != NULL) {
+		delete copieTerrain;
+		copieTerrain = NULL;
+	}
 }
 
 
@@ -213,6 +222,15 @@ void Robot::evaluer(unsigned int depart, unsigned int arrivee) {
 		meilleurCoupArrivee = arrivee;
 		cout << "nouveau meilleur score : " << meilleurScore << endl;
 		cout << "nouveau meilleur coup : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
+	}
+	else if(total == meilleurScore) {
+		if(rand()%2 == 0) {
+			meilleurScore = total;
+			meilleurCoupDepart = depart;
+			meilleurCoupArrivee = arrivee;
+			cout << "nouveau meilleur score : " << meilleurScore << endl;
+			cout << "nouveau meilleur coup : " << meilleurCoupDepart << " -> " << meilleurCoupArrivee << endl;
+		}
 	}
 }
 
@@ -378,6 +396,7 @@ int Robot::distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned 
 }
 
 
+
 void Robot::testRegression() {
 	cout << endl << "Test de Robot" << endl;
 
@@ -456,6 +475,18 @@ void Robot::testRegression() {
 	deplacerFantassin(T5, 3, 4);
 	assert(meilleurCoupArrivee == 35);
 	cout << "\tTest deplacerFantassin : OK" << endl;
+
+	Terrain T6("data/terrains/testDeplacerPaladin.txt");
+	meilleurScore = -1000000; meilleurCoupDepart = -1; meilleurCoupArrivee = -1;
+	deplacerPaladin(T6, 3, 4);
+	assert(meilleurCoupArrivee == 45);
+	cout << "\tTest deplacerPaladin : OK" << endl;
+
+	Terrain T7("data/terrains/testDeplacerArcher.txt");
+	meilleurScore = -1000000; meilleurCoupDepart = -1; meilleurCoupArrivee = -1;
+	deplacerArcher(T7, 3, 4);
+	assert(meilleurCoupArrivee == 24);
+	cout << "\tTest deplacerArcher : OK" << endl;
 
 	cout << "Test de Robot : OK" << endl;
 }
