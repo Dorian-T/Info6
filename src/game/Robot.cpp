@@ -216,24 +216,13 @@ void Robot::trouveMeilleurCoup(unsigned int dx, unsigned int dy, unsigned int ax
 	cout << "evaluation de x=" << dx << " y=" << dy << " -> x=" << ax << " y=" << ay << endl;
 	int s = evaluer();
 	cout << "total : " << s << " meilleur score : " << score << endl;
-	if(s > score) {
+	if(s > score || (s == score && rand()%2 == 0)) {
 		score = s;
 		departX = dx;
 		departY = dy;
 		arriveeX = ax;
 		arriveeY = ay;
 		cout << "nouveau meilleur score : " << score << "\tcoup : x=" << departX << " y=" << departY << " -> x=" << arriveeX << " y=" << arriveeY << endl;
-	}
-	else if(s == score) {
-		if(rand()%2 == 0) {
-			score = s;
-			departX = dx;
-			departY = dy;
-			arriveeX = ax;
-			arriveeY = ay;
-			cout << "nouveau meilleur score : " << score << endl;
-			cout << "nouveau meilleur coup : x=" << departX << " y=" << departY << " -> x=" << arriveeX << " y=" << arriveeY << endl;
-		}
 	}
 }
 
