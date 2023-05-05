@@ -7,8 +7,8 @@
 
 class Jeu {
 	private:
-		Humain *J1;
-		Robot *J2;
+		Humain J1 = Humain(rouge);
+		Robot J2 = Robot(noir);
 
 		bool joueur1;
 		bool fin;

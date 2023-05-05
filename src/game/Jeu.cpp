@@ -17,8 +17,8 @@ Jeu::Jeu(const string & filename) {
 	date(dt);
 	nomFichierSauvegarde = "data/sauvegardes/" + dt + ".txt";
 	terrain = new Terrain(filename);
-	J1 = new Humain(rouge);
-	J2 = new Robot(noir);
+	// J1 = new Humain(rouge);
+	// J2 = new Robot(noir);
 	joueur1 = true;
 	fin = false;
 }
@@ -29,11 +29,11 @@ void Jeu::boucle() {
 	while (!fin) {
 		if (joueur1) {
 			cout << "Joueur 1 :" << endl;
-			J1->joue(*terrain);
+			J1.joue(*terrain);
 		}
 		else {
 			cout << "Joueur 2 :" << endl;
-			J2->joue(*terrain);
+			J2.joue(*terrain);
 		}
 		joueurSuivant();
 		cout << *terrain;
