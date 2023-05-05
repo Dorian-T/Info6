@@ -17,9 +17,11 @@ class Robot {
 		Piece *donjons[4];
 
 		// coup à jouer :
-		int meilleurCoupDepart;
-		int meilleurCoupArrivee;
-		int meilleurScore;
+		int score;
+		int departX;
+		int departY;
+		int arriveeX;
+		int arriveeY;
 
 
 		void deplacerFantassin(const Terrain & t, unsigned int x, unsigned int y);
@@ -28,7 +30,8 @@ class Robot {
 
 
 		// évaluation :
-		void evaluer(unsigned int depart, unsigned int arrivee);
+		void trouveMeilleurCoup(unsigned int dx, unsigned int dy, unsigned int ax, unsigned int ay);
+		int evaluer();
 		void trouverDonjon(const Terrain & t);
 
 		int evaluerPiece(Type t);
