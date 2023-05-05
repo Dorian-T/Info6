@@ -17,8 +17,6 @@ Jeu::Jeu(const string & filename) {
 	date(dt);
 	nomFichierSauvegarde = "data/sauvegardes/" + dt + ".txt";
 	terrain = new Terrain(filename);
-	// J1 = new Humain(rouge);
-	// J2 = new Robot(noir);
 	joueur1 = true;
 	fin = false;
 }

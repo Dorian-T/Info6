@@ -36,12 +36,8 @@ class Robot {
 
 		int evaluerPiece(Type t);
 
-		int evaluerMenace(const Piece & P);
-
 		int evaluerAttaque(const Piece & P);
-		int evaluerAttaqueFantassin(const Piece & P);
-		int evaluerAttaquePaladin(const Piece & P);
-		int evaluerAttaqueArcher(const Piece & P);
+		int evaluerUneAttaque(unsigned int x, unsigned int y, Couleur c);
 
 		int evaluerSiege(const Piece & P);
 

@@ -17,7 +17,7 @@ Robot::Robot(Couleur c) {
 	couleur = c;
 	copieTerrain = NULL;
 	for(int i=0; i<4; i++) donjons[i] = NULL;
-	score = -1000000;
+	score = -10000;
 	departX = -1;
 	departY = -1;
 	arriveeX = -1;
@@ -32,6 +32,7 @@ Robot::~Robot() {
 
 void Robot::joue(Terrain & t) {
 	trouverDonjon(t);
+	score = -10000; departX = -1; departY = -1; arriveeX = -1; arriveeY = -1;
 	Piece * P;
 	for(unsigned int y = 0; y < 9; y++)
 		for(unsigned int x = 0; x < 7; x++) {
@@ -42,11 +43,10 @@ void Robot::joue(Terrain & t) {
 				else deplacerArcher(t, x, y);
 			}
 		}
-	cout << "meilleurCoup (dans joue) : x=" << departX << "y=" << departY << " -> x=" << arriveeX << "y=" << arriveeY << endl;
 	if(departX != -1 && departY != -1 && arriveeX != -1 && arriveeY != -1)
 		t.verifieCoup(departX, departY, arriveeX, arriveeY, false); // pas toujours à false
 	else
-		cout << "pas de coup trouvé" << endl;
+		cout << "pas de coup trouve" << endl;
 }
 
 
@@ -222,8 +222,7 @@ void Robot::trouveMeilleurCoup(unsigned int dx, unsigned int dy, unsigned int ax
 		departY = dy;
 		arriveeX = ax;
 		arriveeY = ay;
-		cout << "nouveau meilleur score : " << score << endl;
-		cout << "nouveau meilleur coup : x=" << departX << " y=" << departY << " -> x=" << arriveeX << " y=" << arriveeY << endl;
+		cout << "nouveau meilleur score : " << score << "\tcoup : x=" << departX << " y=" << departY << " -> x=" << arriveeX << " y=" << arriveeY << endl;
 	}
 	else if(s == score) {
 		if(rand()%2 == 0) {
@@ -244,16 +243,14 @@ int Robot::evaluer() {
 		for(unsigned int x = 0; x < 7; x++) {
 			Piece * P = copieTerrain->getPiece(x, y);
 			if(P != NULL && P->getType() != tour_de_siege) {
-				s = evaluerPiece(P->getType()); cout << "\t\tpiece : " << s << endl;
-				s -= evaluerMenace(*P); cout << "\t\tmenace : " << s << endl;
-				s += evaluerAttaque(*P); cout << "\t\tattaque : " << s << endl;
-				s += evaluerSiege(*P); cout << "\t\tsiege : " << s << endl;
-				s += evaluerPosition(*P); cout << "\t\tposition : " << s << endl;
+				s = evaluerPiece(P->getType());	cout << "\tp=" << s;
+				s += evaluerAttaque(*P);		cout << " a=" << s;
+				s += evaluerSiege(*P);			cout << " s=" << s;
+				s += evaluerPosition(*P);		cout << " p=" << s;
 
 				if(P->getCouleur() == couleur) total += s;
 				else total -= s;
-				cout << "\tscore de la piece " << x << " " << y << " : " << s << endl;
-				cout << "\ttotal temporaire : " << total << endl;
+				cout << "\tscore de la piece x=" << x << " y=" << y << " : " << s << "\ttotal temporaire : " << total << endl;
 			}
 		}
 	return total;
@@ -291,106 +288,62 @@ int Robot::evaluerPiece(Type t) {
 	}
 }
 
-int Robot::evaluerMenace(const Piece & P) {
-	int score = 0;
-	Piece *E[8] = {NULL};
-
-	if(P.getY() >= 1)						E[0] = copieTerrain->getPiece(P.getX(), P.getY()-1);
-	if(P.getX()+1 < 7 && P.getY() >= 1)		E[1] = copieTerrain->getPiece(P.getX()+1, P.getY()-1);
-	if(P.getX()+1 < 7)						E[2] = copieTerrain->getPiece(P.getX()+1, P.getY());
-	if(P.getX()+1 < 7 && P.getY()+1 < 9)	E[3] = copieTerrain->getPiece(P.getX()+1, P.getY()+1);
-	if(P.getY()+1 < 9)						E[4] = copieTerrain->getPiece(P.getX(), P.getY()+1);
-	if(P.getX() >= 1 && P.getY()+1 < 9)		E[5] = copieTerrain->getPiece(P.getX()-1, P.getY()+1);
-	if(P.getX() >= 1)						E[6] = copieTerrain->getPiece(P.getX()-1, P.getY());
-	if(P.getX() >= 1 && P.getY() >= 1)		E[7] = copieTerrain->getPiece(P.getX()-1, P.getY()-1);
-
-	if((E[0] != NULL && E[0]->getCouleur() != P.getCouleur() && (E[0]->getType() == archer || E[0]->getType() == fantassin))
-		|| (E[1] != NULL && E[1]->getCouleur() != P.getCouleur() && (E[1]->getType() == archer || E[1]->getType() == paladin))
-		|| (E[2] != NULL && E[2]->getCouleur() != P.getCouleur() && (E[2]->getType() == archer || E[2]->getType() == fantassin))
-		|| (E[3] != NULL && E[3]->getCouleur() != P.getCouleur() && (E[3]->getType() == archer || E[3]->getType() == paladin))
-		|| (E[4] != NULL && E[4]->getCouleur() != P.getCouleur() && (E[4]->getType() == archer || E[4]->getType() == fantassin))
-		|| (E[5] != NULL && E[5]->getCouleur() != P.getCouleur() && (E[5]->getType() == archer || E[5]->getType() == paladin))
-		|| (E[6] != NULL && E[6]->getCouleur() != P.getCouleur() && (E[6]->getType() == archer || E[6]->getType() == fantassin))
-		|| (E[7] != NULL && E[7]->getCouleur() != P.getCouleur() && (E[7]->getType() == archer || E[7]->getType() == paladin)))
-		score = evaluerPiece(P.getType()) * 0.75;
-
-	return score;
-}
-
 int Robot::evaluerAttaque(const Piece & P) {
-	if(P.getType() == fantassin) return evaluerAttaqueFantassin(P);
-	else if(P.getType() == paladin) return evaluerAttaquePaladin(P);
-	else if(P.getType() == archer) return evaluerAttaqueArcher(P);
-	else return 0;
+	int s = 0, n = 0;
+
+	if((P.getType() == archer || P.getType() == fantassin) && P.getY() >= 1) {
+		n = evaluerUneAttaque(P.getX(), P.getY()-1, P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	if((P.getType() == archer || P.getType() == paladin) && P.getX()+1 < 7 && P.getY() >= 1) {
+		n = evaluerUneAttaque(P.getX()+1, P.getY()-1, P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	if((P.getType() == archer || P.getType() == fantassin) && P.getX()+1 < 7) {
+		n = evaluerUneAttaque(P.getX()+1, P.getY(), P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	if((P.getType() == archer || P.getType() == paladin) && P.getX()+1 < 7 && P.getY()+1 < 9) {
+		n = evaluerUneAttaque(P.getX()+1, P.getY()+1, P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	if((P.getType() == archer || P.getType() == fantassin) && P.getY()+1 < 9) {
+		n = evaluerUneAttaque(P.getX(), P.getY()+1, P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	if((P.getType() == archer || P.getType() == paladin) && P.getX() >= 1 && P.getY()+1 < 9) {
+		n = evaluerUneAttaque(P.getX()-1, P.getY()+1, P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	if((P.getType() == archer || P.getType() == fantassin) && P.getX() >= 1) {
+		n = evaluerUneAttaque(P.getX()-1, P.getY(), P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	if((P.getType() == archer || P.getType() == paladin) && P.getX() >= 1 && P.getY() >= 1) {
+		n = evaluerUneAttaque(P.getX()-1, P.getY()-1, P.getCouleur());
+		if(n > s) s = n;
+	}
+
+	return s;
 }
 
-int Robot::evaluerAttaqueFantassin(const Piece & P) {
-	int score = 0;
-	Piece *E = NULL;
-
-	if(P.getY() >= 1) E = copieTerrain->getPiece(P.getX(), P.getY()-1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX()+1 < 7) E = copieTerrain->getPiece(P.getX()+1, P.getY());
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getY()+1 < 9) E = copieTerrain->getPiece(P.getX(), P.getY()+1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX() >= 1) E = copieTerrain->getPiece(P.getX()-1, P.getY());
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	return score;
-}
-
-int Robot::evaluerAttaquePaladin(const Piece & P) {
-	int score = 0;
-	Piece *E = NULL;
-
-	if(P.getX()+1 < 7 && P.getY() >= 1) E = copieTerrain->getPiece(P.getX()+1, P.getY()-1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX()+1 < 7 && P.getY()+1 < 9) E = copieTerrain->getPiece(P.getX()+1, P.getY()+1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX() >= 1 && P.getY()+1 < 9) E = copieTerrain->getPiece(P.getX()-1, P.getY()+1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX() >= 1 && P.getY() >= 1) E = copieTerrain->getPiece(P.getX()-1, P.getY()-1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	return score;
-}
-
-int Robot::evaluerAttaqueArcher(const Piece & P) {
-	int score = 0;
-	Piece *E = NULL;
-
-	if(P.getY() >= 1) E = copieTerrain->getPiece(P.getX(), P.getY()-1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX()+1 < 7 && P.getY() >= 1) E = copieTerrain->getPiece(P.getX()+1, P.getY()-1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX()+1 < 7) E = copieTerrain->getPiece(P.getX()+1, P.getY());
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX()+1 < 7 && P.getY()+1 < 9) E = copieTerrain->getPiece(P.getX()+1, P.getY()+1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getY()+1 < 9) E = copieTerrain->getPiece(P.getX(), P.getY()+1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX() >= 1 && P.getY()+1 < 9) E = copieTerrain->getPiece(P.getX()-1, P.getY()+1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX() >= 1) E = copieTerrain->getPiece(P.getX()-1, P.getY());
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	if(P.getX() >= 1 && P.getY() >= 1) E = copieTerrain->getPiece(P.getX()-1, P.getY()-1);
-	if(E != NULL && E->getCouleur() != P.getCouleur()) score += evaluerPiece(E->getType()) * 0.5;
-
-	return score;
+int Robot::evaluerUneAttaque(unsigned int x, unsigned int y, Couleur c) {
+	int n = 0;
+	Piece *P = copieTerrain->getPiece(x, y);
+	if(P != NULL && P->getCouleur() != c) {
+		if(c == couleur)
+			n = evaluerPiece(P->getType()) * 0.5;
+		else
+			n = evaluerPiece(P->getType()) * 0.75;
+	}
+	return n;
 }
 
 int Robot::evaluerSiege(const Piece & P) {
@@ -402,16 +355,16 @@ int Robot::evaluerPosition(const Piece & P) {
 	assert((donjons[0] != NULL || donjons[1] != NULL) && (donjons[2] != NULL || donjons[3] != NULL));
 	if(P.getType() == donjon) return 0;
 	else {
-		int score = 0;
+		int s = 0;
 		if(P.getCouleur() == couleur) {	// Si la pièce est de la couleur du robot
-			if(donjons[0] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[0]->getX(), donjons[0]->getY());
-			if(donjons[1] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[1]->getX(), donjons[1]->getY());
-			return score;
+			if(donjons[0] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[0]->getX(), donjons[0]->getY());
+			if(donjons[1] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[1]->getX(), donjons[1]->getY());
+			return s;
 		}
 		else {							// Si la pièce est de la couleur de l'adversaire
-			if(donjons[2] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[2]->getX(), donjons[2]->getY());
-			if(donjons[3] != NULL) score += 11 - (int) distance(P.getX(), P.getY(), donjons[3]->getX(), donjons[3]->getY());
-			return score;
+			if(donjons[2] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[2]->getX(), donjons[2]->getY());
+			if(donjons[3] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[3]->getX(), donjons[3]->getY());
+			return s;
 		}
 	}
 }
@@ -428,7 +381,7 @@ void Robot::testRegression() {
 	assert(couleur == noir);
 	assert(copieTerrain == NULL);
 	for(int i=0; i<4; i++) assert(donjons[i] == NULL);
-	assert(score == -1000000);
+	assert(score == -10000);
 	assert(departX == -1); assert(departY == -1); assert(arriveeX == -1); assert(arriveeY == -1);
 	cout << "\tTest constructeur parametre : OK" << endl;
 
@@ -439,25 +392,12 @@ void Robot::testRegression() {
 	assert(evaluerPiece(tour_de_siege) == 0);
 	cout << "\tTest evaluerPiece : OK" << endl;
 
-	Terrain T1("data/terrains/testEvaluerMenace.txt");
-	T1.getPiece(5, 6)->deplacer(T1, "h");
-	copieTerrain = new Terrain(T1);
-	assert(evaluerMenace(*T1.getPiece(1, 1)) == 150);
-	assert(evaluerMenace(*T1.getPiece(5, 1)) == 0);
-	assert(evaluerMenace(*T1.getPiece(5, 4)) == 150);
-	assert(evaluerMenace(*T1.getPiece(1, 7)) == 0);
-	assert(evaluerMenace(*T1.getPiece(5, 7)) == 150);
-	delete copieTerrain; copieTerrain = NULL;
-	cout << "\tTest evaluerMenace : OK" << endl;
-
 	Terrain T2("data/terrains/testEvaluerAttaque.txt");
 	copieTerrain = new Terrain(T2);
 	assert(evaluerAttaque(*T2.getPiece(3, 1)) == 100);
-	cout << "\tTest evaluerAttaqueFantassin : OK" << endl;
 	assert(evaluerAttaque(*T2.getPiece(3, 4)) == 100);
-	cout << "\tTest evaluerAttaquePaladin : OK" << endl;
-	assert(evaluerAttaque(*T2.getPiece(3, 7)) == 200);
-	cout << "\tTest evaluerAttaqueArcher : OK" << endl;
+	assert(evaluerAttaque(*T2.getPiece(3, 7)) == 100);
+	assert(evaluerAttaque(*T2.getPiece(3, 6)) == 300);
 	delete copieTerrain; copieTerrain = NULL;
 	cout << "\tTest evaluerAttaque : OK" << endl;
 
@@ -489,8 +429,9 @@ void Robot::testRegression() {
 	cout << "\tTest evaluerPosition : OK" << endl;
 
 	Terrain T4("data/terrains/testEvaluer.txt");
-	copieTerrain = new Terrain(T4); score = -1000000; departX = -1; departY = -1; arriveeX = -1; arriveeY = -1;
-	assert(evaluer() == -188);
+	copieTerrain = new Terrain(T4);
+	score = -10000;
+	assert(evaluer() == -88);
 	cout << "\tTest evaluer : OK" << endl;
 
 	trouveMeilleurCoup(3, 3, 3, 4);
@@ -499,20 +440,21 @@ void Robot::testRegression() {
 	delete copieTerrain; copieTerrain = NULL;
 
 	Terrain T5("data/terrains/testDeplacerFantassin.txt");
-	score = -1000000;
+	score = -10000;
 	deplacerFantassin(T5, 3, 4);
 	assert(arriveeX == 3 && arriveeY == 5);
 	cout << "\tTest deplacerFantassin : OK" << endl;
 
 	Terrain T6("data/terrains/testDeplacerPaladin.txt");
-	score = -1000000;
+	score = -10000;
 	deplacerPaladin(T6, 3, 4);
 	assert(arriveeX == 4 && arriveeY == 5);
 	cout << "\tTest deplacerPaladin : OK" << endl;
 
 	Terrain T7("data/terrains/testDeplacerArcher.txt");
-	score = -1000000;
+	score = -10000;
 	deplacerArcher(T7, 3, 4);
+	cout << arriveeX << " " << arriveeY << endl;
 	assert(arriveeX == 2 && arriveeY == 4);
 	cout << "\tTest deplacerArcher : OK" << endl;
 

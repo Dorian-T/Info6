@@ -10,12 +10,13 @@ using namespace std;
 
 int main() {
 	srand(time(NULL));
-	// Jeu J("data/terrains/classique.txt");
-	// J.boucle();
 
-	Terrain T("data/terrains/classique.txt");
-	Robot R(noir);
-	R.joue(T);
+	Jeu J("data/terrains/classique.txt");
+	J.boucle();
+
+	// Terrain T("data/terrains/classique.txt");
+	// Robot R(noir);
+	// R.joue(T);
 
 	return 0;
 }
