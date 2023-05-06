@@ -17,7 +17,7 @@ Robot::Robot(Couleur c) {
 	couleur = c;
 	copieTerrain = NULL;
 	for(int i=0; i<4; i++) donjons[i] = NULL;
-	score = -10000;
+	score = -100000;
 	departX = -1;
 	departY = -1;
 	arriveeX = -1;
@@ -370,7 +370,7 @@ void Robot::testRegression() {
 	assert(couleur == noir);
 	assert(copieTerrain == NULL);
 	for(int i=0; i<4; i++) assert(donjons[i] == NULL);
-	assert(score == -10000);
+	assert(score == -100000);
 	assert(departX == -1); assert(departY == -1); assert(arriveeX == -1); assert(arriveeY == -1);
 	cout << "\tTest constructeur parametre : OK" << endl;
 
@@ -419,7 +419,7 @@ void Robot::testRegression() {
 
 	Terrain T4("data/terrains/testEvaluer.txt");
 	copieTerrain = new Terrain(T4);
-	score = -10000;
+	score = -100000;
 	assert(evaluer() == -88);
 	cout << "\tTest evaluer : OK" << endl;
 
@@ -429,19 +429,19 @@ void Robot::testRegression() {
 	delete copieTerrain; copieTerrain = NULL;
 
 	Terrain T5("data/terrains/testDeplacerFantassin.txt");
-	score = -10000;
+	score = -100000;
 	deplacerFantassin(T5, 3, 4);
 	assert(arriveeX == 3 && arriveeY == 5);
 	cout << "\tTest deplacerFantassin : OK" << endl;
 
 	Terrain T6("data/terrains/testDeplacerPaladin.txt");
-	score = -10000;
+	score = -100000;
 	deplacerPaladin(T6, 3, 4);
 	assert(arriveeX == 4 && arriveeY == 5);
 	cout << "\tTest deplacerPaladin : OK" << endl;
 
 	Terrain T7("data/terrains/testDeplacerArcher.txt");
-	score = -10000;
+	score = -100000;
 	deplacerArcher(T7, 3, 4);
 	cout << arriveeX << " " << arriveeY << endl;
 	assert(arriveeX == 2 && arriveeY == 4);
