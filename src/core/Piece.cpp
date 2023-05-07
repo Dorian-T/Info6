@@ -1,12 +1,12 @@
 #include "Piece.h"
-#include "Terrain.h"
 
 #include <assert.h>
 #include <iostream>
-#include <string>
 
 using namespace std;
 
+
+// constructeurs et destructeur
 
 Piece::Piece(unsigned int X, unsigned int Y, Couleur C, Type T) {
 	x = X;
@@ -31,6 +31,9 @@ Piece::~Piece() {
 	if(siege != NULL) delete siege;
 }
 
+
+// accesseurs
+
 unsigned int Piece::getX() const {
 	return x;
 }
@@ -54,7 +57,7 @@ Piece* Piece::getSiege() const {
 
 unsigned int Piece::getMenace(Terrain & t) {
 	assert(type == donjon);
-	if (couleur == rouge) {
+	if (couleur == rouge) { // on ne regarde pas les mêmes cases selon la couleur du donjon
 		calculMenaceCase(t, t.getPiece(x-1, y), fantassin);
 		calculMenaceCase(t, t.getPiece(x-1, y-1), paladin);
 		calculMenaceCase(t, t.getPiece(x, y-1), fantassin);
@@ -80,14 +83,20 @@ void Piece::calculMenaceCase(Terrain & t, Piece * p, Type ty) {
 			}
 }
 
+
+// mutateur
+
 void Piece::setSiege(Piece* S) {
 	assert(type != donjon && type != tour_de_siege);
 	assert(S == NULL || S->getType() == tour_de_siege);
 	siege = S;
 }
 
+
+// fonctions de déplacement
+
 bool Piece::deplacer(Terrain & t, const string & s) {
-	if(type == fantassin || type == paladin || type == archer) {
+	if(type == fantassin || type == paladin || type == archer) { // seuls les soldats peuvent se déplacer
 		if(s == "h") return deplacerH(t);
 		else if(s == "hd") return deplacerHD(t);
 		else if(s == "d") return deplacerD(t);
@@ -98,19 +107,19 @@ bool Piece::deplacer(Terrain & t, const string & s) {
 		else if(s == "hg") return deplacerHG(t);
 		else return false;
 	}
-	else return false;
+	else return false; // retourne un booléen pour savoir si le déplacement a été effectué
 }
 
 bool Piece::deplacerH(Terrain & t) {
-	if(type == fantassin || type == archer)
-		if(couleur == rouge)
+	if(type == fantassin || type == archer) // seuls les fantassins et les archers peuvent se déplacer en ligne droite
+		if(couleur == rouge) // on ne regarde pas les mêmes cases selon la couleur du soldat
 			if(t.verifieCoup(x, y, x, y-1, false)) y--;
 			else return false;
 		else
 			if(t.verifieCoup(x, y, x, y+1, false)) y++;
 			else return false;
 	else return false;
-	return true;
+	return true; // retourne un booléen pour savoir si le déplacement a été effectué
 }
 
 bool Piece::deplacerHD(Terrain & t) {
@@ -146,7 +155,7 @@ bool Piece::deplacerD(Terrain & t) {
 bool Piece::deplacerBD(Terrain & t) {
 	if(type == paladin)
 		if(couleur == rouge)
-			if(t.verifieCoup(x, y, x+1, y+1, true)) {
+			if(t.verifieCoup(x, y, x+1, y+1, true)) { // les paladins ne peuvent reculer que pour manger un ennemi
 				x++;
 				y++;
 			}

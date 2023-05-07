@@ -1,17 +1,18 @@
-#include "../core/Piece.h"
-#include "../core/Terrain.h"
 #include "Humain.h"
 
 #include <iostream>
-#include <string>
-#include <vector>
 
 using namespace std;
 
 
+// constructeur
+
 Humain::Humain(Couleur c) {
 	couleur = c;
 }
+
+
+// fonctions permettant de choisir et vérifier un coup
 
 void Humain::joue(Terrain & t) {
 	Piece *P;

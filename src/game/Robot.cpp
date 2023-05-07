@@ -1,12 +1,8 @@
-#include "../core/Piece.h"
-#include "../core/Terrain.h"
 #include "Robot.h"
 
 #include <assert.h>
 #include <iostream>
 #include <math.h>
-#include <string>
-#include <vector>
 
 using namespace std;
 
@@ -213,16 +209,16 @@ void Robot::deplacerArcher(const Terrain & t, unsigned int x, unsigned int y) {
 // évaluation :
 
 void Robot::trouveMeilleurCoup(unsigned int dx, unsigned int dy, unsigned int ax, unsigned int ay) {
-	cout << "evaluation de x=" << dx << " y=" << dy << " -> x=" << ax << " y=" << ay << endl;
+	// cout << "evaluation de x=" << dx << " y=" << dy << " -> x=" << ax << " y=" << ay << endl; // DEBUG
 	int s = evaluer();
-	cout << "total : " << s << " meilleur score : " << score << endl;
-	if(s > score || (s == score && rand()%2 == 0)) {
+	// cout << "total : " << s << " meilleur score : " << score << endl; // DEBUG
+	if(s > score || (s == score && rand()%2 == 0)) { // si le score est meilleur, on le garde; si égalité, on choisit aléatoirement
 		score = s;
 		departX = dx;
 		departY = dy;
 		arriveeX = ax;
 		arriveeY = ay;
-		cout << "nouveau meilleur score : " << score << "\tcoup : x=" << departX << " y=" << departY << " -> x=" << arriveeX << " y=" << arriveeY << endl;
+		// cout << "nouveau meilleur score : " << score << "\tcoup : x=" << departX << " y=" << departY << " -> x=" << arriveeX << " y=" << arriveeY << endl; // DEBUG
 	}
 }
 
@@ -232,14 +228,14 @@ int Robot::evaluer() {
 		for(unsigned int x = 0; x < 7; x++) {
 			Piece * P = copieTerrain->getPiece(x, y);
 			if(P != NULL && P->getType() != tour_de_siege) {
-				s = evaluerPiece(P->getType());	cout << "\tp=" << s;
-				s += evaluerAttaque(*P);		cout << " a=" << s;
-				s += evaluerSiege(*P);			cout << " s=" << s;
-				s += evaluerPosition(*P);		cout << " p=" << s;
+				s = evaluerPiece(P->getType());	// cout << "\tp=" << s; // DEBUG
+				s += evaluerAttaque(*P);		// cout << " a=" << s; // DEBUG
+				s += evaluerSiege(*P);			// cout << " s=" << s; // DEBUG
+				s += evaluerPosition(*P);		// cout << " p=" << s; // DEBUG
 
 				if(P->getCouleur() == couleur) total += s;
 				else total -= s;
-				cout << "\tscore de la piece x=" << x << " y=" << y << " : " << s << "\ttotal temporaire : " << total << endl;
+				// cout << "\tscore de la piece x=" << x << " y=" << y << " : " << s << "\ttotal temporaire : " << total << endl; // DEBUG
 			}
 		}
 	return total;
@@ -280,7 +276,7 @@ int Robot::evaluerPiece(Type t) {
 int Robot::evaluerAttaque(const Piece & P) {
 	int s = 0, n = 0;
 
-	if((P.getType() == archer || P.getType() == fantassin) && P.getY() >= 1) {
+	if((P.getType() == archer || P.getType() == fantassin) && P.getY() >= 1) { // on vérifie que la pièce à le droit d'attaquer en fonction de son type
 		n = evaluerUneAttaque(P.getX(), P.getY()-1, P.getCouleur());
 		if(n > s) s = n;
 	}
@@ -328,9 +324,9 @@ int Robot::evaluerUneAttaque(unsigned int x, unsigned int y, Couleur c) {
 	Piece *P = copieTerrain->getPiece(x, y);
 	if(P != NULL && P->getCouleur() != c) {
 		if(c == couleur)
-			n = evaluerPiece(P->getType()) * 0.5;
+			n = evaluerPiece(P->getType()) * 0.5;	// si on attaque une pièce adverse
 		else
-			n = evaluerPiece(P->getType()) * 0.75;
+			n = evaluerPiece(P->getType()) * 0.75;	// si une pièce adverse nous attaque
 	}
 	return n;
 }
@@ -359,7 +355,7 @@ int Robot::evaluerPosition(const Piece & P) {
 }
 
 int Robot::distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2) {
-	return (int) sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+	return (int) sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)); // norme 2 sur R²
 }
 
 
@@ -443,7 +439,6 @@ void Robot::testRegression() {
 	Terrain T7("data/terrains/testDeplacerArcher.txt");
 	score = -100000;
 	deplacerArcher(T7, 3, 4);
-	cout << arriveeX << " " << arriveeY << endl;
 	assert(arriveeX == 2 && arriveeY == 4);
 	cout << "\tTest deplacerArcher : OK" << endl;
 

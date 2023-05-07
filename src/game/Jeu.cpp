@@ -1,16 +1,15 @@
 #include "../core/Piece.h"
-#include "../core/Terrain.h"
-#include "Humain.h"
-#include "Robot.h"
 #include "Jeu.h"
 
 #include <ctime>
 #include <fstream>
 #include <iostream>
-#include <string>
+#include <vector>
 
 using namespace std;
 
+
+// constructeur
 
 Jeu::Jeu(const string & filename) {
 	string dt;
@@ -20,6 +19,9 @@ Jeu::Jeu(const string & filename) {
 	joueur1 = true;
 	fin = false;
 }
+
+
+// fonctions permettant de jouer une partie
 
 void Jeu::boucle() {
 	cout << *terrain;
@@ -59,8 +61,11 @@ void Jeu::finDePartie() {
 	}
 }
 
+
+// fonctions permettant de sauvegarder la partie
+
 void Jeu::jour(string & jour) {
-	if(jour[0] != '0') jour = "0" + jour;
+	if(jour[1] == '\0') jour = "0" + jour;
 }
 
 void Jeu::mois(string & mois) {
@@ -99,7 +104,7 @@ void Jeu::date(string & date) {
 	date = tab[1] + "-" + tab[2] + " " + tab[3];
 }
 
-void Jeu::sauvegarde(const string & nomFichier) {
+void Jeu::sauvegarde(const string & nomFichier) { // sauvegarde le terrain dans un fichier texte
 	ofstream fichier(nomFichier.c_str(), ios::app);
 	if(fichier) {
 		fichier << *terrain;

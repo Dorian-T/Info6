@@ -1,12 +1,13 @@
-#include "Piece.h"
 #include "Terrain.h"
 
 #include <assert.h>
 #include <fstream>
 #include <iostream>
-#include <string>
 
 using namespace std;
+
+
+// constructeurs et destructeur
 
 Terrain::Terrain(const string & fichier) { // majuscule = rouge, minuscule = noir
 	ifstream f(fichier);
@@ -47,10 +48,16 @@ Terrain::~Terrain() {
 			if(grille[i][j] != NULL) delete grille[i][j];
 }
 
+
+// accesseur
+
 Piece* Terrain::getPiece(unsigned int x, unsigned int y) const {
 	assert(x >= 0 && x < 7 && y >= 0 && y < 9);
 	return grille[y][x];
 }
+
+
+// autres méthodes
 
 bool Terrain::verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, unsigned int ny, bool recule) {
 	Piece *temp = NULL;
@@ -109,7 +116,7 @@ bool Terrain::verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, uns
 	}
 }
 
-ostream &operator<<(ostream & os, const Terrain & t) {
+ostream &operator<<(ostream & os, const Terrain & t) { // permet l'affichage et l'enregistrement du terrain
 	Piece* P;
 	for(int i = 0; i < 9; i++) {
 		for(int j = 0; j < 7; j++) {
@@ -163,6 +170,8 @@ ostream &operator<<(ostream & os, const Terrain & t) {
 	}
 	return os;
 }
+
+
 
 void Terrain::testRegression() {
 	cout << endl << "Test de la classe Terrain" << endl;
