@@ -40,7 +40,7 @@ void Robot::joue(Terrain & t) {
 			}
 		}
 	if(departX != -1 && departY != -1 && arriveeX != -1 && arriveeY != -1)
-		t.verifieCoup(departX, departY, arriveeX, arriveeY, false); // pas toujours à false
+		t.verifieCoup(departX, departY, arriveeX, arriveeY, false);
 	else
 		cout << "pas de coup trouve" << endl;
 }
