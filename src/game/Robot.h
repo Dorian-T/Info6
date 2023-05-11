@@ -16,7 +16,7 @@ class Robot {
 		Piece *donjons[4];			// tableau des donjons
 
 		// coup à jouer :
-		int score;					// score du coup à jouer
+		float score;				// score du coup à jouer
 		int departX;				// coordonnée x de la pièce à déplacer
 		int departY;				// coordonnée y de la pièce à déplacer
 		int arriveeX;				// coordonnée x de la case d'arrivée
@@ -36,8 +36,8 @@ class Robot {
 		int evaluerAttaque(const Piece & P); // renvoie le score des attaques faisables par une pièce
 		int evaluerUneAttaque(unsigned int x, unsigned int y, Couleur c);
 		int evaluerSiege(const Piece & P); // détermine si une pièce est sur une tour de siège
-		int evaluerPosition(const Piece & P); // renvoie le score de la position d'une pièce en focntion de sa distance aux donjons adverses
-		int distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2);
+		float evaluerPosition(const Piece & P); // renvoie le score de la position d'une pièce en focntion de sa distance aux donjons adverses
+		float distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2);
 
 	public:
 		// constructeur et destructeur

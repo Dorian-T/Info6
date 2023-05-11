@@ -13,7 +13,7 @@ Robot::Robot(Couleur c) {
 	couleur = c;
 	copieTerrain = NULL;
 	for(int i=0; i<4; i++) donjons[i] = NULL;
-	score = -100000;
+	score = -100000.0;
 	departX = -1;
 	departY = -1;
 	arriveeX = -1;
@@ -336,26 +336,26 @@ int Robot::evaluerSiege(const Piece & P) {
 	else return 0;
 }
 
-int Robot::evaluerPosition(const Piece & P) {
+float Robot::evaluerPosition(const Piece & P) {
 	assert((donjons[0] != NULL || donjons[1] != NULL) && (donjons[2] != NULL || donjons[3] != NULL));
 	if(P.getType() == donjon) return 0;
 	else {
-		int s = 0;
+		float s = 0.0;
 		if(P.getCouleur() == couleur) {	// Si la pièce est de la couleur du robot
-			if(donjons[0] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[0]->getX(), donjons[0]->getY());
-			if(donjons[1] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[1]->getX(), donjons[1]->getY());
+			if(donjons[0] != NULL) s += 11.0 - distance(P.getX(), P.getY(), donjons[0]->getX(), donjons[0]->getY());
+			if(donjons[1] != NULL) s += 11.0 - distance(P.getX(), P.getY(), donjons[1]->getX(), donjons[1]->getY());
 			return s;
 		}
 		else {							// Si la pièce est de la couleur de l'adversaire
-			if(donjons[2] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[2]->getX(), donjons[2]->getY());
-			if(donjons[3] != NULL) s += 11 - (int) distance(P.getX(), P.getY(), donjons[3]->getX(), donjons[3]->getY());
+			if(donjons[2] != NULL) s += 11.0 - distance(P.getX(), P.getY(), donjons[2]->getX(), donjons[2]->getY());
+			if(donjons[3] != NULL) s += 11.0 - distance(P.getX(), P.getY(), donjons[3]->getX(), donjons[3]->getY());
 			return s;
 		}
 	}
 }
 
-int Robot::distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2) {
-	return (int) sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)); // norme 2 sur R²
+float Robot::distance(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2) {
+	return (float) sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)); // norme 2 sur R²
 }
 
 
@@ -366,7 +366,7 @@ void Robot::testRegression() {
 	assert(couleur == noir);
 	assert(copieTerrain == NULL);
 	for(int i=0; i<4; i++) assert(donjons[i] == NULL);
-	assert(score == -100000);
+	assert(score == -100000.0);
 	assert(departX == -1); assert(departY == -1); assert(arriveeX == -1); assert(arriveeY == -1);
 	cout << "\tTest constructeur parametre : OK" << endl;
 
@@ -415,7 +415,7 @@ void Robot::testRegression() {
 
 	Terrain T4("data/terrains/testEvaluer.txt");
 	copieTerrain = new Terrain(T4);
-	score = -100000;
+	score = -100000.0;
 	assert(evaluer() == -88);
 	cout << "\tTest evaluer : OK" << endl;
 
@@ -425,19 +425,19 @@ void Robot::testRegression() {
 	delete copieTerrain; copieTerrain = NULL;
 
 	Terrain T5("data/terrains/testDeplacerFantassin.txt");
-	score = -100000;
+	score = -100000.0;
 	deplacerFantassin(T5, 3, 4);
 	assert(arriveeX == 3 && arriveeY == 5);
 	cout << "\tTest deplacerFantassin : OK" << endl;
 
 	Terrain T6("data/terrains/testDeplacerPaladin.txt");
-	score = -100000;
+	score = -100000.0;
 	deplacerPaladin(T6, 3, 4);
 	assert(arriveeX == 4 && arriveeY == 5);
 	cout << "\tTest deplacerPaladin : OK" << endl;
 
 	Terrain T7("data/terrains/testDeplacerArcher.txt");
-	score = -100000;
+	score = -100000.0;
 	deplacerArcher(T7, 3, 4);
 	assert(arriveeX == 2 && arriveeY == 4);
 	cout << "\tTest deplacerArcher : OK" << endl;
