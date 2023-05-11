@@ -93,6 +93,7 @@ bool Terrain::verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, uns
 				if(grille[ny][nx]->getType() == fantassin || grille[ny][nx]->getType() == paladin || grille[ny][nx]->getType() == archer) { // si la case est un soldat
 					temp = grille[ay][ax]->getSiege();
 					grille[ay][ax]->setSiege(grille[ny][nx]->getSiege());
+					grille[ny][nx]->setSiege(NULL);
 					delete grille[ny][nx];
 					grille[ny][nx] = grille[ay][ax];
 					grille[ay][ax] = temp;
@@ -130,7 +131,7 @@ ostream &operator<<(ostream & os, const Terrain & t) { // permet l'affichage et 
 
 	// le terrain
 	for(int i = 0; i < 9; i++) {
-		os << i << " |";
+		os << i << " |"; // les numéros de lignes
 		for(int j = 0; j < 7; j++) {
 			P = t.getPiece(j, i);
 			if (P == NULL)
