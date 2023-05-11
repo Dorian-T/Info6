@@ -118,7 +118,19 @@ bool Terrain::verifieCoup(unsigned int ax, unsigned int ay, unsigned int nx, uns
 
 ostream &operator<<(ostream & os, const Terrain & t) { // permet l'affichage et l'enregistrement du terrain
 	Piece* P;
+
+	// les numéros de colonnes
+	os << "   ";
+	for(int j = 0; j < 7; j++)
+		os << " " << j << " ";
+	os << endl << "   ";
+	for(int j = 0; j < 7; j++)
+		os << "---";
+	os << endl;
+
+	// le terrain
 	for(int i = 0; i < 9; i++) {
+		os << i << " |";
 		for(int j = 0; j < 7; j++) {
 			P = t.getPiece(j, i);
 			if (P == NULL)
@@ -168,6 +180,7 @@ ostream &operator<<(ostream & os, const Terrain & t) { // permet l'affichage et 
 		}
 		os << endl;
 	}
+	os << endl;
 	return os;
 }
 

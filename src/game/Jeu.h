@@ -24,7 +24,8 @@ class Jeu {
 		void jour(std::string & jour); // renvoie le jour sur deux chiffres
 		void mois(std::string & mois); // renvoie le mois sur deux chiffres
 		void date(std::string & date); // renvoie la date et l'heure actuelle formatée
-		void sauvegarde(const std::string & nomFichier);
+		void sauvegarde();
+		void infoPartie(); // sauvegarde les informations de la partie en début de fichier
 
 	public:
 		// constructeur

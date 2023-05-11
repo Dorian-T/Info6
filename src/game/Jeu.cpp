@@ -25,7 +25,8 @@ Jeu::Jeu(const string & filename) {
 
 void Jeu::boucle() {
 	cout << *terrain;
-	sauvegarde(nomFichierSauvegarde);
+	infoPartie();
+	sauvegarde();
 	while (!fin) {
 		if (joueur1) {
 			cout << "Joueur 1 :" << endl;
@@ -37,7 +38,7 @@ void Jeu::boucle() {
 		}
 		joueurSuivant();
 		cout << *terrain;
-		sauvegarde(nomFichierSauvegarde);
+		sauvegarde();
 		finDePartie();
 	}
 }
@@ -104,13 +105,23 @@ void Jeu::date(string & date) {
 	date = tab[1] + "-" + tab[2] + " " + tab[3];
 }
 
-void Jeu::sauvegarde(const string & nomFichier) { // sauvegarde le terrain dans un fichier texte
-	ofstream fichier(nomFichier.c_str(), ios::app);
+void Jeu::sauvegarde() { // sauvegarde le terrain dans un fichier texte
+	ofstream fichier(nomFichierSauvegarde.c_str(), ios::app);
 	if(fichier) {
 		fichier << *terrain;
-		fichier << endl << endl;
 		fichier.close();
 	}
 	else
-		cout << "Impossible d'ouvrir le fichier " << nomFichier << endl;
+		cout << "Impossible d'ouvrir le fichier " << nomFichierSauvegarde << endl;
+}
+
+void Jeu::infoPartie() {
+	ofstream fichier(nomFichierSauvegarde.c_str());
+	if(fichier) {
+		fichier << "Joueur 1 : Humain (rouge)" << endl;
+		fichier << "Joueur 2 : Robot (noir)" << endl << endl;
+		fichier.close();
+	}
+	else
+		cout << "Impossible d'ouvrir le fichier " << nomFichierSauvegarde << endl;
 }
