@@ -44,17 +44,17 @@ bool Humain::choixDirection(Terrain & t, Piece * P) {
 	do {
 		cout << "Entrez une direction (";
 		if(P->getType() == fantassin) {
-			cout << "h, d, b, g) : ";
+			cout << "H, D, B, G) : ";
 			cin >> s;
 		}
 		else if(P->getType() == paladin) {
-			cout << "hd, bd, bg, hg) : ";
+			cout << "HD, BD, BG, HG) : ";
 			cin >> s;
 		}
 		else {
-			cout << "h, hd, d, bd, b, bg, g, hg) : ";
+			cout << "H, HD, D, BD, B, BG, G, HG) : ";
 			cin >> s;
 		}
-	} while (s != "h" && s != "hd" && s != "d" && s != "bd" && s != "b" && s != "bg" && s != "g" && s != "hg");
+	} while (s != "H" && s != "HD" && s != "D" && s != "BD" && s != "B" && s != "BG" && s != "G" && s != "HG");
 	return P->deplacer(t, s);
 }

@@ -97,14 +97,14 @@ void Piece::setSiege(Piece* S) {
 
 bool Piece::deplacer(Terrain & t, const string & s) {
 	if(type == fantassin || type == paladin || type == archer) { // seuls les soldats peuvent se déplacer
-		if(s == "h") return deplacerH(t);
-		else if(s == "hd") return deplacerHD(t);
-		else if(s == "d") return deplacerD(t);
-		else if(s == "bd") return deplacerBD(t);
-		else if(s == "b") return deplacerB(t);
-		else if(s == "bg") return deplacerBG(t);
-		else if(s == "g") return deplacerG(t);
-		else if(s == "hg") return deplacerHG(t);
+		if(s == "H") return deplacerH(t);
+		else if(s == "HD") return deplacerHD(t);
+		else if(s == "D") return deplacerD(t);
+		else if(s == "BD") return deplacerBD(t);
+		else if(s == "B") return deplacerB(t);
+		else if(s == "BG") return deplacerBG(t);
+		else if(s == "G") return deplacerG(t);
+		else if(s == "HG") return deplacerHG(t);
 		else return false;
 	}
 	else return false; // retourne un booléen pour savoir si le déplacement a été effectué
